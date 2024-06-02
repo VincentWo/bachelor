@@ -1,0 +1,178 @@
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+Upon the first introduction to derivatives one learns quite early that a function
+$f: \RR \to \RR$ is constant if and only if $f'(x) = 0$ for every $x \in \RR$. This statement is quite usefull,
+but it subtle implicit assumption, depending not only on the value of $f'$, but also on the domain
+of $f$. In fact, take:
+\begin{align*}
+	f: \RR \setminus \{0\} &\to \RR \\
+		x &\mapsto \begin{cases}
+			-1 \quad&\text{if } x < 0 \\
+			 1 \quad&\text{if } x > 0
+		\end{cases}
+\end{align*}
+this functions has derivative zero, but is not constant!
+
+This does not come as a surprise and $f$ is of course locally constant,
+i.e. every $\varepsilon$-ball can be shrunk to make $f$ constant on it, or properly:
+\begin{definition}[Locally constant]
+	Let $\U \subseteq \RR$ and $f: \U \to \RR$. We call $f$ \textbf{locally constant} if for every $x \in \U$
+	there is a open neighborhood $\V \subseteq \U$ of $x$ such that $f$ is constant on $\V$.
+\end{definition}
+
+Using this we get the general version of our theorem:
+\begin{lemma}
+	Let $\U \subseteq \RR$ and $f: \U \to \RR$ a smooth function. $f$ is locally constant if and only if
+	$f' = 0$.
+\end{lemma}
+As it usually goes, this statement is more general, but weaker: There are obviously sets (like $\RR$ itself) on
+which a vanishing derivative implies constness e.g. $\RR$ itself – what sets them apart?
+
+On $\RR$ this implication is easily proven: Let $f: \RR \to \RR$ be locally constant. For every $x \in \RR$
+pick an open neighborhood $\V_x$ of $x$ on which $f$ is constant. Now pick any $y \in \RR$ and
+define:
+\begin{align*}
+	\V^=      &\coloneqq \bigcup_{x \in \RR\colon f(x) = f(y)} \V_x \\
+	\V^{\neq} &\coloneqq \bigcup_{x \in \RR\colon f(x) \neq f(y)} \V_x
+\end{align*}
+Both of these sets are open and disjoint and $\RR = \V^= \cup \V^{\neq}$, hence also closed.
+But the only sets on $\RR$ that are open and closed are the empty set and $\RR$ itself and since
+$\V^=$ is non-empty by construction it has to be $\RR$, therefore $f$ is constant.
+
+This non-existence of sets that are open and closed (except $\RR$ and the empty set) follows from a
+geometric intuitive topological property:
+\begin{definition}
+	Let $X$ be a topological space. We call X \textbf{connected} if there are no non-empty
+	disjoint open sets $\V, \O \subseteq X$ such that $\V \cup \O = X$.
+\end{definition}
+Hence if $\U$ is connected $f$ is constant and the connected subsets of $\RR$ are exactly
+these on which $f' = 0$ implies constness of $f$.
+
+Keeping this example in the back of the mind, we are going to take a look at a seemingly unrelated
+question. In Physics one often deals with forces that are dependent on the position of an object (e.g. gravity
+acting on a spaceship as a function of distance to earth). The usual way to model these are vector fields:
+\begin{definition}
+Let $\U \subseteq \RR^n$. A \textbf{vector field on $\U$} is a smooth map $f: \U \to \RR^n$
+\end{definition}
+
+Forces are a usefull concept, but they have the problem of being proportional to the acceleration
+of an object, turning any equation about the position of an object into a second order differential
+equation. Because of this (and for unrelated reasons that we can not get into) it is often more conventient
+to work with the potential energy of an object, defined as the antideritative of the force field. That is,
+given a  force field $f: \RR^n \to \RR^n$ we define its potential function to be a smooth function $u: \RR^n \to \RR$
+such that $\nabla u = f$ (note that the potential is only unique up to a added constant). But given a force field $f: \RR^n \to \RR^n$
+there is no guarentee that it has a potential, hence we would like to limit ourselves to the ones that do.
+\begin{definition}
+A vector field $f: \RR^n \supseteq \U \to \RR^n$ is called \textbf{conservative} if there is a potential $u: \U \to \RR$
+such that $\nabla u = f$.
+\end{definition}
+Calling such a vector field conservative stems from the fact that these are exactly the vector
+fields that conserve energy i.e. every line integral (and the line integral of a force is
+energy) only depends on its endpoints. In particular the line integral over any closed loop is
+zero.
+
+This rises the question: Given an vector field $f: \U \to \RR^n$, how can one check that it
+is conservative? It turns out that for $n = 1$ every vector field is conservative: This is
+a direct consequence of the fundamental theorem of calculus. But for $n \geq 2$ non-conservative vector
+fields exist! So how, given any vector field, can we decide whether it is conservative? One possibility would
+be to "just" find a potential function or a closed loop with non-zero integral, but this isn't always a simple
+or even feasible task. Luckily one usually learns of a simpler method using the curl of a vector field:
+\begin{definition}
+	Let $\U \subseteq \RR^2$ be open and $f: \U \to \RR^2$ a vector field. Define the \textbf{curl of $f$} as
+	the smooth function defined by:
+	\begin{align*}
+		\curl f: \RR^2 &\to \RR \\
+		 (x_1, x_2)
+			&\mapsto \frac{\partial}{\partial x_1} f_2(x_1, x_2) - \frac{\partial}{\partial x_2} f_1(x_1, x_2)
+	\end{align*}
+	With $f_1, f_2$ being the components of $f$ i.e. $f = (f_1, f_2)$
+\end{definition}
+Being based on derivatives, the curl is a property that can be calculated rather easily. And luckily one
+can reduce the question whether a vector field is conservative to a statement about its curl:
+\begin{lemma}
+Let $f: \RR^2 \to \RR^2$ be a vector field. Then $f$ is conservative if and only if its curl is zero.
+\end{lemma}
+
+This is wonderfull! We reduced a hard question to an easy one, turning conservativity into an easily calculated
+invariant. But, as the attentive reader might have already noticed, we did so at the cost of generality.
+Similiar to our first statement, we again reduced the statement to vector fields defined on the whole of
+$\RR^2$. And not without reason, either: There are subsets of $\RR^2$ on which curl-free vector fields are
+not nescecarrily conservative. As an example take $\U = \RR^2 \setminus \{0\}$ and define:
+\begin{align*}
+	f: \U &\to \RR \\
+		(x, y) &\mapsto \frac{1}{x^2 + y^2}(-y, x)
+\end{align*}
+Its curl is:
+\begin{align*}
+	\curl f = \frac{y^2 - x^2}{(x^2 + y^2)^2} - \frac{y^2 - x^2}{(x^2 + y^2)^2} = 0
+\end{align*}
+But this vector field is clear not conservative: Take e.g. the integral on the unit circle (a trivially closed
+loop), it is not zero!
+
+Our argument fails for a similiar reason as in the first example: It includes a assumption on the domain of
+the vector field, since curl-free vector fields are not conservative in general, but something weaker:
+\begin{definition}
+A vector field $f: \RR^n \supseteq  \U \to \RR^n$ is called \textbf{locally conservative} if every point $x \in \U$ has an
+open neighborhood $\V \subseteq \U$ such that $f|_\V$ is conservative.
+\end{definition}
+
+That curl-free vector fields are locally conservative can intuitively be seen by approximating small loops using small squares.
+Imagine one such square of side length $2\Delta > 0$ with mid-point $(x_1, x_2)$. The (counter-clockwise) integral of its boundary over
+a vector field $f$ can then be approximated as:
+\begin{align*}
+	\Delta \cdot & (  f_1(x_1, x_2 - \Delta) + f_2(x_1 + \Delta, x_2) - f_1(x_1, x_2 + \Delta) - f_2(x_1 - \Delta, x_2) \\
+	&\approx \Delta \Big( f_1(x_1, x_2) - \Delta \frac{\partial f_1}{\partial x_2}(x_1, x_2) + f_2(x_1, x_2) + \Delta \frac{\partial f_2}{\partial x_1}(x_1, x_2) \\
+	       & \phantom{\approx \Delta (}		   - f_1(x_1, x_2) - \Delta \frac{\partial f_1}{\partial x_2} (x_1, x_2) - f_2(x_1, x_2) + \Delta \frac{\partial f_2}{\partial x_1}(x_1, x_2) \Big) \\
+	      &= 2\Delta^2 \Big( \frac{\partial f_2}{\partial x_1}(x_1, x_2) - \frac{\partial f_1}{\partial x_2}(x_1, x_2)\Big) \\
+	&= 2 \Delta^2 \curl f
+\end{align*}
+Hence vector fields are locally conservative if and only if they are curl-free. But again: There are sets on which
+every locally conservative vector field is conservative – why? Without giving a rigorous proof:
+As an approximate answer imagine a closed loop on $\RR^2$, to keep it simple again as a square.
+This square can be split into 4 smaller squares and then the integral over the boundary of the larger square is equal to the sum
+of the integrals over the boundaries of the smaller ones. By doing this until all squares
+are small enough such that the integral over their boundary is zero shows that their sum and hence the integral over the boundary of
+the large square is zero.
+
+But in the case of $\RR^2 \setminus \{0\}$ this is not possible: Any loop/square that contains the origin can not be split into smaller squares.
+This property can now again be phrased in topological terms:
+\begin{definition}
+We call a topological space $X$ \textbf{simply connected} if every closed loop i.e. map $f: S^1 \to X$ admits a extension to $\mathbb{D}^2$.
+\end{definition}
+Hence on simply connected spaces locally conservative vector fields are conservative!
+
+Both of these examples can be seen as instances of \textbf{de Rhams theorem}, a deep statement about the connection between the "globalization"
+of local properties of smooth functions on a space and topological properties of the space itself,
+and the subject of this thesis.
+
+Properly stating de Rhams theorem requires the development of de Rham Cohomology: The concept of smooth
+functions and vector fields can be generalized into \textbf{differential forms} with the gradient/curl then
+becoming the \textbf{exterior derivative $\mathrm{d}$}, that maps $k$-forms to $k+1$-forms. Thus the objects
+of our interest are the forms with zero exterior exterior derivative (called closed) modulo the ones that are
+the exterior derivative of another form (called exact), or in algebraic terms:
+\begin{align*}
+	H^* \coloneqq \ker(\mathrm{d}) / \Img(\mathrm{d})
+\end{align*}
+
+\begin{remark}
+The attentive reader might notice that this is only sensible if $\mathrm{d}$ is nil-potent, that
+is $\mathrm{d} \circ \mathrm{d} = 0$, but that is indeed the case, as we are going to proof.
+\end{remark}
+
+$H^*$ is called the de Rham cohomology of a space and de Rhams theorem now states that this is
+isomorphic to a topological invariant: Čech cohomology, which can be understood as measuring the "holes"
+in a space by detecting certain objects that have empty boundary (caled cycles) modulo objects that are the
+boundary of something.
+
+That these two invariants are isomorphic is a surprising fact, first conjectured by E. Cartan in 1928 and
+proven in 1931 by George de Rham in his dissertation \cite{de_rham_sur_1931} using the theory of integration
+of $k$-forms.
+
+The proof that we are going to use was premiered 1952 by Weil in the (french) paper \cite{weil_sur_1952},
+with \cite{tu_differential_1982} being a good modern account. Our contributing lies in extending details
+that were left out of \cite{tu_differential_1982} and combining it with a self-contained \footnote{
+Not self-contained in the sense of proving every statement, but self-contained in the sense that it can be
+(hopefully) understood on its own
+} introductiong to all the needed materials \& motivations, trying to make this thesis accessible to anybody
+with linear algebra, analysis and basic topology without requiring any topic-specific knowledge.
+ 

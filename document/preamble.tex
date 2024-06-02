@@ -1,0 +1,67 @@
+\usepackage{microtype}
+\usepackage{mathdots}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage{fontspec}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{mathtools}
+\usepackage[style=alphabetic]{biblatex}
+\usepackage{tikz}
+\usetikzlibrary{cd,decorations.pathreplacing,decorations.markings,arrows}
+\addbibresource{main.bib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{bookmark}
+\usepackage{mathtools}
+\usepackage{animate}
+\usepackage{pgffor}
+\usepackage[most]{tcolorbox}
+
+\overfullrule=10pt
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+% To fix a warning because of accented characters in the header
+\setlength{\headheight}{14.8pt}
+
+\hypersetup{
+	bookmarks=true,
+	unicode=true,
+	pdftoolbar=false,
+	pdfmenubar=false,
+	pdftitle={Bachelorarbeit},
+	pdfauthor={Vincent Woltmann}
+	% linkcolor={red!50!black},
+	% citecolor={blue!50!black},
+	% urlcolor={blue!80!black},
+}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corolarry}[definition]{Corolarry}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+\theoremstyle{example}
+\newtheorem{example}[definition]{Example}
+
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\V}{\mathcal{V}}
+\renewcommand{\O}{\mathcal{O}}
+\newcommand{\dvb}{d^{\bullet, \bullet}_v}
+\newcommand{\dhb}{d^{\bullet, \bullet}_h}
+\newcommand{\rmd}{\mathrm{d}}
+\usetikzlibrary{shapes.misc}
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\curl}{curl}

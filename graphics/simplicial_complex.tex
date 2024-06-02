@@ -1,0 +1,13 @@
+\documentclass[tikz]{standalone}
+\begin{document}
+\begin{tikzpicture}[
+]
+	\draw
+		(0,0) node (a0) {} node[left] {$a$}
+		--
+		(0, -2) node (ab1) {} node[right] {$\{a,b\}$}
+		--
+		(0, -4) node (b0) {} node[left] {$b$};
+	\fill (a0) circle(1.5pt) (b0) circle(1.5pt);
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,760 @@
+\chapter{De Rham Cohomology}
+Developing de Rham cohomology begins with generalizing smooth functions to domains
+that aren't open subsets of $\RR^n$. This leads to the ubiquitous concept of smooth
+manifolds, the setting of the rest of this thesis, which then allows us to generalize
+the concept of differentiation using the concept of a tangent space – and its dual
+\textit{integration} using the cotangent space, culminating into the theory of differential forms
+and de Rham cohomology.
+
+\begin{remark}
+While we are going to aim for a self-contained introduction to all the needed differential geometric
+background, it is impossible to do so without skipping quite some detail. If one desires a full fledged
+introduction (and the topic is definitly more than interesting enough to deserve one), then one should read
+one of the plethora of well written books about it e.g. \cite{lee_introduction_2013}, \cite{spivak_comprehensive_1979}
+or \cite{wendl_differential_2022}
+\end{remark}
+
+\section{Smooth Manifolds}
+As should be not too suprising this is in general not possible, there isn't any sensible notion
+of a map $f: X \to \RR$ being smooth for an arbitrary topological space. To define smoothness
+we need both some additional structure and some "well-behavedness" i.e. we are going to have to
+limit ourselves to a certain class of "good" spaces.
+
+We are going to start with the "well-behavedness". All throughout calculus the real numbers play a
+quite important role, hence to even have a shot at defining differential structures we are going
+to require our space to be "locally euclidean", that is, we want every point to have a neighborhood that
+is homeomorphic to $\RR^n$. This leads us to the definition of a topological manifold:
+\begin{definition}[Topological Manifold]
+A \underline{topological $n$-manifold} is a second countable and Hausdorff topological space $M$ such
+that every $x \in M$ has a neighborhood $\U \ni x$ that is homeomorphic to $\RR^n$.
+\end{definition}
+
+
+% TODO: rewrite this
+This manifold concept is already a quite powerfull and versatile one, but it is still a purely topological
+concept. But by adding a bit more structure we are going to develop from it the fundamental setting of differential geometry:
+The smooth manifold. And after introducing just enough differential geometric terminology we are going
+to introduce the invariant that interests us most: de Rham cohomology, the multi dimensional analog of
+the question whether local constness of smooth functions implies constness.
+
+But first, we are going to have to develop smooth manifolds:
+
+\section{Smooth Manifolds}
+A smooth manifold is first and foremost a space that locally looks like $\RR^n$:
+But one might note that 
+% TODO: Correct definitions etc.
+\begin{definition}[Coordinate Transformation]
+A \underline{coordinate transformation} from $U_\alpha$ to $U_\beta$ is the map
+\[
+	\phi_{\alpha \beta}: 
+		\phi^{-1}_\alpha(\mathcal{U}_\alpha \cap \mathcal{U}_\beta)
+		\to
+		\phi^{-1}_\beta(\mathcal{U}_\alpha \cap \mathcal{U}_\beta) \
+		x \mapsto (\phi^{-1}_\beta \circ \phi_\alpha)(x)
+\]
+for charts $(\mathcal{U}_\alpha, \phi_\alpha), (\mathcal{U}_\beta, \phi_\beta)$
+of a $n$-manifold $M$.
+\end{definition}
+Though quite wordy it is a natural concept: Given a point
+$p \in \mathcal{U}_\alpha \cap \mathcal{U}_\beta$ there are two unique
+coordinates $\mathbf{x}, \mathbf{y} \in \RR^n$ of $p$ such that
+$\phi_\alpha(\mathbf{x}) = \phi_\beta(\mathbf{x}) = p$ and the coordinate
+transformation is just the way to do that. The problem: If we find a way to
+define differentiation on a $n$-manifold $M$ we would want to make sure that the
+differentiability of a function $f: M \to \RR$ at a point $p \in M$ (whatever
+that means) does not depend on our chosen coordinates $\mathbf{x} \in \RR^n$ for
+$p$, but while the coordinate transformations are required to be continous,
+they aren't required to uphold any kind of differentiability conditions we
+invent. Since these are maps from $\RR^n$ to $\RR^n$ the most natural requirement
+would be smoothness \footnote{
+	Instead of smoothness one can of course also require differentiability,
+	but this soon gets messy since some concepts require differentiating more
+	than once, so we will be practical and just say smooth, leaving the
+	detailed requirements of theorems and definitions as an (not recommened
+	unless nescessary) exercise for the reader.
+} and this also turns out to be exactly the right thing
+\begin{definition}
+A \underline{smooth manifold} is a manifold
+$M$ together with an atlas $\{\mathcal{U}_\alpha, \phi_\alpha\})$  such that
+every coordinate transformation is smooth.
+\end{definition}
+\begin{remark}
+Note that a manifold is only a topological space while a smooth manifold is
+a topological space together with a choice of atlas. This choice is actually
+important since there are manifolds which are homeomorphic,
+but not diffeomorphic, the differential geometric equivalent of homeomorphic.
+\end{remark}
+This requirement allows us to now define differentiability in a natural way
+\begin{definition}
+A function $f: M \to N$ from a $m$-manifold $M$ to a $n$-manifold $N$ is
+\underline{smooth} at the point $p \in M$ if there are open sets
+$p \in \mathcal{U} \subseteq M, f(p) \in \mathcal{V} \subseteq N$ together
+with coordinate charts $\phi: \mathbb{R}^m \to \mathcal{U},
+\psi: \mathbb{R}^m \to \mathcal{V}$ such that
+\[
+	\psi^{-1} \circ f \circ \phi
+\]
+is smooth at $\phi^{-1}(p)$. $f$ is smooth if it is smooth at every $p \in M$.
+\end{definition}
+
+In higher dimensional real analysis one has to replace the derivative $f'$ by the linear
+map $Df$ i.e. the differential of $f$, which can be interpreted as the best linear
+approximation of $f$ in the sense of $Df|_p(v)$ being the best linear (in $v$)
+approximation for $f(p + v)$. We would love to do the same thing, but we can't since a
+smooth manifold in general does not have any vector space structure, making it impossible
+to talk about directions or linearity.
+
+The remedy for this is going to be the tangent space: For every point $p \in M$ one
+defines a local tangent space $T_p M$ that is a $n$-dimensional vector space and can
+be thought of as either a linear approximation of $M$ at $p$, the $n$-dimensional vector
+space of "directions" at $p$ or as the directional derivatives at $p$ seen as functionals
+on $C^\infty(M)$ fullfilling a "product-rule" TODO.
+
+We sadly don't have the time to fully develop the theory of tangent spaces, so we have
+to take the things we need as black boxes. $TM$ is the tangent space of $M$, taken as the
+"disjoint union" of all local tangent spaces, it can also be equipped with a topology and
+an atlas such that it is a $2n$-dimensional smooth manifold. A smooth map $f: M \to N$
+induces a map $Df: TM \to TN$ that intuitively maps "changes" on $M$ to "changes" on $N$.
+
+Although tangent spaces don't have a canonical basis, once we have chosen coordinates
+$\mathbf{x} = (x_1, \dots, x_n)$ for $p \in M$ there is a standard choice of basis of
+$T_pM$ denoted as 
+\begin{align*}
+	\frac{\partial}{\partial \mathbf{x}} = 
+		\left\{\frac{\partial}{\partial x_1}, \dots, \frac{\partial}{\partial x_n}\right\}
+\end{align*}
+% TODO: M \to N or only M \to \RR
+that acts on a smooth $f: M \to \RR$ as
+\begin{align*}
+	\frac{\partial}{\partial x_1} f = (f \circ \mathbf{x}^{-1}(\mathbf{x}(p) + t e_1))'(0)
+\end{align*}
+
+\section{Differential Forms}
+While we established a way to define differentiation of smooth functions on manifolds,
+it remains to define its counterpart: Integration. We delayed this for a reason: While
+the classic concept of differentiation can be unambigously generalized to manifolds and
+multiple dimensions, the concept of integration can be generalized in quite different ways.
+And this is not by coincidence: The 1-d Integral actually fullfills three distinct roles,
+which grow distinct when taken to multiple dimensions (while still being interconnected).
+
+In the case of $\RR$ Integration is a means of measuring area (this is generalized by the familiar
+Lebesgue Integral TODO: Riemann Curvature Integral), of representing antiderivates, that is
+a function $F$ defined by the equation $F' = f$ (this is generalized by (partial) differential
+equations) and last but not least a means of calculating a signed area/"work" (which is
+finally generalized by differential forms)
+
+The difference between signed and unsigned area is substanstial, even it might seem minute,
+since it requires one to integrate over orientated areas. In the easiest 1d-case this is intuitivly
+expressed by exchanging the limits:
+\[
+	\int_a^b = -\int_b^a	
+\]
+And it makes sense: The work required of following a path from a to b should be the opposite of
+following the same path backwards. (While one would want the length of the path to be independent
+from the direction taken).
+
+Conviently this concept of signed area is not a new thing, one recalls from linear algebra that
+the determinant of a $n \times n$ matrix can be interpreted as the signed change of area of a
+$n$ parallelopiped under the linear transformation. And indeed, our theory of differential
+forms is going to start with its linear algebraic predecessor: Forms, which we are going
+to use to define the concept of a "weighted" $n$-volume of a $n$-parallelopiped. This concept
+can then by generalized to smooth manifolds by using tangent spaces as local linearizations
+of a smooth manifolds, allowing us to talk rigourisly about "infinitisimal" volumes without
+having to take limits. After that we finally are going to be able to enjoy the fruits of our
+labor by defining de Rham cohomology and developing its basic computational tools.
+
+\begin{remark}
+The power of differential geometry often lies in using the (hopefully)
+familiar techniques of linear algebra to analyse smooth functions
+% 
+\end{remark}
+
+% TODO: The upper section is kind of ugly
+\subsection*{Forms}
+When defining integration one usually starts to talk about "infinitisimal"
+displacements (or in higher dimensions parallelepipeds), making everything
+precise using limits. But we already have a way to talk about an "infinititisimal"
+change in a direction: The tangent space at a point precisely presents that.
+
+Because of this logic it makes sense to start the definition of differential forms
+as a locally defined function on the tangent space. Also: One important property of
+smooth objects is that they are "locally linear", hence it might even be enough to
+limit ourselves to linear maps of the tangent space.
+
+We therefore define a differential 1-form at a point $p$ to be a linear map from
+$T_pM$ to $\RR$.
+
+This logic upholds for line-integrals quite well, but is there any way to use the
+tangent space to represent higher dimensional shapes? Since we can't assume there
+to be any canonical definition of matrix, we have to limit ourselves to shapes that
+can be defined just using the linear algebraic properties of the tangent space. The
+most obvious shape is therefore the $k$-parallelepiped, that we can represent using
+an $k$-tuple of vectors $\xi_1, \dots, \xi_k \in T_pM$. Following the linearity of 
+the 1-dimensional case, we also require a differential $k$-form to be linear in all
+its arguments. For $k \geq 2$ there is also a special class of parallelepipeds,
+the degenerate ones which have two or more linear dependent sides. These don't have
+any $k$-volume and hence we require our differential forms to map these to zero.
+One consequence of this is that for any $\xi_1, \xi_2 \in \RR^n$ we have:
+\begin{align*}
+&&	 0 &= \omega(\xi + \eta, \xi + \eta) \\
+&&	   &= \omega(\xi, \xi + \eta) + \omega(\eta, \xi + \eta) \\
+&&	   &= \underbrace{\omega(\xi, \xi)}_{= 0} + \omega(\xi, \eta) + \omega(\eta, \xi) + \underbrace{\omega(\eta, \eta)}_{= 0} \\
+&&	   &= \omega(\xi, \eta) + \omega(\eta, \xi) \\
+&\iff& \omega(\xi,\eta) &= - \omega(\eta,\xi)
+\end{align*}
+hence we require differential forms to be skew-symmetric. In fact skew-symmetry is
+not only a necessary, but also a sufficient condition for forms to map linear
+dependent vectors to zero.
+\begin{lemma}
+	Let $\omega$ be a skew-symmetric $k$-form on $\RR^n$ and $\xi_1, \dots, \xi_k$
+	be lineary dependent. Then $\omega(\xi_1, \dots, \xi_k) = 0$
+\end{lemma}
+\begin{proof}
+	Without loss of generality we assume that $\xi_1 = \lambda_2 \xi_2 + \dots + \lambda_k \xi_k$
+	for some $\lambda_2, \dots, \lambda_k \in \RR$. Then:
+	\begin{align*}
+		\omega(\xi_1, \dots, \xi_n)
+		&=
+		\omega(\lambda_2 \xi_2 + \dots + \lambda_k \xi_k, \xi_2, \dots, \xi_k) \\
+		&=
+		\lambda_2 \omega(\xi_2, \xi_2, \dots, \xi_k) + \dots + \lambda_k \omega(\xi_k, \xi_2, \dots, \xi_k)
+	\end{align*}
+	All of these terms have at least two equal vectors and hence by skew-symmetry are equal to their
+	negative value, which is only possible if they are zero. Therefore the sum is zero.
+\end{proof}
+This effort culminates in our local definition of a differential form:
+\begin{definition}
+Let $M$ be a smooth $n$-manifold and $p \in M$. A $k$-differential form (with $k \leq n$)
+at $p$ is a skew-symmetric multi-linear map from $(T_p M)^k$ to $\RR$.
+\end{definition}
+
+Now some notation. Given a basis $\frac{\partial}{\partial x_1}, \dots, \frac{\partial}{\partial x_n}$
+of a tangent space $T_p M$, we denote the dual basis as $\mathrm{d}x_1, \dots, \mathrm{d}x_n$, i.e.:
+\[
+	\mathrm{d}x_i(\frac{\partial}{\partial x_j}) = \delta_{i,j}
+\]
+We then recall from linear algebra that every linear map $\omega$ can be uniquely written as:
+\[
+	\omega = c^i \mathrm{d}x_i	
+\]
+for $c^1, \dots, c^n \in \RR$, so we usually denote differential forms like that
+(but always remember that this is a non-canonical, coordinate dependent notation).
+
+We can add more structure to this. 
+
+
+Let's imagine that we have two differential forms $\mathrm{d}x_1$ and $\mathrm{d}x_2$.
+Both of these assign a "weight" to the $\frac{\partial}{\partial  x_1}$/$\frac{\partial}{\partial x_2}$ direction,
+so there should be a way to assign a "matching" weight to the parallelogram spanned by these vectors.
+In fact we will denote this 2-form as $\mathrm{d}x_1 \wedge \mathrm{d}x_2$
+
+TODO: k-forms representation, smoothness, exterior product, definition of integration
+
+\subsection{The exterior deriative}
+One of the most important aspects of integration on $\RR$ is the
+fundamental theorem of calculus:
+\[
+	\int_a^b f'(t)\mathrm{d}t = f(b) - f(a)	
+\]
+To generalize this to higher dimensions we first note that the points $a,b$ are the
+boundary of the path from $a$ to $b$. Points can be taken as 0-dimensional manifolds
+and hence the concept of induced boundary notation can be extended to them, in absence
+of different orders of a single point we take the order of a point to be either a plus
+or minus sign. Hence the path from $a$ to $b$ induces a positive orientation on $b$
+and a negative one on $a$, equal to the signs in the fundamental theorem. Even
+going further we can define the integration of a smooth function $f$ on a 0-dimensional
+oriented manifold $M$ as:
+$
+	\int_M f = \sum_{p \in M} \sign(p) f(p)
+$
+where $\sign(p)$ represents the orientation of $p$. This allows us to rephrase the
+fundamental theorem as a statement purely about integration:
+\[
+	\int_a^b f'(t)\mathrm{d}t = \int_{\{-a, b\}} f
+\]
+since a differential $k$-form can be integrated on $k$-manifolds, we are going to
+call smooth functions differential $0$-forms.
+
+The fundamental theorem of calculus in 1-dimension fits in the picture of differential
+forms as a measurement of change. Given a $0$-form $f$ on points, the integral of the
+one form $f'$ on a path $\gamma$ from $a$ to $b$ measures the total change of $f$
+on that path. Generalizing this we ask whether for a given $k$-form $\omega$ there
+is a $k + 1$-form $\eta$ such that for every $k+1$-manifold $M$ we have:
+\[
+	\int_M \eta = \int_{\partial M} \omega
+\]
+\section{De-Rham Cohomology}
+After spending some time to get our definitions in order we want to talk about
+our original problem: Detecing holes. Our most basic definition of an hole is
+in the $0$-dimensional case: The number of connected components of a manifold.
+Since this is the most basic case we would hope to classify $0$-forms in some
+way to detect this. One special property of a connected manifold is that every
+locally constant function is globally constant. A function being locally constant
+is something that we can easliy measure using differential forms: A function $f$ is
+locally constant iff $\mathrm{d}f = 0$. Since $\mathrm{d}$ is a ring homomorphism
+on $\Omega^0(M)$ its kernel $\ker(\mathrm{d})$ is a subring and we can define
+the 0-th De-Rham Cohomology as:
+\[
+	H^0(M) \coloneqq \ker(\mathrm{d}) \cap \Omega^0(M)
+\]
+We find that the dimension of this is exactly equal to the number of connected components
+of $M$, since every locally constant function is defined by it's value on one point of a
+connected component.
+
+It is a priori not clear how to generalize the concept of "local constness" to higher differential
+forms, but we can find a generalization by changing how we phrase "local constness".
+A function is locally const iff for a given point $p$ there is a neighborhood $U$ of $p$ such that for
+every $q \in U$:
+\[
+	f(p) = f(q) \iff 0 = f(p) - f(q) = \int_{\{-q, p\}} f = \int_\gamma \mathrm{d} f
+\]
+where $\gamma$ is any loop from $p$ to $q$. The "interesting" forms (forms that only appear
+if the manifold is not connected) are now the ones for which this is true locally, but not globally
+i.e. there are points $p, q \in M$ such that:
+\[
+	\int_{-q, p} \omega \neq 0
+\]
+
+Taking this into higher dimensions, we can look at the differential $k$-forms in the kernel
+of $\mathrm{d}$. Given a differential $k$-form $\omega$ with $\mathrm{d}\omega$, its local property
+now is that for every point $p \in M$ there is neighborhood $\mathcal{U}$ such that the integral
+of $\omega$ over any compact oriented $k$-submanifold $M$ without boundary is zero. This is because
+locally every such manifold is the boundary of a compact oriented $k+1$-manifold $B$
+
+TODO: This is not a trivial statement
+
+and hence by Stokes:
+\[
+	\int_M \omega = \int_B \mathrm{d}M
+\]
+Since these are important, they have a special name
+\begin{definition}
+Let $M$ be a smooth manifold. A differential form $\omega$ on $M$ is called \textbf{closed}
+if $\mathrm{d} \omega = 0$
+\end{definition}
+
+The interesting question now becomes for which closed forms this is \textbf{not} true
+globally. It is easier to answer the converse: For which $k$-forms is this true globally.
+One important fact about the exterior derivative is, that it is nilpotent, hence a large
+class of closed forms are the forms that are the results of exterior differentiation and in
+fact it holds for every $k$-form which can be written $\mathrm{d}\omega$ for some $k-1$ form $\omega$,
+that for any compact oriented manifold $M$ without boundary:
+\[
+	\int_M \mathrm{d}\omega = \int_{\partial M} \omega = 0
+\]
+These are the "boring" forms, which we also denote by a special name.
+\begin{definition}
+Let $M$ be a smooth manifold, $\omega$ a differential form. We call $\omega$ exact if there is a differential
+form $\eta$ such that $\omega = \mathrm{d}\eta$.
+\end{definition}
+
+We are thus interested in the closed forms modulo the exact ones, in general we define:
+\begin{definition}
+Let $M$ be a smooth manifold. We define the \textbf{de-Rham cohomology of $M$} as the graded
+algebra:
+\[
+	H^*(M) \coloneqq \bigoplus_{k = 0}^\infty \ker(\mathrm{d}^k)/\Img(\mathrm{d}^{k - 1})
+\]
+\end{definition}
+\begin{remark}
+Elements of $H^*(M)$ are equivalence classes of elements of $\Omega^*(M)$, which we will
+denote as $[c]$ for some $c \in \Omega^*(M)$ as a representative. But since we are going to
+talk a lot about cohomology we are going to sometimes abuse notation and write $c$ to mean $[c]$
+when the intent is clear. One just has to remember that the cohomology consists of equivalence classes
+and that hence such a choice is not unique in general.
+\end{remark}
+
+% TODO: Graded Algebra? Exterior product?
+Our previous discussion already allows us to calculate the zero-th de-Rham cohomology
+\begin{lemma}
+Let $M$ be a smooth manifold. Then the zeroth de-Rham cohomology is
+\[
+	H^0(M) \simeq \bigoplus_{c \in \pi_0(M)} \mathbb{R}
+\]
+where $\pi_0(M)$ are the connected components of $M$.
+
+The exterior product corresponds to memberwise multiplication.
+\end{lemma}
+\begin{proof}
+TODO
+\end{proof}
+%TODO: Sollte vermutlich erklärt werden
+\begin{lemma}
+Let $M$ be a smooth $n$-manifold. Then for every $k > n$:
+\[
+	H^k(M) = 0
+\]
+\end{lemma}
+\begin{proof}
+For $k > n$ the only skew-symmetric $k$-form on a $n$-dimensional vector space is $0$, hence
+$\Omega^k(M) = 0$, which implies $H^k(M) = 0$.
+\end{proof}.
+
+% TODO: Pullback of forms
+
+\subsection{The Mayer-Vietoris Sequence}
+With our current knowledge it seems impossible to calculate the de-Rham cohomology for anything but the most simplest of
+spaces, hence we have to develop more computational tools. We are going to start with the most important one: A way to
+calculate the cohomology of more complicated spaces by splitting them into simpler ones, whose cohomology is known.
+Concretely we are going to find a connection between the cohomology of a space $X$ and the cohomology of open subsets $\U, \V$ that cover $X$
+i.e. $\U \cup \V = X$.
+
+That connection is going to be the \textbf{Mayer-Vietoris-Sequence}, derived from the sequence of inclusions:
+\begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAFkQBfU9TXfIRQBGclVqMWbADrSAqgAJZAYwhoATtCXSAat14gM2PASIAmMdXrNWiELMUq6abXq7iYUAObwioAGaaALZIFiA4EEiiIAxYYLYgcBCxUCDUABYwdKmIYEwMDNQ4dFgMbJDxaYnpWP44SAC00dZSdlgA+rJuBoEQIYhhEVHUcDV1wzF0AEYwDAAK-CZCIOpYXun1VpIJHQ76AcETQ4hkEjZsAFbcFFxAA
+\begin{tikzcd}
+M & \U \coprod \V \arrow[l, "j"] & \U \cap \V \arrow[l, "i_\V", shift left] \arrow[l, "i_\U"', shift right]
+\end{tikzcd}
+\end{center}
+With $\U \coprod \V$ being the disjoint union, $j$ the inclusion from $\U$ and $\V$ into $M$
+and $i_\U$ being the inclusion of $\U \cap \V$ into $\U$ (and then into the disjoint union),
+similiar with $i_\V$. All of these are smooth maps and hence this induces another sequence of
+restrictions of differential forms:
+\begin{equation}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12B5AWxgHM6APQBUACgCyAShABfUuky58hFAEZyVWoxZtOvAcPGcAqlIAEnAEZZ+ENMziXufQaLGcAajPmLseAiIAJk1qemZWRA4XQ3dTZwBjOjRnbzktGCh+eCJQADMAJwgeJA0QHAgkEJAGLDBIkDgIWqgQagALGDpWxDAmBgZqHDosBjZIerbG9qw8nFKwnQasAH0vUSmGOisYBgAFJQDVEALbdvnfEELihfLKxGq4GbmkAFoyrZ39w5U2BhgXosImxVqYNpdriVEGQ7rdwroogArcEUWRAA
+\begin{tikzcd}
+\Omega^*(M) \arrow[r, "j^*"] & \Omega^*(\U) \bigoplus \Omega^*(\V) \arrow[r, "i_\V^*"', shift right] \arrow[r, "i_\U^*", shift left] & \Omega^*(\U \cap \V)
+\end{tikzcd}
+\label{cd:de-rham:mv-first}
+\end{equation}
+This does not quite get us anywhere, but we recall from (linear) Algebra that there are special
+kind of sequences that provide a lot of information:
+\begin{definition}
+Let $A_i$ a sequence of vector spaces with homomorphism $f_i: A_i \to A_{i + 1}$:
+\begin{center}
+	% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12oIcEBfUuky58hFAEZyVWoxZsAggH1gAawAEAWjXi+IAUOx4CRAExTq9Zq0Qglq3fpAZDoogGZzMqwuXqA1NoOgk7CRmLIACyelnI2nNy8etIwUADm8ESgAGYAThAAtkiSIDgQSCaOuQXl1KVIbpV5hYgeJWWIEY3ViGRtRXwUfEA
+	\begin{tikzcd}
+	\dots \arrow[r] & A_{k - 1} \arrow[r] & A_{k} \arrow[r] & A_{k + 1} \arrow[r] & \dots
+	\end{tikzcd}
+\end{center}
+We call this sequence \textbf{exact} if $\Img(f_i) = \ker(f_{i + 1})$ for every $i \in \NN$.
+If every $A_i$ but three are zero we call it a \textbf{short exact sequence}.
+\end{definition}
+Now \ref{cd:de-rham:mv-first} being exact can be seen as the statement that
+the cohomology of a space is the cohomology of its parts, modulo their overlap.
+
+This statement seems reasonable, but we have to modify it a bit, since the default restrictions would map a form $\omega$ on $M$
+to the form $2\omega$ on $\U \cap \V$ which of course does not have to be zero. But we can make this nilpotent by arrigning some signs to arrive at the 
+\textbf{Short Mayer Vietoris Sequence}:
+\begin{equation}
+	% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoAGAXVJADcBDAGwFcYkQAdDgeQFsYA5vQB6AKgAUAWQCUIAL6l0mXPkIoATBWp0mrdlz6CRErgFVpAAi4AjLAIhoWcKz35Cx4rgDVZCpdjwCIgBmLRoGFjZETlcjDzMXAGN6NBcfeUUQDADVInIwnUj2cgz-FSCUABYCiL1okr8s5UC1ZE1ibVqokE8OCDd6UhccemZfTOzy1tCO8N1urhHmCwBaF36jeW0YKAF4IlAAMwAnfqQyEBwIJE0QRiwwbrgIe6gQGgALGHo3xDBmRiMGgjLCMdiQR7vEBwD5YQ44JD5Qp1EBYMQAfW8qwsaNEmI4pihjHo1hgjAACs1ctFGDB4aUQCczogkVdznMitEAFZiBlM3hIUKXa4sxr8m7AkWVMWnAWIACskqQADZgfRQexeCk4Gy5JQ5EA
+	\begin{tikzcd}
+	0 \arrow[r] & \Omega^*(M) \arrow[r, "j^*"] & \Omega^*(\U) \bigoplus \Omega^*(\V) \arrow[r, "i^*_\V - i^*_\U"] & \Omega^*(\U \cap \V) \arrow[r] & 0 \\
+	            &                              & {(\omega, \tau)} \arrow[r, maps to]                              & \tau - \omega                  &  
+	\end{tikzcd}
+	\label{cd:de-rham:mv-ses}
+\end{equation}
+Now the important statement becomes:
+\begin{theorem}
+The Short Mayer-Vietoris sequence (\ref{cd:de-rham:mv-ses}) is exact.
+\end{theorem}
+%TODO: I need to talk about partitions of unity somewhere
+\begin{proof}
+We already concluded that $j^*$ is injective and the kernel of $i^*_\V - i^*_\U$ consists
+exactly of the differential forms that agree on $\U \cap \V$, hence
+$\Img(j^*) = \ker(i^*_\V - i^*_\U)$.
+
+It remains to show that $i^*_\V - i^*_\U$ is surjective, which we are going to do by
+constructing a right-inverse. Let $\omega \in \Omega^*(\U \cap \V)$ and $\rho_\U, \rho_V$ a
+partition of unity subordinate to $\U, \V$. Now $\rho_\mathcal{V} \omega$ (taken as pointwise
+multiplication) can be zero-extended to $\U$, as can $\rho_\mathcal{U} \omega$ to $\V$. We then
+have:
+\begin{equation*}
+	(i^*_\V - i^*_U)(-\rho_\V \omega, \rho_\U \omega) = (\rho_\U + \rho_\V)\omega = \omega
+\end{equation*}
+Therefore this map is surjective and the whole sequence is exact.
+%TODO: Picture
+\end{proof}
+This is still a bit pointless since it is only a statement of differential complexes, not of
+cohomologies. But all of these maps descend to maps on cohomlogies
+\begin{theorem}[Mayer-Vietoris sequence]
+	Let $M$ be a smooth manifold and $\U, \V$ open subsets, such that $M = \U \cup \V$.
+
+	The short Mayer-Vietoris sequence
+	\begin{equation*}
+	% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12B5AWxgHM6APQBUACgCyAShABfUuky58hFAEZyVWoxZtOvAcPGcAqlIAEnAEZZ+ENMziXufQaLGcAajPmLseAiIAJk1qemZWRA4XQ3dTZwBjOjRnbzktGCh+eCJQADMAJwgeJA0QHAgkEJAGLDBIkDgIWqgQagALGDpWxDAmBgZqHDosBjZIerbG9qw8nFKwnQasAH0vUSmGOisYBgAFJQDVEALbdvnfEELihfLKxGq4GbmkAFoyrZ39w5U2BhgXosImxVqYNpdriVEGQ7rdwroogArcEUWRAA
+	\begin{tikzcd}
+	\Omega^*(M) \arrow[r, "j^*"] & \Omega^*(\U) \bigoplus \Omega^*(\V) \arrow[r, "i_\V^*"', shift right] \arrow[r, "i_\U^*", shift left] & \Omega^*(\U \cap \V)
+	\end{tikzcd}
+	\end{equation*}
+	induces a long exact sequence sequence in cohomology, called \textbf{Mayer-Vietoris} sequence:
+	\begin{equation}
+		% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoAGAXVJADcBDAGwFcYkQAJAPQGsAKALIBKEAF9S6TLnyEUAJgrU6TVu278AOhoCqQgARaARlgDmENCzh71fLQDUR4ydjwEiAZkU0GLNok68tjoGGgDG9GghDmISIBguMkTkXsq+7FpQEDgITnFSrrIkpMRKPqr+3MA8egDUesSigo6x8dJu8sWlKn4BVbX1jVq6IcZmFsxWldV1DUHRua0FHp3e3WpcfTODwVrhkfbNzm2FACwrqeUgGVk5SjBQJvBEoABmAE4QALZIZCA4EEgFCBGFgwD04BAQVAQDQABYwejQxBgZiMRg0HD0LCMdiQMEwkBwWFYF44JDJYH0QwwRgABXyiX8jBgpJirw+30QFP+P1y7y+SE8fwBXL5HKQADYMSKAOxigWIM7CpAAVnlnJV0slokooiAA
+		\begin{tikzcd}[column sep=small]
+			\usetikzlibrary{fadings}
+			&\arrow[
+				d,
+				"\dots"{description},
+				dash pattern=
+					on 0.5pt
+					off 8pt
+					on 1pt
+					off 7pt
+					on 2pt
+					off 6pt
+					on 4pt
+					off 5pt
+					on 6pt
+					off 4pt
+					% on 8pt
+					% off 3pt
+					% on 10pt
+					% off 1pt
+					on 100pt,
+				rounded corners,
+				to path={
+					([xshift=3ex]\tikztostart.west)
+					-- (\tikztostart.west)
+					-- ([xshift=-3ex]\tikztostart.west)
+					-| ([xshift=-3ex]\tikztotarget.west)
+					-- (\tikztotarget)
+				}
+				]
+			&\\[-1.6em]
+			& H^k(M)
+				\arrow[r]
+			& H^k(\U) \bigoplus H^k(\V)
+				\arrow[r]
+				% \arrow[u, ""{coordinate, name=U}]
+				\arrow[d, phantom, ""{coordinate, name=Z}]
+			& H^k(\U \cap \V)
+				\arrow[
+					dll,
+					"d^*"{pos=1.0, description},
+					rounded corners,
+					to path={
+						-- ([xshift=2ex]\tikztostart.east)
+						|- (Z) [near end]\tikztonodes
+						-| ([xshift=-2ex]\tikztotarget.west)
+						-- (\tikztotarget)
+					}]
+			&\\
+            & H^{k + 1}(M)
+				\arrow[r]
+			& H^{k + 1}(\U) \bigoplus H^{k + 1}(\V)
+				\arrow[d, phantom, ""{coordinate, name=D}]
+				\arrow[r]
+			& H^{k + 1}(\U \cap \V)
+				\arrow[
+					d,
+					""{description},
+					dash,
+					dash pattern=
+						on 0.5pt
+						off 8pt
+						on 1pt
+						off 7pt
+						on 2pt
+						off 6pt
+						on 4pt
+						off 5pt
+						on 6pt
+						off 4pt
+						% on 8pt
+						% off 3pt
+						% on 10pt
+						% off 1pt
+						on 100pt,
+					rounded corners,
+					to path={
+						([xshift=-6ex]\tikztotarget.east)
+						-| ([xshift=2ex]\tikztostart.east)
+						-- (\tikztostart.east)
+					}
+				]
+			&\\[-1.3em]
+			& {} & {} & {}
+		\end{tikzcd}
+	\end{equation}
+\end{theorem}
+The easiest way to prove this is to actually first prove a much more abstract algebraic result,
+which is going to include our theorem as a special case. But before we can do this we have to
+define some algebraic basics.
+\begin{definition}[Cochain Complex]
+A \textbf{cochain complex} is a graded vector space $A^*$ together with maps
+\begin{align*}
+	\rmd^k: A^k \to A^{k + 1}
+\end{align*}
+which together define a map $\rmd: A^* \to A^*$ in the obvious way, that fullfills:
+\begin{align*}
+	\rmd \circ \rmd = 0
+\end{align*}
+The map $\mathrm{d}$ will usually be called \textbf{differential} or
+\textbf{coboundary operator} of $A^*$.
+\end{definition}
+The de Rham complex is our most important example of cochain complex. We can even phrase
+the concept of Cohomology in purely algebraic terms:
+\begin{definition}[Cohomology]
+Let $A^*$ be a cochain complex. We define the \textbf{cohomology} of $A^*$ as the graded
+vector space:
+\begin{align*}
+H^k(A^*) \coloneqq \ker(\rmd^k) / \Img(\rmd^{k - 1})
+\end{align*}
+We will call $\ker(\rmd^k)$ $k$-cocyles of $A^*$ and $\Img(\rmd^{k - 1})$
+$k$-coboundaries of $A^*$.
+\end{definition}
+The only missing ingredients remaining to give the more general result is a general way to
+talk about maps between cochain complexes
+\begin{definition}[cochain map]
+Let $(A^*, \rmd_A^*), (B^*, \rmd_B^*)$ be cochain complexes and $f^k: A^k \to B^k$ a vector
+space homomorphism for every $k$. We call $f^k$ \textbf{cochain map} if it commutes with
+$\rmd_A^*$/$\rmd_B^*$ i.e. if the following diagram commutes:
+\[\begin{tikzcd}
+	{A^*} & {A^{* + 1}} \\
+	{B^*} & {B^{* + 1}}
+	\arrow["{\mathrm{d}_A}", from=1-1, to=1-2]
+	\arrow["{f^*}"', from=1-1, to=2-1]
+	\arrow["{f^{* + 1}}"', from=1-2, to=2-2]
+	\arrow["{\mathrm{d}_B}"', from=2-1, to=2-2]
+\end{tikzcd}\]
+(this introduces a common abuse of notation: Writing $A^*, A^{* + 1}$ to mean that these can be
+replaced by $A^k, A^{k + 1}$ for any $k$.
+)
+\end{definition}
+Cochain maps are so important because they induce well-defined maps in cohomology:
+\begin{lemma}
+Let $(A^*, \rmd_A), (B^*, \rmd_B)$ be two cochain complexes and $f^*: A^* \to B^*$ be a chain
+map. Then the homomorphism $\tilde{f}^*: H^*(A^*) \to H^*(B^*)$ is well-defined.
+\end{lemma}
+\begin{proof}
+$f^*$ descends to a map $\tilde{f}^*$ on $H^*(A^*)$ since this is just a quotient of a
+subspace of $A^*$. It remains to check that $\Img(\tilde{f}^*) \subseteq H^*(B^*)$. Let
+$a \in \ker(\rmd_A)$, then:
+\begin{align*}
+\rmd_B(\tilde{f}^*(a)) = \tilde{f}^*(\rmd_A a) = 0
+\end{align*}
+Hence $\Img(\tilde{f}^*) \subseteq H^*(B^*)$.
+\end{proof}
+By abuse of notation we will usually refer to $f^*$ and $\tilde{f}^*$ as just $f^*$.
+
+By replacing vector spaces with cochain complexes and maps with cochain complexes we can
+talk about a short exact sequence of cochain complexes and thus finally phrase our general
+statement:
+\begin{theorem}
+Let
+% https://q.uiver.app/#q=WzAsNSxbMSwwLCJBXioiXSxbMCwwLCIwIl0sWzIsMCwiQl4qIl0sWzMsMCwiQ14qIl0sWzQsMCwiMCJdLFsxLDBdLFswLDIsImZeKiJdLFsyLDMsImdeKiJdLFszLDRdXQ==
+\[\begin{tikzcd}
+	0 & {A^*} & {B^*} & {C^*} & 0
+	\arrow[from=1-1, to=1-2]
+	\arrow["{f^*}", from=1-2, to=1-3]
+	\arrow["{g^*}", from=1-3, to=1-4]
+	\arrow[from=1-4, to=1-5]
+\end{tikzcd}\]
+be a short exact sequence of chain complexes. Then there exists a connecting morphism
+$\rmd^*: C^* \to A^{* + 1}$ such that the sequence
+% https://q.uiver.app/#q=WzAsNixbMSwwLCJIXiooQV4qKSJdLFsyLDAsIkheKihCXiopIl0sWzMsMCwiSF4qKENeKikiXSxbNCwwLCJIXnsqICsgMX0oQV4qKSJdLFs1LDAsIlxcZG90cyJdLFswLDAsIlxcZG90cyJdLFswLDEsImZeKiJdLFsxLDIsImdeKiJdLFsyLDMsIlxcbWF0aHJte2R9XioiXSxbMyw0XSxbNSwwXV0=
+\[\begin{tikzcd}[column sep=small]
+	\dots & {H^*(A^*)} & {H^*(B^*)} & {H^*(C^*)} & {H^{* + 1}(A^*)} & \dots
+	\arrow[from=1-1, to=1-2]
+	\arrow["{f^*}", from=1-2, to=1-3]
+	\arrow["{g^*}", from=1-3, to=1-4]
+	\arrow["{\mathrm{d}^*}", from=1-4, to=1-5]
+	\arrow[from=1-5, to=1-6]
+\end{tikzcd}\]
+is exact.
+\end{theorem}
+\begin{proof}
+We first define a candidate for the morphism, then prove that it is well-defined and then,
+that it indeed makes the sequence exact. Let $[c] \in H^k(C^*)$. $g^k$ is surjective, hence
+we can pick a $b \in B^k$ such that $g^k(b) = c$. Since $g^*$ is a cochain map we can put
+these in a commutative diagram together with $\mathrm{d}_B b$ and $\rmd_C c$ (which is by
+definition zero):
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJiIl0sWzAsMSwiXFxtYXRocm17ZH1fQiBiIl0sWzEsMSwiMCJdLFsxLDAsImMiXSxbMCwxLCJcXG1hdGhybXtkfV9CIiwyXSxbMSwyLCJnXntrICsgMX0iXSxbMCwzLCJnXmsiLDJdLFszLDIsIlxcbWF0aHJte2R9X0MiXV0=
+\[\begin{tikzcd}[column sep=small]
+	b & c \\
+	{\mathrm{d}_B b} & 0
+	\arrow["{g^k}"', from=1-1, to=1-2]
+	\arrow["{\mathrm{d}_B}"', from=1-1, to=2-1]
+	\arrow["{\mathrm{d}_C}", from=1-2, to=2-2]
+	\arrow["{g^{k + 1}}", from=2-1, to=2-2]
+\end{tikzcd}\]
+Thus $g(\mathrm{d}_B b) = 0$ and by exactness there is a $a \in A^{k + 1}$ such that 
+$f(a) = \rmd_B b$. We define the connecting map as the map from $[c]$ to $[a]$.
+
+There was one choice we made in this construction: Picking a specific $b$ (picking $a$ did not
+involve a choice since $f^*$ is injective on the cochain complexes). To prove that that $[a]$
+is independent of this choice let $\tilde{b} \in B^k$ be another element such that
+$g^k(\tilde{b})=c$. Then $g^k(b - \tilde{b}) = 0$ and thus their exists a $\hat{a} \in A^k$
+such that $f^k(a) = b - \tilde{b}$ and thus by commutatitivy:
+% https://q.uiver.app/#q=WzAsNixbMSwwLCJiIC0gXFx0aWxkZXtifSJdLFsxLDEsIlxcbWF0aHJte2R9X0IoYiAtIFxcdGlsZGV7Yn0pIl0sWzIsMSwiMCJdLFsyLDAsIjAiXSxbMCwwLCJcXGhhdHthfSJdLFswLDEsIlxcbWF0aHJte2R9X0FcXGhhdHthfSJdLFswLDEsIlxcbWF0aHJte2R9X0IiLDJdLFsxLDIsImdee2sgKyAxfSIsMl0sWzAsMywiZ15rIl0sWzMsMiwiXFxtYXRocm17ZH1fQyJdLFs0LDAsImZeayJdLFs0LDUsIlxcbWF0aHJte2R9X0EiLDJdLFs1LDEsImZee2sgKyAxfSIsMl1d
+\[\begin{tikzcd}[column sep=small]
+	{\hat{a}} & {b - \tilde{b}} & 0 \\
+	{\mathrm{d}_A\hat{a}} & {\mathrm{d}_B(b - \tilde{b})} & 0
+	\arrow["{f^k}", from=1-1, to=1-2]
+	\arrow["{\mathrm{d}_A}"', from=1-1, to=2-1]
+	\arrow["{g^k}", from=1-2, to=1-3]
+	\arrow["{\mathrm{d}_B}"', from=1-2, to=2-2]
+	\arrow["{\mathrm{d}_C}", from=1-3, to=2-3]
+	\arrow["{f^{k + 1}}"', from=2-1, to=2-2]
+	\arrow["{g^{k + 1}}"', from=2-2, to=2-3]
+\end{tikzcd}\]
+And since $[\rmd_A] = 0$ by definition, both $b$ and $\tilde{b}$ lead to the same $[a]$, hence
+$\mathrm{d}^*$ is well-defined.
+
+Proof of exactness starts with proving that $\Img(f^k) = \ker(g^k)$ in cohomology. One part of
+this is trivial:
+\begin{align*}
+	(g \circ f)([a]) = [(g \circ f)(a)] = [0] = 0
+\end{align*}
+For the reverse let $[b] \in H^k(B^*)$ such that $g^k([b]) = [0]$. That is the case if and only if
+$g^k(b) = \rmd_C c$ for some $c \in C^{k - 1}$. By surjectivity there is then a
+$\hat{b} \in B^{k - 1}$ such that $g^{k - 1}(\hat{b}) = c$. By commutativity then
+$g(\rmd_B \hat{b}) = \rmd_C g(\hat{b}) = \rmd_C c$ and thus $g^k(b - \rmd_B \hat{b}) = 0$.
+By exactness of the original sequence there exists therefore a $a \in A^k$ such that
+$f^k(a) = b - \rmd_B \hat{b}$ and:
+\begin{align*}
+	0 = \rmd_B (b - \rmd_B \hat{b}) = \rmd_B f^k(a) = f^{k + 1}(\rmd_A a)
+\end{align*}
+Hence by injectivity $\rmd_A a = 0$ and thus $[a] \in H^k(A^*)$. Especially:
+\begin{align*}
+	f^k([a]) = [b - \rmd_B \hat{b}] = [b] - [\rmd_B \hat{b}] = [b]
+\end{align*}
+Hence $\Img(f^k) = \ker(g^k)$.
+
+Next we prove that $\Img(g^k) = \ker(\rmd^*)$. Let $[b] \in H^k(B^*)$, looking at our
+construction of $\rmd^*$ we see that $\rmd_B b = 0$ and hence $a = 0$ by injectivity
+and hence $\rmd^* [g^k(b)] = [a] = 0$ and $\ker(\rmd^*) \subseteq \Img(g^*)$. Also, if $\mathrm{d}^* [c] = [0]$, then our
+construction becomes:
+% https://q.uiver.app/#q=WzAsNSxbMCwxLCJcXG1hdGhybXtkfV9BIGEiXSxbMCwwLCJhIl0sWzEsMSwiXFxtYXRocm17ZH1fQiBiIl0sWzEsMCwiYiJdLFsyLDAsImMiXSxbMSwwLCJcXG1hdGhybXtkfV9BIiwyXSxbMCwyLCJmXntrICsgMX0iLDJdLFszLDIsIlxcbWF0aHJte2R9X0IiXSxbMyw0LCJnXmsiXV0=
+\[\begin{tikzcd}
+	a & b & c \\
+	{\mathrm{d}_A a} & {\mathrm{d}_B b}
+	\arrow["{\mathrm{d}_A}"', from=1-1, to=2-1]
+	\arrow["{g^k}", from=1-2, to=1-3]
+	\arrow["{\mathrm{d}_B}", from=1-2, to=2-2]
+	\arrow["{f^{k + 1}}"', from=2-1, to=2-2]
+\end{tikzcd}\]
+Since $g^k \circ f^k = 0$ it follows that $g^k(b - f^k(a)) = c$ and since $f^*$ is a chain
+map $\rmd_B f^k(a) = \rmd_B b$, thus:
+\begin{align*}
+\rmd_B(b - f^k(a)) = 0
+\end{align*}
+Hence $[c] \in \Img(g^k)$ and especially $\Img(g^*) = \ker (\rmd^*)$.
+
+The last step is to proof that $\Img(\mathrm{d}^*) = \ker(f^*)$. Let $[c] \in H^k(C^*)$, then
+$f^{k + 1}(\rmd^* c) = [\rmd_B b]$ for some $b \in H^k(B^*)$ by construction, hence
+$\Img(\mathrm{d}^*) \subseteq \ker(f^*)$. The reverse works similiar, if
+$[a] \in \ker(f^{k + 1})$ then there is a $b \in B^k$ such that
+$f^{k + 1}(a) = \rmd_B^{k + 1}b$, then by our construction $\rmd^*([g^{k}(b)]) = [a]$ and
+therefore $\Img(\rmd^*) = \ker(f^*)$.
+\end{proof}
+
+It is constructive to translate this result back into the language of de Rham cohomology
+using a concrete example. Let us look at the circle $S^1$ and compute its cohomology
+using this sequence. We can cover $S^1$ by two open sets $\U, \V$ as seen in TODO, then
+$H^0(\U \cap \V) \simeq \RR^2$ by TODO and $H^k(\U) = H^k(\V) = H^k(\U \cap \V) = 0$ for
+every $k \geq 1$ by TODO. Thus we get the sequence:
+% https://q.uiver.app/#q=WzAsNixbMCwwLCIwIl0sWzEsMCwiSF4wKFNeMSkiXSxbMiwwLCJIXjAoXFxVKSBcXG9wbHVzIEheMChcXFYpIl0sWzMsMCwiSF4wKFxcVSBcXGNhcCBcXFYpIl0sWzQsMCwiSF4xKFNeMSkiXSxbNSwwLCIwIl0sWzAsMV0sWzEsMl0sWzIsM10sWzMsNF0sWzQsNV1d
+\[\begin{tikzcd}[column sep=small]
+	0 & {H^0(S^1)} & {H^0(\U) \oplus H^0(\V)} & {H^0(\U \cap \V)} & {H^1(S^1)} & 0
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-2, to=1-3]
+	\arrow[from=1-3, to=1-4]
+	\arrow[from=1-4, to=1-5]
+	\arrow[from=1-5, to=1-6]
+\end{tikzcd}\]
+It is already known that $H^0(S^1)$ consists of the const functions on $S^1$ (since $S^1$
+is connected) and the restriction of these functions are obviously const themselves
+% TODO: First algebraic, then geometric
+% TODO: Some computational examples
+

@@ -1,0 +1,16 @@
+\documentclass{standalone}
+\usepackage{tikz}
+
+\begin{document}
+\begin{tikzpicture}
+	\draw
+		(0,0) node (alpha) {} node[above] {$\alpha$}
+		--
+		(-2, -4) node (beta0) {} node[below left] {$\beta_0$}
+		--
+		(2, -4) node (beta1) {} node[below right] {$\beta_1$}
+		-- (0,0);
+
+	\fill (alpha) circle(1.5pt) (beta0) circle(1.5pt) (beta1) circle(1.5pt);
+\end{tikzpicture}
+\end{document}

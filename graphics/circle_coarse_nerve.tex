@@ -1,0 +1,13 @@
+\documentclass{standalone}
+\usepackage{tikz}
+
+\begin{document}
+\begin{tikzpicture}
+	\draw
+		(0,0) node (alpha) {} node[above] {$\alpha$}
+		--
+		(0, -4) node (beta) {} node[below] {$\beta$};
+
+	\fill (alpha) circle(1.5pt) (beta) circle(1.5pt);
+\end{tikzpicture}
+\end{document}

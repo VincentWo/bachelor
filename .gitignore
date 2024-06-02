@@ -1,0 +1,13 @@
+build/
+.direnv/
+misc/
+*.pdf
+*.log
+*.aux
+*.fdb_latexmk
+*.fls
+*.run.xml
+*.bcf
+*.toc
+.DS_Store
+

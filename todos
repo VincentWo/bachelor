@@ -1,0 +1,20 @@
+General:
+	- Fix hyphens
+	- Improve spell checking + grammar checking
+	- Mention that vector space always means RR-vector space
+	- Improve TOC
+	- Add cover page
+	- Set proper title
+Chapter 2 Cech-Cohomology:
+	{
+		TD_CITATION_NEEDED
+		- Find a reference for Cech Homology (de Rhams original book?)
+	}
+	- Improve @def:cochain_complex especially together with
+	  @def:simplicial_cohomology
+	- Find reference for @def:simplicial_komplex
+	- TD_TRIANGULATION: Add proper definition for topology of simplicial complex
+	- Improve the section about simplicial complexes in general
+	- TD_NATURAL_HOMOTOPY: Decide how much to say about natural & homotopy
+	  equivalent
+	- Add another advantage of chech cohomology to the beginning of @sec:cech

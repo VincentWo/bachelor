@@ -1,0 +1,44 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.pathreplacing,decorations.markings}
+
+\begin{document}
+\tikzset{
+  % style to apply some styles to each segment of a path
+  on each segment/.style={
+    decorate,
+    decoration={
+      show path construction,
+      moveto code={},
+      lineto code={
+        \path [#1]
+        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
+      },
+      curveto code={
+        \path [#1] (\tikzinputsegmentfirst)
+        .. controls
+        (\tikzinputsegmentsupporta) and (\tikzinputsegmentsupportb)
+        ..
+        (\tikzinputsegmentlast);
+      },
+      closepath code={
+        \path [#1]
+        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
+      },
+    },
+  },
+  % style to add an arrow in the middle of a path
+  mid arrow/.style={postaction={decorate,decoration={
+        markings,
+        mark=at position .5 with {\arrow[#1]{stealth}}
+      }}},
+}
+
+\begin{tikzpicture}
+  \useasboundingbox (-1.3820, -1.5) rectangle (1.5, 1.5);
+  \path [draw=black,postaction={on each segment={mid arrow=black}}] (-1,-1) rectangle (1,1);
+  \node[font=\small] at (0, 1.2) { $f(x_1 - \Delta, x_2)$};
+  % \draw[help lines,step=.5] (-1.5,-1.5) grid (1.5,1.5);
+\end{tikzpicture}
+\end{document}

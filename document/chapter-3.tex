@@ -1,0 +1,440 @@
+\chapter{The Čech-de Rham Double Complex}
+When we introduced the Čech and the de Rham Cohomology we did so for a similiar
+reason: To find an algebraic invariant that corresponds to the "holes" of a space.
+This conceptual simmilarity is a strong reason for us to believe that both cohomologies
+should give the same result for smooth manifolds, in spite of their otherwise completely
+different construction. And in fact: for the limited amount of spaces at which we looked
+at so far, they booth indeed produced the same results.
+
+In this chapter we are going to make this hope a reality by proving the "de Rham theorem":
+\begin{theorem}[De Rhams theorem]
+Let $M$ be a smooth manifold. There is a natural?? isomorphism between the de Rham cohomology of $M$
+and the Čech cohomology of any good cover of $M$ (for $M$ seen as a topological manifold)
+\end{theorem}
+
+This is not only a remarkable fact, but it also solves some non-trivial remaining issues
+we had with both cohomologies. Our main problem with Čech-chomology was the potential dependence
+on a specific choice of cover, but since the de Rham cohomology does not depend on any cover,
+this isomorphism lets us conclude:
+\begin{corolarry}
+Let $M$ be a smooth manifold. The Čech cohomology of a good cover of $M$ is independent
+of the choice of good cover.
+\end{corolarry}
+While not being a practical issue for us so far, there are indeed smooth manifolds that
+are homeomorphic, but not diffeomorphic. There is hence no a priori reason for de Rham
+cohomology to be a topological invariant, but one would hope that a measurement of "holes"
+is a topological invariant and since Čech cohomology is defined only in terms of topological
+properties, it also follows:
+\begin{corolarry}
+Let $M, N$ be two homeomorphic smooth manifolds. Then the de Rham cohomology of $M$ is naturally
+isomorphic to the de Rham cohomology of $N$.
+\end{corolarry}
+
+% techniques one usually uses & their drawbacks, so far (research more):
+% - Integration over singular simplices (Drawbacks no clear)
+% - Using sheaf cohomology (Very algebraic/category theoric, research: concrete isomorphism)
+% - Using spectral sequences (Not clear whether our approach is basically using a spectral sequence)
+
+We are going to proof this using the approach outlined in TODO
+To achieve this we are going to find a connection between the Čech-Cohomology
+of an open cover and the de Rham-cohomology of it's intersection in the form
+of a exact sequence, by finding an alternate representation of Čech-Cohomology
+using locally const functions.
+\begin{definition}
+Let $M$ be a smooth manifold with open covering $\mathfrak{U}$. Define
+the \underline{chain complex of locally const functions} for every $n \geq 0$
+as:
+\[
+	C^n_l(M, \mathfrak{U}) 
+		\coloneq \prod_{\alpha_0, \dots, \alpha_n}
+		\{\, f: \bigcap_{i = 0}^n U_{\alpha_i} \to \RR \  \text{locally constant} \,\}
+\]
+and the coboundary operator:
+\begin{align}
+	\delta^n: C^n_l &\to C^{n + 1}_l, \\
+	f &\mapsto \prod_{i = 0}^\infty (-1)^c
+\end{align}
+\end{definition}
+
+% Theorem that this identical to the Cech cohomology for good enough covers
+
+\section{The Double Complex}
+Extending the Mayer-Vietoris Sequence to countable covers gives us all the
+differential geometric tools we need, what remains is mostly Algebra in the form
+of diagram chasing.
+
+\begin{definition}[Double Complex]
+	A \underline{double complex} is a $\ZZ \times \ZZ$-graded abelian group
+	$C^{\bullet, \bullet} := \{C^{p,q}\}_{p,q \in \ZZ}$ together with group
+	homomorphisms
+	\[
+		d^{p,q}_h: C^{p, q} \to C^{p + 1, q}
+		\quad
+		\text{ and }
+		\quad
+		d^{p,q}_v: C^{p,q} \to C^{p, q + 1}
+	\]
+	for every $p,q \in \ZZ$ (with $d^{\bullet, \bullet}_h$ as usual referring
+	to the unique homomorphism that restricts to $d^{p,q}$ on $C^{p,q}$ and
+	similiar for $d^{\bullet, \bullet}_v$),  with $\dvb, \dhb$ each being
+	nilpotent and commutative with each other, i.e:
+	\[
+		\dvb \circ \dvb = \dhb \circ \dhb = \dhb \circ \dvb - \dvb \circ \dhb = 0
+	\]
+\end{definition}
+\begin{remark}
+	Some authors (e.g. \cite{weibel_introduction_1994}) prefer these maps to
+	be anticommutative instead of commutative. While this saves some signs
+	in some places (e.g. in the definition of homology of a chain complex),
+	it also adds them in other places and since the later dominates in this
+	thesis, we are going to follow \cite{tu_differential_1982} and assume
+	commutativity.
+\end{remark}
+
+Differently phrased: A double complex is a commutative lattice of groups:
+\begin{center}
+	% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoAGAXVJADcBDAGwFcYkQAdD2qCHBALNl0mXPkIoATBWp0mrdlx59BwkBmx4CRAMwyaDFm0SduvfiCEjN4ouVLFZhhSa7nV1sdpRlHB+cYgAMIAesD2kgKWahpeEsjSfnJG7KHAZJHRnlrxeknOgWnSmVbqojlEACwOTgHsAHSNWWU23sgRtSmuHO7NsRU+pJKdLsFh9sRRpf22UkMjhWG+UzHls8h6w-5dY8CJK9nr1VvJo431fWtt9joLij0ql63xZLfbo2n25ActcUTSb1Oi3SFB+MzaekBBVSYWk3yefxQ1ShdRM5wRAxIpEqd26ygs0yu8WkOPegSUvUJz102NxpnxglkMCgAHN4ERQAAzABOEAAtkg9CAcBAkNUgUgwMxGIwaIx6AAjGCMAAKRPYjBgnJwzR5-LFNBFSHsEsQUplcsVyrV1JMmu1ut5AsQ4qNiAArGTJdLZSB5UrVeq7VqdaU9c7PcLRYgyKbzb7-dag36Q479R7DdGAGxes0+y0Bm2IlMOsNOpA5qNIaRx-N+q2B20l0NqcMVzNIADsufjBaTTftLa55cQAA4O4gAJw9uuJxvFwdp53TqsumcW+uF5OLsvpldu4gm6F5jdzosDZtLpCHifEWPH3ub-sL1O75031eRh+zhvn2aXt9r1jA8a2-U9f23V9WxHO8J0rMCEwggcoOHdNiCFA9xQQvt5wvHdoLQ11o2IL9UUfM9INLAj3yIpAV2wp9cP-fDUPfSMD3gsify3ZCqNY692OIo8uPAniXz4kA2xjSsD27WtROfPCUMkmCZOI+8RMQsSlIkqTiHHVdiCwzScL-bwAOo6992I0iunIpDxKHFT00kE0OPXLTFOY19KAEIA
+\begin{tikzcd}
+                & \vdots                        & \vdots                        & \vdots                        &     \\
+\dots \arrow[r] & {C^{0,2}} \arrow[u] \arrow[r] & {C^{1,2}} \arrow[u] \arrow[r] & {C^{2,2}} \arrow[u] \arrow[r] & ... \\
+\dots \arrow[r] & {C^{0,1}} \arrow[u] \arrow[r] & {C^{1,1}} \arrow[r] \arrow[u] & {C^{2,1}} \arrow[r] \arrow[u] & ... \\
+\dots \arrow[r] & {C^{0,0}} \arrow[r] \arrow[u] & {C^{1,0}} \arrow[r] \arrow[u] & {C^{2,0}} \arrow[r] \arrow[u] & ... \\
+                & \vdots \arrow[u]              & \vdots \arrow[u]              & \vdots \arrow[u]              &    
+\end{tikzcd}
+\end{center}
+with each row and column being a chain complex.
+
+As the double complex can be seen as a generalization of the chain complex one
+naturally wonders whether one can define the homology of it.
+To accomplish this we first need to reduce the double complex to a chain 
+complex, thus we define:
+\begin{definition}[Associated Chain Complex]
+	Given a double complex $C^{\bullet, \bullet}$ with maps $\dvb, \dhb$ the
+	\underline{associated chain complex of $C^{\bullet, \bullet}$}, denoted as
+	$C^\bullet(C^{\bullet, \bullet})$ is defined as:
+	\[
+		C^n(C^{\bullet, \bullet}) \coloneq \bigoplus_{n = p + q} C^{p,q}
+	\]
+	with the associated map $d^n: C^n \to C^{n + 1}$
+	defined as:
+	\[
+		d^n \coloneq \sum_{p + q = n} d^{p,q}_v + (-1)^p d^{p,q}_h
+	\]
+\end{definition}
+The usefullness of this definition heavily depends on this actually being a
+chain complex, hence the first thing one wants to proof:
+\begin{lemma}
+	For a given double complex $C^{\bullet, \bullet}$ with maps $\dvb$ and $\dhb$
+	the associated chain complex is a chain complex.
+\end{lemma}
+\begin{proof}
+	Being a $\ZZ$-graded abelian group immediately follows from the definition,
+	so it only remains to proof that $d^\bullet$ is nilpotent.
+
+	Let $c \in C^{p,q}$ for some $p,q \in \ZZ$. Then:
+	\begin{align*}
+		(d^{p + q + 1} \circ d^{p + q})(c)
+		&=
+		d^{p + q + 1}(d^{p,q}_v(c) + (-1)^p d^{p,q}_h(c)) \\
+		&=
+		\overbrace{
+			(d^{p + 1, q}_v \circ d^{p,q}_v)(c)
+		}^{\text{nilpotent}}
+		+
+		\overbrace{
+			(d^{p, q + 1}_v \circ d^{p,q}_v)(c)
+		}^{\text{nilpotent}} \\
+		&+ (-1)^p (\underbrace{
+				(d^{p + 1, q}_v \circ d^{p,q}_h)(c)
+				- (d^{p, q + 1}_h \circ d^{p,q}_v)(c)
+			)
+		}_{\text{commutative}}) \\
+		&= 0 \qedhere
+	\end{align*}
+\end{proof}
+Note that by abuse of notation we will sometimes call $C^{\bullet, \bullet}$
+a chain complex, this always refers to $C^\bullet(C^{\bullet,\bullet})$.
+
+Having obtained an ordinary cell complex from a double complex we can
+now define the homology of it:
+\begin{definition}[Homology of a Double Complex]
+	For a given double complex $C^{\bullet,\bullet}$ we define the
+	\underline{homology of the double complex} as the homology of the
+	associated chain complex, in notation:
+	\[
+		H^\bullet(C^{\bullet,\bullet}) := H^\bullet(C^\bullet(C^{\bullet,\bullet}))
+	\]
+\end{definition}
+While double complexes are interesting objects in their own right, we
+will simply use them as a tool and therefore will impose some additional
+restrictions. Henceforth we will always assume that double complexes have
+only positive parts, that is $C^{p,k} = 0$ for $p < 0$ or $k <0$.
+
+We are doing all these because we want to find a double complex
+$C^{\bullet, \bullet}$ that can be augmented by chain complexes
+$\Omega^\bullet, \hat{C}^\bullet$ such that the following diagram commutes:
+\begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoAGAXVJADcBDAGwFcYkQAdD2qCHBAL6l0mXPkIoATBWp0mrdlx59BwkBmx4CRAMwyaDFm0SduvfiCEjN4ouVLFZhhSa4B5ALYwA5vQB6kpZqGmLaKGSOBvLGIADCfsD2kgJB1qESyNKRckbs8cBkyanqoloZetnOMfnSRVYlNmHIACwOTtHsAHTdxSFldqSS7bmuHJ4+-sS9pbbhg8MucQn2xCn1fbOZ81EjSwUOa8EzTXpDO4s1B9ONGa1nOYvdndfpAzoLMe5evn7kL-1zd7narLCiHNIArZAh4g-bkcENV4oPTQqp5BLSeH-TatVEdExPbFNMjND6KDgAC3oOGAsQEvyJGWkpOB5KpNLpfim62O5VILJhbOptPpgR5NwGVFZo2UFnFSJa-LJo3MglkMCg3ngRFAADMAE4QDxIPQgHAQJCtQWIMDMRiMGiMegAIxgjAACrz2IwYLqcMUDUbLTRzUh7NbbfbHS63Z6JSYfX6A4bjYgraHEABWaWRh0gJ2uj1ehO+-31QOp7Nmi2IMgRu15gux4v50vJoNZkM1gBsOYb0cLcaRraT5ZTSF71aQ0nrUfzMaL8ZHZbUFYnXaQAHY+3Om4vh4mV3rx4gABwbxAATh3jYXQ4By-bqevU7TN4HzaXh6fSBfGeI4Zoja-bzoOLbfmOHYARexB1kBuYfvuD4QauJ7Qa+VbwSBe73rMj6QamsEwTOWG7ne4FtgRSBEa+k6kbeYFfpRqFQaa-5WvRiG4WE+EsYR6Y1sQmH4ghoGfgezHHlBAm-u+YlIXhKFSYRVb-nRInYeRTGjnx1GqYJgEaWRjESTpynUZO-7brODHichkkgGutaWYJcFGbZCk8Upjloeer7EBx7lcRRZk+VBf6CcJIyiThIVHmFqaSOGalybF2nxU5xBsTWp5UWeF46Hl2XTqsum1n5-6XnlxARdO8JlUlF6SMklACEAA
+\begin{tikzcd}
+\vdots                       & \vdots                        & \vdots                        & \vdots                        &       \\
+\Omega^2 \arrow[r] \arrow[u] & {C^{0,2}} \arrow[u] \arrow[r] & {C^{1,2}} \arrow[u] \arrow[r] & {C^{2,2}} \arrow[u] \arrow[r] & ...   \\
+\Omega^1 \arrow[r] \arrow[u] & {C^{0,1}} \arrow[u] \arrow[r] & {C^{1,1}} \arrow[r] \arrow[u] & {C^{2,1}} \arrow[r] \arrow[u] & ...   \\
+\Omega^0 \arrow[r] \arrow[u] & {C^{0,0}} \arrow[r] \arrow[u] & {C^{1,0}} \arrow[r] \arrow[u] & {C^{2,0}} \arrow[r] \arrow[u] & ...   \\
+                             & \hat{C}^0 \arrow[u] \arrow[r] & \hat{C}^1 \arrow[u] \arrow[r] & \hat{C}^2 \arrow[u] \arrow[r] & \dots
+\end{tikzcd}
+\end{center}
+And our hope would be to conclude from this that the homology of
+$\Omega^\bullet$ and $\hat{C}^\bullet$ are isomorphic to the homology of
+the double complex (and especially to each other). But to actually do this
+we are going to require something more:
+\begin{theorem}
+\label{theorem:augmentation_iso_homology}
+Let $C^{\bullet,\bullet}$ be a double complex, $(A^\bullet, \delta)$ a chain
+complex.
+
+If for every $n >= 0$ there is a map
+\[
+	\alpha^n: A^n \to C^{n,0}
+\]
+such that the following diagram commutes:
+\begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZAJgBoBmAXVJADcBDAGwFcYkQBhAPWAAZTeAXxCDS6TLnyEU5CtTpNW7bsACMA4aPHY8BIgBY5NBizaJOPMkJFiQGHVKIBWIwtPsAOh6gQcCLXYSutIkpMTyJkrmKvyqmrb2knooZKoRimYWfGHx2kkhsmnGGco86sS5gQ7JyLLhxe7RZaRxNnnBBmHpjVmplYkdKIZFblG9OW1V+URW3WNetD5+kwOOMgJzmQtL-glBa8iGvJueHou+u+0HLvWjW94XK-s1LiOR9ztP1SHqbyXmAEEuMQvtMUOUToCuKpQYNkOoqA0xkDeLCDupjkj7udlgFVjVYpCQKi8c8Qvxbu92CS9t8iPxEXdqSJ5DAoABzeBEUAAMwAThAALZIfggHAQJDqJnmKA8fhCAD6AAtJvyhZKaOKkGRpSBZdk4srVQLhYgdVrEOQAmrTaKLYZdfr5YIFbRjerEA6LS5HXKWi63daTUgfRaAGxY9hOnJGoMer0SxAAdkjMr9hpVcdNKbFiYjvrU-td7tN+YtAE5U3rLEXM7YbUgcxaABxV-W-F113nBxCt3NISsFvrFrMa-vJtvNRWB+s982JvtUtPAKwBkshzWJ1RCWcestbuK702Di2qCpHpB909Wi+IE9b-SjxCqJtb-NLkBeWCMHD0Lg07sPVUfdJR9D8vxgH8-xhJ9VFDLdm1g+9QNg+CNzFegsEYdglQgCAAGsQCrLwmDQJU-xBJ9iDtN9YJAz1NUw7DzFwgiiN1EjGDI6D1zNKVTyTWDXxFRisJwvDCOIjxSPI-8WUEIA
+\begin{tikzcd}
+            & \vdots                                                & \vdots                                                      & \vdots                                                      & \vdots                                       &       \\
+0 \arrow[r] & A^2 \arrow[u] \arrow[r, "\alpha^2", hook]             & {C^{0,2}} \arrow[r, "{d^{0,2}_h}"] \arrow[u]                & {C^{1,2}} \arrow[r, "{d^{2,1}_h}"] \arrow[u]                & {C^{2,2}} \arrow[u] \arrow[r]                & \dots \\
+0 \arrow[r] & A^1 \arrow[u, "\delta^1"] \arrow[r, "\alpha^1", hook] & {C^{0,1}} \arrow[u, "{d^{0,1}_v}"] \arrow[r, "{d^{0,1}_h}"] & {C^{1,1}} \arrow[u, "{d^{1,1}_v}"] \arrow[r, "{d^{1,1}_h}"] & {C^{2,1}} \arrow[u, "{d^{2,1}_v}"] \arrow[r] & \dots \\
+0 \arrow[r] & A^0 \arrow[u, "\delta^0"] \arrow[r, "\alpha^0", hook] & {C^{0,0}} \arrow[r, "{d^{0,0}_h}"] \arrow[u, "{d^{0,0}_v}"] & {C^{1,0}} \arrow[r, "{d^{0,1}_h}"] \arrow[u, "{d^{1,0}_v}"] & {C^{2,0}} \arrow[r] \arrow[u, "{d^{2,0}_v}"] & \dots
+\end{tikzcd}
+\end{center}
+and every row is exact, then
+\[
+	H^\bullet(A^\bullet) \cong H^\bullet(C^{\bullet,\bullet})
+\]
+\end{theorem}
+Before proving this we are going to need a convenient lemma:
+\begin{lemma}
+\label{lemma:helpfull}
+Given a chain complex $C^{\bullet, \bullet}$ for which the sequence
+\begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAGEA9YMtAXxB9S6TLnyEUARnJVajFmy7Bp-QcJAZseAkQBMM6vWatEHbvtVCRW8UQDMBuccXcHl9ZrE6UAFkdGFUwAdIKgIHAQ+WRgoAHN4IlAAMwAnCABbJDIQHAgkSSsQVIz86lykXULizMR9HLzEOyq0mod6pB8oviA
+\begin{tikzcd}
+{C^{0,p}} \arrow[r] & {C^{1,p}} \arrow[r] & {C^{2,p}} \arrow[r] & {C^{3,p}} \arrow[r] & \dots
+\end{tikzcd}
+\end{center}
+is exact for every $p$, then every homology class
+$[c] \in H^n(C^{\bullet, \bullet})$ is homological to one represented by a
+$\tilde{c} \in C^{0,n})$, i.e. $[c] = [\tilde{c}]$.
+\end{lemma}
+\begin{proof}
+Let $[c] \in H^n(C^{\bullet, \bullet})$. We assume w.l.o.g. $c \in C^{j, n - j}$
+for some $j > 0$ (for $j = 0$ we are finished anyway). By definition of homology
+we know
+\[
+	c \in \ker(d^n) => c \in \ker(d^{j, n - j}_v + (-1)^j d^{j, n - j}_h)
+\]
+And since these lay in different parts of a direct sum, it can be concluded:
+\[
+	d^{j, n - j}_v(c) = d^{j, n - j}_h(c) = 0
+\]
+And by exactness of the rows, there is a $\tilde{c}$ such that
+$d^{j - 1, n - j}_h(\tilde{c}) = c$. Then:
+\[
+	d^{n - 1}(\tilde{c}) = d^{j - 1, n - j}_v(\tilde{c}) + (-1)^{j - 1} c
+\]
+And therefore in homology:
+\[
+	[c] = [\underbrace{
+		(-1)^{j} d^{j - 1, n - j}_v(\tilde{c})
+	}_{\in C^{j - 1, n - j + 1}}]
+\]
+This can be iterated until finding a $c' \in C^{0, n}$ such that $[c] = [c']$.
+\end{proof}
+This gives us a clear path to proof it:
+\begin{proof}[Proof of \ref{theorem:augmentation_iso_homology}]
+$\alpha^\bullet$ is actually a chain map, since commutativity gives:
+\[
+	(\alpha^{n + 1} \circ \delta^n)
+		= (\delta^n \circ \alpha^n)
+\]
+And by exactness for every $a \in A^n$:
+\[
+	(d^n \circ \alpha^n)(a) = d^{0,n}_v(\alpha(a)) + d^{0,n}_h(\alpha(a)) = d^{0,n}_v(a)
+\]
+Hence $\alpha^\bullet$ is a chain map and descends to a map on homology.
+
+Proving that this is an isomorphism can be done quite directly, we start by
+showing that $\alpha^n$ is injective: Let $[a] \in H^n(A^\bullet)$ such that
+\[
+	\alpha^n([a])
+		= [\alpha^n(a)]
+		= 0
+\]
+Then by definition of homology $\alpha^n(a) \in \Img(d^{n - 1})$,
+therefore there is a $c \in C^{0, n - 1}$ such that:
+\[
+	a = d^{n - 1}(c) = d^{0, n - 1}_v(c) + d^{0, n - 1}_h(c)
+\]
+therefore also $c \in \ker(d^{0, n - 1}_h)$, which by exactness is
+$\Img(\alpha^{n - 1})$, therefore there is a $\tilde{a}$ such that
+$\alpha^{n - 1}(a) = c$. Putting this in a "commutative" diagram with
+concrete elements instead of groups gives us:
+\begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkR6QBfU9TXfIRRli1Ok1bti3XiAzY8BIuQpiGLNohAAdbUzQALegAp6AShl8Fg5aQBMaiZpABjS3P6KhyFaJrrJLWkeKwElFDtVfycpd3kw70iHaI1YkI9rcJJ7R1StXTxGWGB6Lm4xGCgAc3giUAAzACcIAFskMhAcCCRydKbW9poupEjO+ixGdgMICABrd362xABmIe7EOz7mpdHhxAAWLYGNtaQAViOl1c71gDZLpAB2U5Wh8cmtabnyriA
+\begin{tikzcd}
+0                           & 0                             &   \\
+a \arrow[u] \arrow[r, hook] & \alpha(a) \arrow[u] \arrow[r] & 0 \\
+\tilde{a} \arrow[r, hook]   & c \arrow[u] \arrow[r]         & 0
+\end{tikzcd}
+\end{center}
+Which shows that by commutativity
+$(\alpha^n \circ \delta^{n - 1})(\tilde{a}) = \alpha^n(a)$, hence by
+injectivity of $\alpha^n$ also $\delta^{n - 1}(\tilde{a}) = a$, 
+implying $[a] = 0$ and especially that $\alpha^\bullet$ is injective.
+
+Surjectivity of $\alpha^\bullet$ can now be proven by using Lemma
+\ref{lemma:helpfull}. Let $[c] \in H^n(C^{\bullet, \bullet})$,
+assume w.l.o.g. that $c \in C^{0,n}$. By definition of homology
+$c \in \ker(d^n)$ and therefore $d^{0,n}_v(c) = d^{0,n}_h(c) = 0$, by exactness
+there then is a $a \in A^n$ such that $\alpha^n(a) = c$ and by commutativity:
+\[
+	0 = (d^{0,n}_v \circ \alpha^n)(a) = (\alpha^{n + 1} \circ \delta^n)(a)
+\]
+and by injectivity of $\alpha^{n + 1}$ also $\delta^n(a)$, implying
+$[a] \in H^n(A^\bullet)$ and especially:
+\[
+	\alpha^\bullet([a]) = [\alpha^\bullet(a)] = [c]
+\]
+Since $[c]$ was chosen arbitarily $\alpha^\bullet$ is therefore also
+surjective.
+\end{proof}
+
+Everything we did here can be also done for a double complex with exact
+coloumns instead of rows and augmented at the bottom instead of the left.
+This requires some sign trickery, but leads to the final version of our
+statement
+\begin{corolarry}
+Given two chain complexes $A^\bullet, B^\bullet$ a double complex
+$C^{\bullet,\bullet}$ and maps $\alpha^\bullet, \beta^\bullet$ such that
+\begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZAJgBoBGAXVJADcBDAGwFcYkQBhAPWAAZTiAXxCDS6TLnyEUAZgrU6TVu27BypNMNHjseAkQAs8mgxZtEnHmSEixIDLqlFrC08our+5LXYeT9KGQyrkrmlnykvD46-tLIcsQhZio86t62MXpxcsEmoSlqkdH2ElmGAknu4WTp2iWOAchGuYrJHlZFGfWxRACsxq1VADpDUBA4CHV+ZSj9iXltICNjE13TTrOkLW5hy+OTvqUbTZGVu0O0KweZx3K8Z+wjl-trR41k9wvDF1evDXFpB4WACCXGIfx6KHU80GYVB5AhM2Q6k+sMePxeUzeAK2QJAoN4iOOZAMeIAQlxCVj-kQ5KSvmEKQjqZCTvS0RYKeCWUj+uydujfjzjl48VTDjSUPwYQKLOKbo1+Nt8nKie9SL0xWrshqtcLGkZNQz2FSFDAoABzeBEUAAMwAThAALZIfggHAQJDeOwO51emgepBCH2Ol2IOTuz2IKIhv2IIyRpAyOq+sMRwOIXop0NIBMZgBs2bj+YDUazsbD-UTiG9dpziAA7KWg0WwwAOZuN1tIEvVtvdzOdhsDsjVgCcA6b1fIMbrcY709rIFTQc75GDc7D6mnyYrrrXBgH5CrGbdsqWQyYaAAFvQwSAA-QsIx2NeIBAANZdFc13sZ49HieUbkMOe41gu-6FmB5AQVGCbniMV63pSD7uk+L4WG+n7fvW5B-lGEYIZejA3neCKPs+r7vl+R5jp2xCzsu9YMfRS4-sQ24ZsQG5MXG5B0dW8EqheABGMA4HehIURhIBYTRYEsdWvZEWJElcORaGUZh1E4XGHGdguKniXe4LSVR2EjumwHlpuQZ5sBUG2YgxBAV6-YKfhXoTgpU5cYx7GwUG3iUIIQA
+\begin{tikzcd}
+            & \vdots                                    & \vdots                                   & \vdots                                   & \vdots                                   &       \\
+0 \arrow[r] & A^2 \arrow[r, "\alpha^2", hook] \arrow[u] & {C^{0,2}} \arrow[r] \arrow[u]            & {C^{1,p}} \arrow[r] \arrow[u]            & {C^{2,2}} \arrow[r] \arrow[u]            & \dots \\
+0 \arrow[r] & A^1 \arrow[u] \arrow[r, "\alpha^1", hook] & {C^{0,1}} \arrow[u] \arrow[r]            & {C^{1,1}} \arrow[u] \arrow[r]            & {C^{2,1}} \arrow[u] \arrow[r]            & \dots \\
+0 \arrow[r] & A^0 \arrow[u] \arrow[r, "\alpha^0", hook] & {C^{0,0}} \arrow[u] \arrow[r]            & {C^{1,0}} \arrow[u] \arrow[r]            & {C^{2,0}} \arrow[u] \arrow[r]            & \dots \\
+            &                                           & B^0 \arrow[r] \arrow[u, "\beta^0", hook] & B^1 \arrow[r] \arrow[u, "\beta^1", hook] & B^2 \arrow[r] \arrow[u, "\beta^2", hook] & \dots \\
+            &                                           & 0 \arrow[u]                              & 0 \arrow[u]                              & 0 \arrow[u]                              &      
+\end{tikzcd}
+\end{center}
+commutes with every row and coloum except for the left- and bottommost
+being exact, then:
+\[
+	H^\bullet(A^\bullet)
+		\cong H^\bullet(C^{\bullet, \bullet})	
+		\cong H^\bullet(B^\bullet)
+\]
+
+\end{corolarry}
+\begin{proof}
+As said this follows from \ref{theorem:augmentation_iso_homology}
+using symmetry and sign trickery.
+\end{proof}
+
+
+\section{Mayer-Vietoris to the Infinite}
+It remained to show that the rows of the double complex are exact.
+\begin{theorem}[The Generalized Mayer-Vietoris Sequence]
+The sequence
+% https://q.uiver.app/#q=WzAsNSxbMSwwLCJcXE9tZWdhXiooTSkiXSxbMCwwLCIwIl0sWzIsMCwiXFxPbWVnYV4qKFxcY29wcm9kX3tcXGFscGhhXzAgPCBcXGFscGhhXzF9IFxcbWF0aGNhbHtVfV97XFxhbHBoYV8wLCBcXGFscGhhXzF9KSJdLFszLDAsIlxcT21lZ2FeKihcXGNvcHJvZF97XFxhbHBoYV8wIDwgXFxhbHBoYV8xIDwgXFxhbHBoYV8yfSBcXG1hdGhjYWx7VX1fe1xcYWxwaGFfMCwgXFxhbHBoYV8xLCBcXGFscGhhXzJ9KSJdLFs0LDAsIlxcZG90cyJdLFsxLDBdLFswLDJdLFsyLDNdLFszLDRdXQ==
+\[\begin{tikzcd}[column sep=small]
+	0 & {\Omega^*(M)} & {\Omega^*(\coprod_{\alpha_0 < \alpha_1} \mathcal{U}_{\alpha_0, \alpha_1})} & {\Omega^*(\coprod_{\alpha_0 < \alpha_1 < \alpha_2} \mathcal{U}_{\alpha_0, \alpha_1, \alpha_2})} & \dots
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-2, to=1-3]
+	\arrow[from=1-3, to=1-4]
+	\arrow[from=1-4, to=1-5]
+\end{tikzcd}\]
+is exact.
+\end{theorem}
+\begin{proof}
+We already proved that $\delta^2 = 0$, hence it is enough to find a map $r$ that is a
+left inverse to $\delta$ on the kernel.
+
+Let $\omega \in \Omega^*(\coprod_{\alpha_0 < \dots < \alpha_k} \mathcal{U}_{\alpha_0, \dots, \alpha_k})$.
+Let $\{\rho_\alpha\}$ be a partition of unity subordinate to the cover $\{\mathcal{U}_\alpha\}$.
+
+Let $\omega$ be a closed $k$-form on $\coprod \mathcal{U}_{\alpha_0, \dots, \alpha_p}$. Then we define
+a $k$-form $\tau$ on $\coprod \mathcal{U}_{\alpha_0, \dots, \alpha_{p - 1}}$ by:
+\[
+	\tau_{\alpha_0, \dots, \alpha_{p - 1}} = \sum_{\beta \in I} \rho_\beta \omega_{\beta, \alpha_0, \dots, \alpha_{p - 1}}
+\]
+
+
+\end{proof}
+
+\section{Explicit Isomorphism \& Applications}
+
+Let us take a good cover $\mathcal{U}_\alpha, \mathcal{U}_\beta, \mathcal{U}_\gamma$ of $S^1$. The nerve of
+this cover is shown in TODO, together with a choice of orientation.
+\tikzset{
+  % style to apply some styles to each segment of a path
+  on each segment/.style={
+    decorate,
+    decoration={
+      show path construction,
+      moveto code={},
+      lineto code={
+        \path [#1]
+        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
+      },
+      curveto code={
+        \path [#1] (\tikzinputsegmentfirst)
+        .. controls
+        (\tikzinputsegmentsupporta) and (\tikzinputsegmentsupportb)
+        ..
+        (\tikzinputsegmentlast);
+      },
+      closepath code={
+        \path [#1]
+        (\tikzinputsegmentfirst) -- (\tikzinputsegmentlast);
+      },
+    },
+  },
+  % style to add an arrow in the middle of a path
+  mid arrow/.style={postaction={decorate,decoration={
+        markings,
+        mark=at position .5 with {\pgftransformscale{2}\arrow[#1]{stealth}}
+      }}},
+}
+\begin{figure}
+\begin{tikzpicture}
+    \tikzstyle{point}=[thick,draw=black,inner sep=0pt]
+    \node[label={[below left]$\alpha$}] (a) at (0,0) {};
+    \node[label={[below right]$\beta$}] (b) at (5,0) {};
+    \node[label={[above]$\gamma$}] (c) at (2.5,4.33) {};
+	% yshift=-10pt
+	% xshift=7pt, yshift=7pt
+	% xshift=-7pt, yshift=7pt
+    \draw[postaction={on each segment={mid arrow}}]
+		(a.center) -- node[midway, label={[label distance=10pt]270:$c$}] {}
+		(b.center) -- node[midway, label={[label distance=10pt]0:$a$}] {}
+		(c.center) -- node[midway, label={[label distance=10pt]180:$b$}] {}
+		cycle;
+	\foreach \n in {a,b,c}
+	{
+		\fill (\n.center) circle (1.5pt);
+	}
+\end{tikzpicture}
+\end{figure}
+The Čech cochains of this complex are:
+\begin{align*}
+	C^0(K) = \langle \alpha, \beta, \gamma \rangle, \,
+	C^1(K) = \langle a, b, c \rangle
+\end{align*}
+With the coboundary operator being defined as:
+\begin{align*}
+	\delta \alpha = b - c,\quad 
+	\delta \beta = c - a,\quad
+	\delta \gamma = a - b
+\end{align*}
+We already calculated the cohomology of this, its $\hat{H}^0(K) = \hat{H}^1(K) = \RR$,
+with the 1-cohomology being generated by $[\alpha] = [\beta] = [\gamma]$. We can 

@@ -1,0 +1,600 @@
+\chapter{Čech Cohomology}
+One of the most noticable invariants of a topological space is the number of its connected components.
+While being intuitivle understandable, it is also limited: There are a lot of topological spaces that are
+widely different, but have the same number of connected components. This limitation can be in a certain sense
+traced back to connectedness being a "low-dimensional" invarant, best seen by trying to prove a seemingly obvious statement
+\begin{theorem}
+	Let $n \neq m \in \NN$. $\RR^n$ is not homeomorphic to $\RR^m$
+\end{theorem}
+We can prove this in the case of $n = 1, m > 1$ as follows: Take any $p \in RR$, then $\RR \setminus \{p\}$ has
+two connected components, but $\RR^m \setminus \{q\}$ is connected for any $q \in RR^m$, hence the spaces can't
+be homeomorphic. For distinguishing the case of $n = 2, m > 2$ this argument fails – in that sense connectedness
+is a lower dimensional phenomonen.
+
+Various higher dimensional generalizations of connected components have been developed
+that overcome this limitation by measuring higher dimensional phenomena. Of these generalizations
+Cohomology is arguably the easiest to compute and understand. There are actually multiple different
+ways to define cohomology, but on "nice" spaces (which includes all smooth manifolds) all of them agree, allowing
+us to restrict our attention to just one: Čech Cohomology. Čech Cohomology is an based on the concept that topological
+spaces are mess, too messy
+\begin{remark}
+One normally would state most of the definitions in this chapter in
+the context of modules of a ring $R$, getting vector spaces as a special
+case (since vector spaces are exactly the modules of their field),
+but since de Rham cohomology only makes sense as a vector space this
+would only add needlees abstraction \footnote{
+	One could also do everything in the context of abelian categories,
+	the most general setting for homological algebra
+	% citation needed 
+	(and some argue the most natural), but this would be even more of an
+	overkill.
+}
+\end{remark}
+
+\section{Simplicial cohomology \& nerves}
+We want to approximate topological spaces with simplicial complexes, a combinatorial
+object:
+\begin{definition}
+We call $K = (V, S)$ for sets $V,S$ a \underline{simplicial complex} with
+\underline{vertices} $V$ and \underline{simplices} $S$ if the elements of $S$
+are non-empty subsets of $V$, calling $\sigma \in S$ a $n$-simplex of $K$ if
+it has $n + 1$ elements and if they fullfill the following conditions:
+\begin{enumerate}
+	\item For every vertex $v \in V$ there is a 0-simplex $\{v\} \in S$
+	\item For every $\sigma \in S$ all subsets $\sigma' \subseteq \sigma$
+		are also in $S$.
+\end{enumerate}
+\end{definition}
+Even though this definition is quite technical, it has an intuitive counterpart:
+One can imagine the vertices/0-simplices as points, the 1-simplices as lines between
+their elements seen as 0-simplices, the 2-simplices as filled triangles, with
+every 2 element subset of them seen as their boundary lines etc.
+
+% TODO: Define topology
+
+The classical way to assign a simplicial complex to a topological space was by triangulation,
+that is one would search a simplicial complex, whose topology would be homeomorphic to
+the original space. While this method does have inutive appeal it also has weaknesses,
+a major one being that not all topological spaces have one (not even all topological
+manifolds).
+
+This lead to the development the approximation of a space as a simplicial complex using
+open covers:
+\begin{definition}
+	The \underline{nerve} $\mathfrak{N}(\mathfrak{U}, X)$ of an open cover
+	$\mathfrak{U}$ of a space $X$ is the simplicial complex $K$ with
+	vertices $V = \mathfrak{U}$ and simplices:
+	\[
+		S = \bigcup_{n = 0}^\infty
+			\{\,
+				\{ U_0, \dots, U_n \}
+				\mid
+				U_0, \dots, U_n \in \mathfrak{U}:
+				U_0 \cap \dots \cap U_n \neq \emptyset
+			\,\}
+	\]
+	We will denote the $n$-simplices of this nerve by $\mathfrak{N}^n(\mathfrak{U}, X)$.
+\end{definition}
+That is: We take the open sets as vertices, with two intersecting sets being lines, three intersecting
+set as 2-simplices and in general $n + 1$ intersecting sets as $n$-simplices.
+
+To make this structure more workable we turn it into a graded vector space structure:
+\begin{align*}
+	C^n(\mathfrak{N}(\mathfrak{U}, X)) \coloneqq \bigoplus_{\sigma \in \mathfrak{N}^n(\mathfrak{U}, X)} \RR
+\end{align*}
+We will also establish a convention to refer its elements. For $\alpha_0, \dots, \alpha_n \in I$ we 
+denote the element representing the intersection of $\U_{\alpha_0}, \dots, \U_{\alpha_n}$ by
+$e_{\alpha_0, \dots, \alpha_n}$ (in the case of an empty intersection we will treat it as being zero).
+
+We will also use this to introduce the concept of orientation to simplicial complexes by defining:
+\begin{align*}
+	e_{\alpha_{\sigma(0)}, \dots, \alpha_{\sigma(n)}} = \sign(\sigma) e_{\alpha_0, \dots, \alpha_n}
+\end{align*}
+which also defines elements with any index repetition as zero.
+
+This allows us to enrichen the structure on this even further by introducing a boundary operator,
+encapsulating the idea of mapping an oriented $n$-simplex to its oriented boundary of $(n - 1)$-simplices.
+Given any $n$-simplex $e_{\alpha_0, \dots, \alpha_n}$ we define its boundary:
+\begin{align*}
+	\partial e_{\alpha_0, \dots, \alpha_n} \coloneqq \sum_{i = 0}^n (-1)^n e_{\alpha_0, \dots, \hat{\alpha}_i, \dots, \alpha_n}
+\end{align*}
+where $\hat{\alpha}_i$ denotes the removal of the $i$th index.
+
+\begin{example}
+The boundary of $e_{a, b}$ is $b - a$, this can be interpreted as $e_{a, b}$ being the line from $a$ to $b$
+and $e_{b, a}$ being the line from $b$ to $a$.
+
+The triangle $e_{a,b,c}$ has the boundary $e_{b, c} - e_{a, c} + e_{a, b} = e_{a,b} + e_{b, c} + e_{c, a}$.
+This can be interpreted as its choice of orientation consisting of lines from $a$ to $b$ to $c$, in contrast
+to e.g. $e_{c, b, a} = -e_{a, b, c}$ consisting of lines from $c$ to $b$ to $a$.
+\end{example}
+
+This map is obviously a linear map on $C_*(\mathfrak{N}(\mathfrak{U}, X))$ and it is nil-potent, that is
+$\partial \circ \partial = 0$. Intuitively that is because the boundary of a boundary is empty, but one
+can also do the algebraic calculation of $\partial^2$ to see that the signs all cancel each other.
+
+This is now an example of a more general algebraic concept:
+
+\begin{definition}
+	A \underline{Chain complex} $(C_\bullet, \partial_\bullet)$ is a $\ZZ$-graded
+	vector space $C_\bullet$ together with a map
+	$\partial_\bullet: C_\bullet \to C_\bullet$ (called \underline{boundary map})
+	whose restriction to $C_n$ (which we will denote by $\partial_n$) maps to
+	$C_{n - 1}$ and which is nilpotent, i.e. $\partial_\bullet^2 = 0$.
+\end{definition}
+In abuse of notation we will denote this by writing
+$\partial: C_\bullet \to C_{\bullet - 1}$.
+
+To "detect holes" we are now going to take inspiration from the definition of
+the fundamental group. There one is interested in non-contractible loops, that
+is: maps from $S^1$ into the space that cannot be extended to $D^2$. Putting
+this into a more general context: One is interested in loops that aren't the boundary
+of anything. Taking a loop to mean everything that does not have boundary gives us
+the algebraic definition:
+\begin{align*}
+	\ker \partial_n / \Img \partial_{n + 1}
+\end{align*}
+Following this reasoning we are going to call the elements of $\Img(\partial_\bullet)$
+\underline{boundaries} and the elements of $\ker(\partial_\bullet)$ \underline{cycles}.
+
+Doing this procedure for a chain complex leads us to the namesake of homological algebra:
+\begin{definition}
+The \underline{Homology} of a chain complex $(C_\bullet, \partial)$ is the
+$\ZZ$-graded vector space:
+\[	
+	H_n(C_\bullet, \partial_\bullet) = \ker(\partial_n)/\Img(\partial_{n - 1})
+\]
+\end{definition}
+
+All of this reminds us of the way we defined de Rham cohomology, but not quite:
+The exterior derivative goes in the "opposite direction", i.e. it maps $n$-forms
+to $n+1$ forms and we put "co" in front of everything.
+
+Because we want to proof a relationship to de Rham cohomology \footnote{
+	There are also other reasons to prefer cohomology. Similiar to de Rham
+	cohomology it is possible to define a product structure on it, turning
+	it into an algebra (and
+	there are spaces which cohomologies are isomorphic as vector spaces,
+	but not as algebras). Also Čech cohomology has certain "good" properties
+	that Čech homology has not because of category theoretic reasons, see
+	Lecture 46 of \cite{wendl_topology_2024} for more detail
+ }
+we have to "reverse the direction" of Čech-Homology in a process called
+dualisation:
+\begin{definition}
+The \underline{Cochain Complex} $(C^\bullet, \delta^\bullet)$ of a 
+chain complex $(C_\bullet, \partial_\bullet)$ is its dualization:
+\begin{align}
+	C^n \coloneq \{\, f: C_n \to \RR \text{ linear}  \,\}\\
+	\delta^n: C^n \to C^{n + 1} \\
+	f \mapsto (f \circ \partial_{n + 1})
+\end{align}
+% \label{def:cochain_complex}
+\end{definition}
+\begin{remark}
+Note that this is the so called algebraic dual since we do not require
+boundedness/continouity of the linear maps.
+\end{remark}
+% Finally arriving at:
+\begin{definition}
+The \underline{Cohomology} of a cochain complex
+$(C^\bullet, \delta^\bullet)$ is the $\ZZ$-graded vector space:
+\[
+	H^n(C^\bullet, \delta^\bullet) := \ker(\delta^n)/\Img(\delta^{n - 1})
+\]
+\end{definition}
+Dual to our previous remark we are going to denote the elements of $\Im(\delta)$ as coboundaries
+and the elements of $\ker(\delta)$ as cocycles.
+
+Combining all of this leads us to finally define the Čech-cohomology of an open cover:
+\begin{definition}
+Let $X$ be a topological space with open cover $\mathfrak{U}$. We define \textbf{the Čech-cohomology of
+$\mathfrak{U}$} as:
+\begin{align*}
+	\hat{C}^\bullet(\mathfrak{U}, X) \coloneqq H^\bullet(C^\bullet(\mathfrak{U}, X))
+\end{align*}
+\end{definition}
+
+% After getting this out of the way, we can proceed to define the precursor to
+% Čech-Cohomology, simplicial cohomology. This cohomology won't be defined on
+% all spaces, but only on so called simplicial complexes, a foremost combinatorial
+% object:
+% %-TODO: Find reference for this definition!
+
+% This abstract combinatorial definition has an intuitive interpretation by
+% taking  elements of $V$ as discrete points with every 2-element set
+% $\{a,b\} \subseteq S$ being a line connecting $a$ and $b$, every 3-element
+% set $\{a,b,c\} \subseteq S$ being a filled triangle connecting the lines
+% $\{a,b\}, \{a,c\}, \{c,b\}$, etc...
+
+\begin{figure}[h]
+\centering
+\includegraphics{graphics/simplicial_complex2.pdf}
+\caption{A triangle as a simplicial complex}
+\end{figure}
+
+% One could make this more precise and assign a topological space
+% to every simplicial complex, but we are not going to do that
+% since we only need this for motivation and because this topology
+% agrees with the obvious one for finite simplicial complexes and 
+% is nontrivial to define for infinite ones.
+% TODO: Add reference to rigorous definition
+
+% The motivating reason behind the definition of chain complexes was to
+% link the $n$-dimensional elements of a space to a vector space. Here a
+% identification with the $n$-simplices seems like the obvious choice and the
+% easiest vector space one could imagine would just be the direct sum of a copy
+% of $\RR$ for every one, i.e.:
+% \[
+% 	\tilde{C}_n^\Delta
+% 		= \bigoplus_{
+% 		\substack{
+% 			\sigma \subseteq S \\
+% 			|\sigma| = n + 1
+% 		}} \RR
+% \]
+% , but defining the boundary operator then becomes
+% difficult, especially since the naive definition of just mapping a simplex
+% to the direct sum of its boundary faces does not work: This operator would
+% not be nilpotent and the boundary of something like $\{a,b\} + \{b,c\}$ would be
+% $a + 2b + c$ since the inner points would not cancel each other out.
+
+% To solve this we are going to get inspired by de Rham cohomology and give
+% the simplices an orientation by referring to ordered $n + 1$-tuple
+% $(v_0, \dots, v_n)$ instead of unordered $n + 1$-element sets and requiring:
+% \[
+% 	(v_0, \dots, v_i, v_{i + 1}, \dots, v_n)
+% 	\sim
+% 	-(v_0, \dots, v_{i + 1}, v_i, \dots, v_n)
+% \]
+
+% TODO: shorter and more precise
+
+% \begin{definition}
+% Given a simplicial complex $K = (V, S)$, we define its \underline{simplicial
+% chain complex} as the $\ZZ$-graded abelian group $C^\Delta_\bullet(K)$ together
+% with the boundary operator $\partial_\bullet: C^\Delta_\bullet(K) \to C^\Delta_{\bullet - 1}(K)$.
+% \end{definition}
+% \begin{lemma}
+% The simplicial chain complex is a chain complex. \qed
+% \end{lemma}
+% From an algebraic perspective this leads us to define:
+% \begin{definition}
+% Given a simplicial complex $K = (V, S)$, we define its \underline{simplicial
+% homology} as the homology of its simplicial chain complex, denoted by:
+% \[
+% 	H_n^\Delta(K) \coloneq H_n(C_\bullet(K))
+% \]
+% \end{definition}
+% TODO: Introduction of cochain complex/cohomology and this inconsistent.
+% \begin{definition}
+% Given a simplicial complex $K = (V, S)$ we define its \underline{simplicial
+% cohomology} as the cohomology of its simplicial chain complex, denoted by:
+% \[
+% 	H^n_\Delta(K) \coloneqq H^n(C^\Delta_\bullet(K))	
+% \]
+% \end{definition}
+% As we already briefly mentioned, one can associate a topological space
+% to every simplicial complex. The reverse of this, associating a simplicial
+% complex to a topological space, is called triangulation. This is neither unique
+% nor always possible, but one can show that the homology of two triangulations
+% $K, K'$ of two spaces $X, X'$ are naturally
+% TODO: Should we say something about this word
+% TODO: What about homotopy equivalent
+% isomorphic if $X$ and $X'$ are homeomorphic, therefore the simplicial homology
+% of two different triangulations of a space $X$ does not depend on the choice
+% of triangulation (up to a natural isomorphism) allowing one to speak of
+% {the} simplicial homology of a triangulable topological space, denoted by 
+% $H^\Delta_\bullet(X)$. We are not going to prove any of this, since there is
+% an alternative way to define a Cohomology for any (not just trianguable)
+% topological space called Čech-Cohomology, by associating simplicial complexes
+% to open covers
+% That is, the vertices of a nerve are the open sets of the cover and the
+% $n$-simplices are the nonempty intersections of $n$ sets. Since open covers are
+% taken to only contain nonempty sets
+% TOO: Define this somehow
+% and if $U_1 \cap U_2 \cap U_3 \neq \emptyset$ then
+% $U_1 \cap U_2 \neq \emptyset$, therefore the nerve is always actually a
+% simplicial complex. This provides the straightforward definition:
+% \begin{definition}
+% The \underline{Čech-Cohomology} of an open cover $\mathfrak{U}$ of a space $X$ is the 
+% simplicial cohomology of the nerve of the cover:
+% \[
+% 	\check{C}^\bullet(X, \mathfrak{U})
+% 		\coloneq C^\bullet_\Delta(\mathfrak{N}(X, \mathfrak{U}))
+% \]
+% \end{definition}
+
+\begin{figure}
+	\centering
+	\tcbsetforeverylayer{enhanced, colback=white, frame hidden}
+	\begin{tcolorbox}[segmentation style={solid}]
+	    \begin{tcbraster}[raster columns=2]
+		    \tcbincludegraphics[height=6cm]{graphics/circle_coarse_cover.pdf}
+			\tcbincludegraphics[height=6cm]{graphics/circle_coarse_nerve.pdf}
+		\end{tcbraster}
+		\tcblower
+		\begin{tcbraster}[raster columns=2]
+		    \tcbincludegraphics[height=6cm]{graphics/circle_fine_cover.pdf}
+		    \tcbincludegraphics[height=6cm]{graphics/circle_fine_nerve.pdf}
+	    \end{tcbraster}
+	\end{tcolorbox}
+	\label{figure:circle_nerves}
+	\caption{A fine and a coarse open cover of $S^1$ and their nerves}
+\end{figure}
+
+\section{Čech-Cohomology as a limit}
+% TODO: Another advantage would be good
+We are almost finished with the definition of Čech-cohomology, but there remains one issue that we
+swept a bit under the rug: So far we did not define the Čech-cohomology of a space, only of an open
+cover of a space.
+
+And for good reason: Not every open cover of a space produces a reasonable approximation. In fact: every
+space can be covered by just itself, with the resulting nerve being one point, resulting in a cohomology
+that is trivial in every dimension but 0. For a less contrived example see \ref{figure:circle_nerves} 
+$S^1$ can be covered by two overlapping open sets, which produces a nerve that consists only of a 1-simplex –
+not a very circle-like shape.
+
+And this makes sense conceptually: We talked about taking covers as approximations of spaces
+and these are bad approximations. The more interesting question is when we can talk about one approximation being better
+than another and whether there is always going to be a "good" approximation. 
+
+While it is not always possible to talk about one cover being better than another, it is sometimes possible:
+\begin{definition}
+An open cover $\mathfrak{U}$ is a \underline{refinement} of another open cover
+$\mathfrak{V}$ if every open set $U \in \mathfrak{U}$ is contained in some
+$U \subseteq V \in \mathfrak{V}$
+\end{definition}
+For this concept to be usefull we have to find a relation between the Čech-cohomologies of an open cover
+and its refinement. We will do this by defining a map on the chain complexes: Given a
+refinement $\mathfrak{V}$ with index set $J$ of a cover $\mathfrak{U}$ with index set $I$ we
+can define a (non-canonical) map
+$\lambda: J \to I$ that fullfills the relation:
+\begin{align*}
+	\V_\alpha \subseteq \U_{\lambda(\alpha)}
+\end{align*}
+We can use this to define a map between the cochain complexes:
+\begin{align*}
+	i: C^n(\mathfrak{U}, X) &\to C^n(\mathfrak{V}, X) \\
+		c &\mapsto i(c)
+\end{align*}
+as:
+\begin{align*}
+	(i(c))(e_{\alpha_0, \dots, \alpha_n}) = c(e_{\lambda(\alpha_0), \dots, \lambda(\alpha_n)})
+\end{align*}
+Before using this to define a map on cohomology we are going to establish a general
+condition for a map on cochains to descend to a map on cohomology. 
+\begin{definition}
+A \underline{cochain map} $f: C^\bullet \to D^\bullet$ is a map between two
+cochain complexes
+$(C^\bullet, \delta_C^\bullet), (D^\bullet, \delta_D^\bullet)$ that maps
+$C^n$ to $D^n$ and commutes with the boundary operators, i.e.
+\[
+	\delta_D^\bullet \circ \phi^\bullet
+	=
+	\phi^\bullet \circ \delta_C^\bullet
+\]
+\end{definition}
+This condition can be equally stated as requiring the diagram
+% https://q.uiver.app/#q=WzAsNSxbMCwzLCJDXlxcYnVsbGV0Il0sWzAsNCwiRF5cXGJ1bGxldCJdLFsxLDMsIkNee3tcXGJ1bGxldH0gKyAxfSJdLFsxLDQsIkRee3tcXGJ1bGxldH0gKyAxfSJdLFsyLDAsIlxcYnVsbGV0Il0sWzAsMSwiZiIsMl0sWzAsMiwiXFxtYXRocm17ZH1fQV5cXGJ1bGxldCJdLFsyLDMsImYiXSxbMSwzLCJcXG1hdGhybXtkfV9CXlxcYnVsbGV0IiwyXV0=
+\[\begin{tikzcd}
+	&& \bullet \\
+	\\
+	\\
+	{C^\bullet} & {C^{{\bullet} + 1}} \\
+	{D^\bullet} & {D^{{\bullet} + 1}}
+	\arrow["{\mathrm{d}_A^\bullet}", from=4-1, to=4-2]
+	\arrow["f"', from=4-1, to=5-1]
+	\arrow["f", from=4-2, to=5-2]
+	\arrow["{\mathrm{d}_B^\bullet}"', from=5-1, to=5-2]
+\end{tikzcd}\]
+to commute. Chain maps do descend unto cohomology, because:
+\begin{lemma}
+Every cochain map $\phi: C^\bullet \to D^\bullet$ descends to cohomology,
+which we will denote by
+\[	
+	\phi^\bullet: H^\bullet(C^\bullet) \to H^\bullet(D^\bullet)
+\]
+\end{lemma}
+\begin{proof}
+Proving this is equal to proving $\phi(\Img(\delta_C^\bullet)) \subseteq \Img(\delta_D^\bullet)$.
+Let $c \in C^\bullet$, then by the chain map condition:
+\begin{align*}
+	\phi(\delta_C^\bullet(c)) = \delta_D^\bullet(\phi(c)) & \qedhere
+\end{align*}
+\end{proof}
+
+Our map $i$ fullfills this condition since:
+\begin{align*}
+	\delta i(c)(e_{\alpha_0, \dots, \alpha_n})
+		= \delta c(e_{\lambda(\alpha_0), \dots, \lambda(\alpha_n)})
+		&= c(\partial e_{\lambda(\alpha_0), \dots, \lambda(\alpha_n)}) \\
+		&= \sum_{j = 0}^n (-1)^j c(e_{\lambda(\alpha_0), \dots, \hat{\lambda(\alpha_j)}, \dots, \lambda(\alpha_n)}) \\
+		&= i\left(\sum_{j = 0}^n (-1)^j c(e_{\alpha_0, \dots, \hat{\alpha}_j, \dots, \alpha_n}) \right) \\
+		&= i(\delta c) (e_{\alpha_0, \dots, \alpha_n})
+\end{align*}
+% TODO: Hat looks weird here
+Hence it descends to a map $i^*$ on cohomology.
+
+\begin{remark}
+The attentive reader might have already noticed it, but the definition of $i$ that we give here
+is far frome unique. Depending on the refinement there might be a lot of choice involved
+in selecting $\lambda(\alpha)$ for alla $\alpha \in I$. But we do not have to worry about
+this since the map induced on cohomology is independent of this chain level choices.
+But we are not going to prove this, since this is rather annoying to do without providing much insight.
+If interested, one can look at a proof in TODO
+\end{remark}
+
+For a fixed topological space $X$ we can now define $\mathcal{O}(X)$ as the set of all open
+covers of $X$ and equip it with a relation:
+\begin{align*}
+	\mathfrak{U} \leqslant \mathfrak{V}
+		\iff
+	\mathfrak{V} \text{ is a refinement of } \mathfrak{U}
+\end{align*}
+While two open covers don't have to be refinements of each other, there is always going
+to be another open cover that is a refinement of both. Thus $(\mathcal{O}(X), \leqslant)$ 
+is a directed set. Indexing the set of cohomologies of nerves of all open covers of $X$
+by this directed set (together with the linear maps we established above) turns it into a
+richer structure:
+\begin{definition}
+A \textbf{directed system} is a family of vector spaces $\{A\}_{\alpha \in I}$ indexed by a
+directed set $\langle I, \leqslant \rangle$ together with a morphism
+\begin{align*}
+	f_{\alpha \beta}: A_\alpha \to A_\beta
+\end{align*}
+for every $\alpha \leqslant \beta$ that fullfill:
+\begin{itemize}
+	\item $f_{\alpha \alpha}$ is the identity on $A_\alpha$
+	\item For every $\alpha \leqslant \beta \leqslant \gamma$:
+		\begin{align*}
+			f_{\alpha \gamma} = f_{\beta \gamma} \circ f_{\alpha \beta}
+		\end{align*}
+\end{itemize}
+\end{definition}
+One can imagine a directed system as a tree-like structure with infinite leaves:
+% https://q.uiver.app/#q=WzAsMTEsWzAsMCwiQV97XFxhbHBoYX0iXSxbMSwxLCJBX1xcZ2FtbWEiXSxbMCwxLCJBX1xcYmV0YSJdLFswLDIsIkFfXFxkZWx0YSJdLFsxLDIsIkFfXFx6ZXRhIl0sWzAsMywiQV9cXGVwc2lsb24iXSxbMiwyLCJBX1xcZXRhIl0sWzMsMiwiXFxkb3RzIl0sWzEsMCwiXFx2ZG90cyJdLFsxLDMsIlxcaWRkb3RzIl0sWzIsMSwiXFx2ZG90cyJdLFswLDFdLFsyLDFdLFszLDRdLFs1LDRdLFsxLDZdLFs0LDZdLFs2LDddLFs4LDFdLFs5LDZdLFsxMCw2XV0=
+\[\begin{tikzcd}[column sep=small]
+	{A_{\alpha}} & \vdots \\
+	{A_\beta} & {A_\gamma} & \vdots \\
+	{A_\delta} & {A_\zeta} & {A_\eta} & \dots \\
+	{A_\epsilon} & \iddots
+	\arrow[from=1-1, to=2-2]
+	\arrow[from=1-2, to=2-2]
+	\arrow[from=2-1, to=2-2]
+	\arrow[from=2-2, to=3-3]
+	\arrow[from=2-3, to=3-3]
+	\arrow[from=3-1, to=3-2]
+	\arrow[from=3-2, to=3-3]
+	\arrow[from=3-3, to=3-4]
+	\arrow[from=4-1, to=3-2]
+	\arrow[from=4-2, to=3-3]
+\end{tikzcd}\]
+Now a natural question would be whether this tree has any "root". While there in general
+isn't any such root in the tree itself there may be candidates that we can add to the
+system. We do this by first defining possible candidates:
+\begin{definition}[Target]
+	Given a directed system $\{A_\alpha\}_{\alpha \in I}$ of vector spaces we say
+	that a vector space $B$ together with morphisms $\{\phi_\alpha\}_{\alpha \in I}$:
+	\[
+		\phi_\alpha: A_\alpha \to B	
+	\]
+	is called \underline{Target} of the directed system if for every $\alpha \in I$ 
+	the diagram
+
+	TODO
+
+	commutes.
+\end{definition}
+Note that by abuse of notation we will sometimes refer to a target as just a vector space
+$B$ while eliding the morphisms if they are clear from context.
+
+While this definition is already usefull it is too broad. Every vector space together with
+the trivial morphism for every vector space in a system is the target of every direct system of vector spaces.
+Wanting to include the information of all possible targets into it, we define:
+\begin{definition}[Direct Limit]
+Given a direct system $\{A_\alpha\}_{\alpha \in I}$ of vector spaces we call a target
+$B$ together with morphisms $\{\phi_\alpha\}_{\alpha \in I}$ a direct limit of the system
+if for every other target $C$ together with morphisms $\{\psi_\alpha\}_{\psi \in I}$ there
+is a unique morphism TODO such that the following diagram commutes:
+
+TODO
+\end{definition}
+The term "limit" implies some kind of uniqueness and indeed
+\begin{lemma}
+Given two limits of a direct system there exists a natural isomorphisms between them.
+\end{lemma}
+\begin{proof}
+TODO
+\end{proof}
+Because of this we are going to talk about \textbf{the} limit of a directed system
+and denote it by
+\[
+	\varinjlim \{A_\alpha\}_{\alpha \in I}
+\]
+
+Using this we can define the Čech cohomology of a space:
+\begin{definition}[Čech Cohomology]
+Let $X$ be a topological space. We define its \textbf{Čech cohomology} as the direct limit
+of the Čech cohomology of its open cover, denoted by
+\[
+	\hat{H}^\bullet(X) \coloneqq \varinjlim \{\hat{H}(X, \mathfrak{U})\}_{\mathfrak{U} \in \mathcal{O}(X)}
+\]
+\end{definition}
+
+\begin{remark}
+If one looks too close at this definition, one notices that it does not really define the
+Čech cohomology of a space as a vector space, but rather as an equivalence class
+of naturally isomorphic vector spaces. This is more a philosophical than a practical issue though
+since the natural isomorphisms allow us to just take a specific representative as "the" Čech cohomology.
+\end{remark}
+
+While this definition is quite elegant, it does suffer from the problem of it being quite impractical.
+Given a topological space we would have to calculate the Čech cohomology of all its open covers and
+then apply the limiting operation – in most cases this is all but impossible.
+
+But there is a solution to this problem. It is actually enough to calculate the Čech-cohomology of
+a specific subset of open covers, if it fullfills some conditions. To formulate these we first define:
+\begin{definition}
+A subset $I_0 \subseteq I$ of a directed set $I$ is called \textbf{cofinal} if for every $\alpha \in I$
+there is a $\beta \in I_0$ such that $\beta \geqslant \alpha$
+\end{definition}
+
+Then we can put this into a lemma:
+\begin{lemma}
+	Let $\{X_\alpha\}_{\alpha \in I}$ be a direct system with morphism $\phi_{\alpha \beta}$.
+
+	If $I_0 \subseteq I$ is a cofinal set such that $\phi_{\alpha, \beta}$ is an isomorphism for every
+	$\alpha, \beta \in I_0, \alpha \leqslant \beta$ than $\injlim \{A_\alpha\}_{\alpha \in I}$ is isomorphic
+	to every $X_\gamma$ for $\gamma \in I_0$.
+\end{lemma}
+
+\begin{proof}
+Pick $\alpha_0 \in I_0$. For any $\alpha \in I$ there is a $\beta \in I$ such that $\alpha_0 \leqslant \beta$ and $\alpha \leqslant \beta$
+and since $I_0$ there is a $\gamma \in I_0$ such that $\beta \leqslant \gamma$. Putting the respective spaces and morphisms in a diagram:
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJBX1xcYWxwaGEiXSxbMSwwLCJBX1xcYmV0YSJdLFswLDEsIkFfe1xcYWxwaGFfMH0iXSxbMiwwLCJBX1xcZ2FtbWEiXSxbMCwxLCJcXHZhcnBoaV97XFxhbHBoYSBcXGJldGF9Il0sWzIsMSwiXFx2YXJwaGlfe1xcYWxwaGFfMCBcXGJldGF9Il0sWzEsMywiXFx2YXJwaGlfe1xcYmV0YSBcXGdhbW1hfSJdLFsyLDMsIlxcdmFycGhpX3tcXGFscGhhXzAgXFxnYW1tYX0iLDJdXQ==
+\[\begin{tikzcd}
+	{A_\alpha} & {A_\beta} & {A_\gamma} \\
+	{A_{\alpha_0}}
+	\arrow["{\varphi_{\alpha \beta}}", from=1-1, to=1-2]
+	\arrow["{\varphi_{\beta \gamma}}", from=1-2, to=1-3]
+	\arrow["{\varphi_{\alpha_0 \beta}}", from=2-1, to=1-2]
+	\arrow["{\varphi_{\alpha_0 \gamma}}"', from=2-1, to=1-3]
+\end{tikzcd}\]
+In this diagram $\varphi_{\alpha_0 \gamma}$ is an isomorphism, hence we have:
+\begin{align*}
+	\varphi_\alpha:
+		A_\alpha &\to A_{\alpha_0} \\
+		x &\mapsto (\varphi_{\alpha_0 \gamma})^{-1} \circ \varphi_{\beta \gamma} \circ \varphi_{\alpha \beta}(x)
+\end{align*}
+
+Therefore $A_{\alpha_0}$ is a target of $\{A_\alpha\}_{\alpha \in I}$.
+
+Now let $B$ be any other target, with morphisms $\{\psi_\alpha\}_{\alpha \in I}$. Since $A_{\alpha_0}$
+is in the system there is a morphism $\psi_{\alpha_0}: A_{\alpha_0} \to B$. This morphism is also unique
+by construction and hence $A_{\alpha_0}$ is the limit of the direct system.
+\end{proof}
+
+Now it remains to show that there is such a subset of open covers. This is going to be the so called
+"good" covers
+\begin{definition}
+Given a topological space $X$, a \textbf{good cover} is a cover $\{\U_\alpha\}_{\alpha \in I}$ such that
+for any subset $J \subseteq I$ the intersection
+\[
+	\bigcap_{\alpha \in J} \U_\alpha
+\]
+is TODO
+\end{definition}
+
+Good covers are a good candidate for an eventually constant sequence:
+\begin{lemma}
+	TODO
+\end{lemma}
+It of course remains to show that the Čech cohomology of all good covers is isomorphic. While this is a
+quite nontrivial fact by itself, for us it will follow as a direct corollary of the de Rham theorem – the
+main subject of this thesis.
+
+\section{TODO}
+TODO:
+	- Figure out whether concrete calculations of Čech cohomology even need their own chapter since we
+	  already have quite some pages.
