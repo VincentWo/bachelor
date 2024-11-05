@@ -1,7 +1,7 @@
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 Upon the first introduction to derivatives one learns quite early that a function
-$f: \RR \to \RR$ is constant if and only if $f'(x) = 0$ for every $x \in \RR$. This statement is quite usefull,
+$f: \RR \to \RR$ is constant if and only if $f'(x) = 0$ for every $x \in \RR$. This statement is quite useful,
 but it subtle implicit assumption, depending not only on the value of $f'$, but also on the domain
 of $f$. In fact, take:
 \begin{align*}
@@ -11,22 +11,20 @@ of $f$. In fact, take:
 			 1 \quad&\text{if } x > 0
 		\end{cases}
 \end{align*}
-this functions has derivative zero, but is not constant!
-
-This does not come as a surprise and $f$ is of course locally constant,
-i.e. every $\varepsilon$-ball can be shrunk to make $f$ constant on it, or properly:
+this functions has derivative zero, but is not constant! Though this does not come as a surprise and $f$ is of course almost constant, i.e.
 \begin{definition}[Locally constant]
 	Let $\U \subseteq \RR$ and $f: \U \to \RR$. We call $f$ \textbf{locally constant} if for every $x \in \U$
 	there is a open neighborhood $\V \subseteq \U$ of $x$ such that $f$ is constant on $\V$.
 \end{definition}
-
-Using this we get the general version of our theorem:
+Allowing us to formulate a more general version of the theorem
 \begin{lemma}
-	Let $\U \subseteq \RR$ and $f: \U \to \RR$ a smooth function. $f$ is locally constant if and only if
+	Let $\U \subseteq \RR$ open and $f: \U \to \RR$ a smooth function. $f$ is locally constant if and only if
 	$f' = 0$.
 \end{lemma}
-As it usually goes, this statement is more general, but weaker: There are obviously sets (like $\RR$ itself) on
-which a vanishing derivative implies constness e.g. $\RR$ itself – what sets them apart?
+As it usually goes this statement is more general, but also weaker: There are obviously sets (like $\RR$ itself) on
+which a vanishing derivative implies constness. Recovering the original statement from our general version requires
+detecting these cases. To figure out the distinguish property of these sets, we follow the proof of the statement on
+$\RR$ to see where it breaks apart for general sets:
 
 On $\RR$ this implication is easily proven: Let $f: \RR \to \RR$ be locally constant. For every $x \in \RR$
 pick an open neighborhood $\V_x$ of $x$ on which $f$ is constant. Now pick any $y \in \RR$ and
@@ -55,13 +53,13 @@ acting on a spaceship as a function of distance to earth). The usual way to mode
 Let $\U \subseteq \RR^n$. A \textbf{vector field on $\U$} is a smooth map $f: \U \to \RR^n$
 \end{definition}
 
-Forces are a usefull concept, but they have the problem of being proportional to the acceleration
+Forces are a useful concept, but they have the problem of being proportional to the acceleration
 of an object, turning any equation about the position of an object into a second order differential
-equation. Because of this (and for unrelated reasons that we can not get into) it is often more conventient
-to work with the potential energy of an object, defined as the antideritative of the force field. That is,
+equation. Because of this (and for unrelated reasons that we can not get into) it is often more convenient
+to work with the potential energy of an object, defined as the antiderivative of the force field. That is,
 given a  force field $f: \RR^n \to \RR^n$ we define its potential function to be a smooth function $u: \RR^n \to \RR$
 such that $\nabla u = f$ (note that the potential is only unique up to a added constant). But given a force field $f: \RR^n \to \RR^n$
-there is no guarentee that it has a potential, hence we would like to limit ourselves to the ones that do.
+there is no guarantee that it has a potential, hence we would like to limit ourselves to the ones that do.
 \begin{definition}
 A vector field $f: \RR^n \supseteq \U \to \RR^n$ is called \textbf{conservative} if there is a potential $u: \U \to \RR$
 such that $\nabla u = f$.
@@ -93,23 +91,23 @@ can reduce the question whether a vector field is conservative to a statement ab
 Let $f: \RR^2 \to \RR^2$ be a vector field. Then $f$ is conservative if and only if its curl is zero.
 \end{lemma}
 
-This is wonderfull! We reduced a hard question to an easy one, turning conservativity into an easily calculated
+This is wonderful! We reduced a hard question to an easy one, turning conservativity into an easily calculated
 invariant. But, as the attentive reader might have already noticed, we did so at the cost of generality.
-Similiar to our first statement, we again reduced the statement to vector fields defined on the whole of
+Similar to our first statement, we again reduced the statement to vector fields defined on the whole of
 $\RR^2$. And not without reason, either: There are subsets of $\RR^2$ on which curl-free vector fields are
-not nescecarrily conservative. As an example take $\U = \RR^2 \setminus \{0\}$ and define:
+not necessary conservative. As an example take $\U = \RR^2 \setminus \{0\}$ and define:
 \begin{align*}
 	f: \U &\to \RR \\
 		(x, y) &\mapsto \frac{1}{x^2 + y^2}(-y, x)
 \end{align*}
-Its curl is:
+Its curl vanishes:
 \begin{align*}
 	\curl f = \frac{y^2 - x^2}{(x^2 + y^2)^2} - \frac{y^2 - x^2}{(x^2 + y^2)^2} = 0
 \end{align*}
 But this vector field is clear not conservative: Take e.g. the integral on the unit circle (a trivially closed
 loop), it is not zero!
 
-Our argument fails for a similiar reason as in the first example: It includes a assumption on the domain of
+Our argument fails for a similar reason as in the first example: It includes a assumption on the domain of
 the vector field, since curl-free vector fields are not conservative in general, but something weaker:
 \begin{definition}
 A vector field $f: \RR^n \supseteq  \U \to \RR^n$ is called \textbf{locally conservative} if every point $x \in \U$ has an
@@ -137,7 +135,7 @@ the large square is zero.
 But in the case of $\RR^2 \setminus \{0\}$ this is not possible: Any loop/square that contains the origin can not be split into smaller squares.
 This property can now again be phrased in topological terms:
 \begin{definition}
-We call a topological space $X$ \textbf{simply connected} if every closed loop i.e. map $f: S^1 \to X$ admits a extension to $\mathbb{D}^2$.
+We call a topological space $X$ \textbf{simply connected} if it is connected and every closed loop i.e. map $f: S^1 \to X$ admits a extension to $\mathbb{D}^2$.
 \end{definition}
 Hence on simply connected spaces locally conservative vector fields are conservative!
 
@@ -161,18 +159,33 @@ is $\mathrm{d} \circ \mathrm{d} = 0$, but that is indeed the case, as we are goi
 
 $H^*$ is called the de Rham cohomology of a space and de Rhams theorem now states that this is
 isomorphic to a topological invariant: Čech cohomology, which can be understood as measuring the "holes"
-in a space by detecting certain objects that have empty boundary (caled cycles) modulo objects that are the
+in a space by detecting certain objects that have empty boundary (called cycles) modulo objects that are the
 boundary of something.
 
-That these two invariants are isomorphic is a surprising fact, first conjectured by E. Cartan in 1928 and
+That these two invariants are isomorphic is a deep fact, first conjectured by E. Cartan in 1928 and
 proven in 1931 by George de Rham in his dissertation \cite{de_rham_sur_1931} using the theory of integration
-of $k$-forms.
+of differential $k$-forms. While giving an intuitive interpretation of de Rham cohomology being dual to the
+(oriented and compact) submanifolds
+\footnote{
+	Sadly it is more complicated than this, because one needs to consider more than just these submanifolds.
+	Properly doing this leads to the theory of \textit{currents} for a detailed review see TODO
+}
+it also requires the machinery of integration of differential forms and gets quite technical in the details.
 
-The proof that we are going to use was premiered 1952 by Weil in the (french) paper \cite{weil_sur_1952},
-with \cite{tu_differential_1982} being a good modern account. Our contributing lies in extending details
-that were left out of \cite{tu_differential_1982} and combining it with a self-contained \footnote{
-Not self-contained in the sense of proving every statement, but self-contained in the sense that it can be
-(hopefully) understood on its own
-} introductiong to all the needed materials \& motivations, trying to make this thesis accessible to anybody
-with linear algebra, analysis and basic topology without requiring any topic-specific knowledge.
+On the other extreme it is possible to prove this statement using \textit{sheaf cohomology}, but this elegance comes
+at the cost of geometric intuition and requiring heavy algebraic machinery.
+
+The proof that is done in this thesis was premiered 1952 by Weil in the (French) paper \cite{weil_sur_1952},
+with \cite{tu_differential_1982} being a good (non French) modern account. It strikes a balance, being elegant
+without requiring either integration nor too heavy algebraic machinery and still having a geometric explanation
+though not one as obvious.
+
+Out contribution lies in supplying details of the proof that were left out of \cite{tu_differential_1982}, combining
+it with a self-contained
+\footnote{
+	Not self-contained in the sense of proving every statement, but self-contained in the sense that it can be
+	(hopefully) understood on its own
+}
+introduction to all the needed materials \& motivations, trying to make this thesis accessible to anybody with a
+knowledge of linear algebra, analysis and topology at an undergraduate level without requiring any topic-specific knowledge.
  
