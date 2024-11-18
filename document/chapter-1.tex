@@ -1,103 +1,92 @@
 \chapter{De Rham Cohomology}
-Developing de Rham cohomology begins with generalizing smooth functions to domains
-that aren't open subsets of $\RR^n$. This leads to the ubiquitous concept of smooth
-manifolds, the setting of the rest of this thesis, which then allows us to generalize
-the concept of differentiation using the concept of a tangent space – and its dual
-\textit{integration} using the cotangent space, culminating into the theory of differential forms
+Curl-free vector fields and locally constant smooth functions are not that different: Both associate
+some smoothly varying data to points and can be described as the nullspace of some linear
+"differentiation" operator.
+
+But properly developing and generalizing this concept requires developing the ubiquitous concept 
+of smooth manifolds, enabling us to not only generalize the concept of a smooth function to more than
+just open subsets of $\RR^n$, but also to develop (some of) the rich theory of differential geometry:  
+Generalizing the concept of differentiation using the concept of a tangent space – and its dual
+the cotangent space to generalize integration, culminating into the theory of differential forms
 and de Rham cohomology.
 
 \begin{remark}
 While we are going to aim for a self-contained introduction to all the needed differential geometric
 background, it is impossible to do so without skipping quite some detail. If one desires a full fledged
-introduction (and the topic is definitly more than interesting enough to deserve one), then one should read
-one of the plethora of well written books about it e.g. \cite{lee_introduction_2013}, \cite{spivak_comprehensive_1979}
-or \cite{wendl_differential_2022}
+introduction (and the topic is definitely more than interesting enough to deserve one), then one should
+read one of the plethora of proper ones e.g. \cite{lee_introduction_2013},
+\cite{spivak_comprehensive_1979} or \cite{wendl_differential_2022}
 \end{remark}
 
 \section{Smooth Manifolds}
-As should be not too suprising this is in general not possible, there isn't any sensible notion
-of a map $f: X \to \RR$ being smooth for an arbitrary topological space. To define smoothness
-we need both some additional structure and some "well-behavedness" i.e. we are going to have to
-limit ourselves to a certain class of "good" spaces.
+Before getting into smooth manifolds, we start with topological manifolds. The archetypical example of one is
+the $n$-dimensional sphere, defined as:
+\begin{align*}
+	S^n = \{\, x \in \RR^{n + 1} \mid |x| = 1  \,\}
+\end{align*}
+Let us continue with $S^1$, the familiary shape of the circle. Though it is a subset of $\RR^2$ it
+is not really $2$-dimensional, but rather of dimension $1$ e.g. in the case of polar coordinates $S^1$
+is just $\{\, r = 1 \,\}$ and hence can be described locally by just one coordinate: The angle
 
-We are going to start with the "well-behavedness". All throughout calculus the real numbers play a
-quite important role, hence to even have a shot at defining differential structures we are going
-to require our space to be "locally euclidean", that is, we want every point to have a neighborhood that
-is homeomorphic to $\RR^n$. This leads us to the definition of a topological manifold:
+While this description does not work globally, this turns out to be the crucial feature of manifolds: They are
+locally euclidean:
 \begin{definition}[Topological Manifold]
-A \underline{topological $n$-manifold} is a second countable and Hausdorff topological space $M$ such
-that every $x \in M$ has a neighborhood $\U \ni x$ that is homeomorphic to $\RR^n$.
+A \textbf{Topological Manifold} of dimension $n$ is a metrizable and separable\footnote{
+	There are good reasons to require this, but we are just going to accept this as a technical requirement.
+}
+topological space $M$ in which every point $p \in M$ has a Neighborhood $\U$ that is homeomorphic to
+an open set $\V \subseteq \RR^n$.
+
+Given such a set $\U$ and homeomorphism $\varphi: \U \to \V$ we call $(\U, \varphi)$ a \textbf{chart}
+or \textbf{local coordinate system} of $M$.
 \end{definition}
+This definition might seem already enough to define smoothness. Given a $m$-manifold $M$ and a
+$n$-manifold $N$ and a function $f: M \to N$ we can for every point $p \in M$ take a chart
+$(\U, \varphi)$ near $p$ and a chart $(\V, \psi)$ near $f(p)$ and then turn $f$ into a function from
+$\U$ to $\V$\footnote{
+	This surpresses some technicalities, since $f(\U)$ is not guaranteed to be a subset of $\V$, but
+	we are going to assume this without loss of generality (otherwise just shrink $\U$ enough)
+} as follows:
+\begin{align*}
+	\psi \circ f \circ \phi^{-1}: \U \to \V
+\end{align*}
+This is now a function from an open subset of $\RR^m$ to an open subset of $\RR^n$, hence we already
+know what "smoothness" means.
 
-
-% TODO: rewrite this
-This manifold concept is already a quite powerfull and versatile one, but it is still a purely topological
-concept. But by adding a bit more structure we are going to develop from it the fundamental setting of differential geometry:
-The smooth manifold. And after introducing just enough differential geometric terminology we are going
-to introduce the invariant that interests us most: de Rham cohomology, the multi dimensional analog of
-the question whether local constness of smooth functions implies constness.
-
-But first, we are going to have to develop smooth manifolds:
-
-\section{Smooth Manifolds}
-A smooth manifold is first and foremost a space that locally looks like $\RR^n$:
-But one might note that 
-% TODO: Correct definitions etc.
-\begin{definition}[Coordinate Transformation]
-A \underline{coordinate transformation} from $U_\alpha$ to $U_\beta$ is the map
-\[
-	\phi_{\alpha \beta}: 
-		\phi^{-1}_\alpha(\mathcal{U}_\alpha \cap \mathcal{U}_\beta)
-		\to
-		\phi^{-1}_\beta(\mathcal{U}_\alpha \cap \mathcal{U}_\beta) \
-		x \mapsto (\phi^{-1}_\beta \circ \phi_\alpha)(x)
-\]
-for charts $(\mathcal{U}_\alpha, \phi_\alpha), (\mathcal{U}_\beta, \phi_\beta)$
-of a $n$-manifold $M$.
-\end{definition}
-Though quite wordy it is a natural concept: Given a point
-$p \in \mathcal{U}_\alpha \cap \mathcal{U}_\beta$ there are two unique
-coordinates $\mathbf{x}, \mathbf{y} \in \RR^n$ of $p$ such that
-$\phi_\alpha(\mathbf{x}) = \phi_\beta(\mathbf{x}) = p$ and the coordinate
-transformation is just the way to do that. The problem: If we find a way to
-define differentiation on a $n$-manifold $M$ we would want to make sure that the
-differentiability of a function $f: M \to \RR$ at a point $p \in M$ (whatever
-that means) does not depend on our chosen coordinates $\mathbf{x} \in \RR^n$ for
-$p$, but while the coordinate transformations are required to be continous,
-they aren't required to uphold any kind of differentiability conditions we
-invent. Since these are maps from $\RR^n$ to $\RR^n$ the most natural requirement
-would be smoothness \footnote{
+But this definition has major flaw: It is not coordinate independent. That is, given a function is smooth at a
+point $p$ with respect to charts $(x, \U)$, $(y, \V)$ there is no guarentee that the function is also going to be
+smooth with respect to some other charts $(\tilde{x}, \tilde{\U}), (\tilde{y}, \tilde{\V})$. This can be fixed by
+restricting to smooth changes of coordinate, that is by requiring for two charts $(x, \U), (y, \V)$ of some manifold
+$m$ that the map $x \circ y^{-1}$ is smooth\footnote{
 	Instead of smoothness one can of course also require differentiability,
 	but this soon gets messy since some concepts require differentiating more
 	than once, so we will be practical and just say smooth, leaving the
 	detailed requirements of theorems and definitions as an (not recommened
 	unless nescessary) exercise for the reader.
-} and this also turns out to be exactly the right thing
-\begin{definition}
-A \underline{smooth manifold} is a manifold
-$M$ together with an atlas $\{\mathcal{U}_\alpha, \phi_\alpha\})$  such that
-every coordinate transformation is smooth.
-\end{definition}
-\begin{remark}
-Note that a manifold is only a topological space while a smooth manifold is
-a topological space together with a choice of atlas. This choice is actually
-important since there are manifolds which are homeomorphic,
-but not diffeomorphic, the differential geometric equivalent of homeomorphic.
-\end{remark}
-This requirement allows us to now define differentiability in a natural way
-\begin{definition}
-A function $f: M \to N$ from a $m$-manifold $M$ to a $n$-manifold $N$ is
-\underline{smooth} at the point $p \in M$ if there are open sets
-$p \in \mathcal{U} \subseteq M, f(p) \in \mathcal{V} \subseteq N$ together
-with coordinate charts $\phi: \mathbb{R}^m \to \mathcal{U},
-\psi: \mathbb{R}^m \to \mathcal{V}$ such that
-\[
-	\psi^{-1} \circ f \circ \phi
-\]
-is smooth at $\phi^{-1}(p)$. $f$ is smooth if it is smooth at every $p \in M$.
-\end{definition}
+}.
 
-In higher dimensional real analysis one has to replace the derivative $f'$ by the linear
+While this is the right choice this requires us to pick more data than just a topological space. We also have to pick
+open sets and their coordinate functions.
+
+Such a choice is called an Atlas:
+\begin{definition}
+TODO
+\end{definition}
+One would hope that the choice of atlas does not matter, but it turns out that it does: There are topological spaces
+with non-equivalent smooth structures. Hence we are always going to need to include the smooth structure of smooth
+manifolds when talking about them, though it is usually going to follow from context.
+
+Similiarly as with topological spaces, true equivalence of spaces is a too fine invariant. The right equivalence is
+given by diffeomorphisms:
+\begin{definition}
+	Let $M,N$ be smooth manifolds. We call a smooth map $f: M \to N$ \textit{diffeomorphism} if it is bijective and
+	its inverse is also smooth.
+\end{definition}
+We call manifolds that admit a diffeomorphism between them diffeomorphic – as in topological spaces it is rather difficult
+to show that two spaces are not diffeomorphic, but smooth invariants helps with this.
+
+While we defined smoothness itself, it remains to define the actual derivative of a cohomology.
+In classical real analysis one has to replace the derivative $f'$ by the linear
 map $Df$ i.e. the differential of $f$, which can be interpreted as the best linear
 approximation of $f$ in the sense of $Df|_p(v)$ being the best linear (in $v$)
 approximation for $f(p + v)$. We would love to do the same thing, but we can't since a
@@ -134,7 +123,7 @@ While we established a way to define differentiation of smooth functions on mani
 it remains to define its counterpart: Integration. We delayed this for a reason: While
 the classic concept of differentiation can be unambigously generalized to manifolds and
 multiple dimensions, the concept of integration can be generalized in quite different ways.
-And this is not by coincidence: The 1-d Integral actually fullfills three distinct roles,
+And this is not by coincidence: The one dimensional Integral actually fullfills three distinct roles,
 which grow distinct when taken to multiple dimensions (while still being interconnected).
 
 In the case of $\RR$ Integration is a means of measuring area (this is generalized by the familiar
@@ -186,6 +175,7 @@ $T_pM$ to $\RR$.
 
 This logic upholds for line-integrals quite well, but is there any way to use the
 tangent space to represent higher dimensional shapes? Since we can't assume there
+% TODO: Talk about determinant
 to be any canonical definition of matrix, we have to limit ourselves to shapes that
 can be defined just using the linear algebraic properties of the tangent space. The
 most obvious shape is therefore the $k$-parallelepiped, that we can represent using

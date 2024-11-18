@@ -1,9 +1,9 @@
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 Upon the first introduction to derivatives one learns quite early that a function
-$f: \RR \to \RR$ is constant if and only if $f'(x) = 0$ for every $x \in \RR$. This statement is quite useful,
-but it subtle implicit assumption, depending not only on the value of $f'$, but also on the domain
-of $f$. In fact, take:
+$f: \RR \to \RR$ is constant if and only if $f'(x) = 0$ for every $x \in \RR$. This statement is useful,
+but also contains a subtle implicit assumption: It depends not only on the value of $f'$, but also on
+the domain of $f$. In fact, take:
 \begin{align*}
 	f: \RR \setminus \{0\} &\to \RR \\
 		x &\mapsto \begin{cases}
@@ -11,12 +11,10 @@ of $f$. In fact, take:
 			 1 \quad&\text{if } x > 0
 		\end{cases}
 \end{align*}
-this functions has derivative zero, but is not constant! Though this does not come as a surprise and $f$ is of course almost constant, i.e.
-\begin{definition}[Locally constant]
-	Let $\U \subseteq \RR$ and $f: \U \to \RR$. We call $f$ \textbf{locally constant} if for every $x \in \U$
-	there is a open neighborhood $\V \subseteq \U$ of $x$ such that $f$ is constant on $\V$.
-\end{definition}
-Allowing us to formulate a more general version of the theorem
+this functions unsurprisingly has derivative zero, but is not globally constant, only locally i.e. every
+point has a neighborhood on which the restriction of $f$ is constant.
+
+In fact it holds in general:
 \begin{lemma}
 	Let $\U \subseteq \RR$ open and $f: \U \to \RR$ a smooth function. $f$ is locally constant if and only if
 	$f' = 0$.
@@ -27,7 +25,7 @@ detecting these cases. To figure out the distinguish property of these sets, we 
 $\RR$ to see where it breaks apart for general sets:
 
 On $\RR$ this implication is easily proven: Let $f: \RR \to \RR$ be locally constant. For every $x \in \RR$
-pick an open neighborhood $\V_x$ of $x$ on which $f$ is constant. Now pick any $y \in \RR$ and
+pick an open neighborhood $\V_x$ of $x$ on which $f$ is constant. Pick any $y \in \RR$ and
 define:
 \begin{align*}
 	\V^=      &\coloneqq \bigcup_{x \in \RR\colon f(x) = f(y)} \V_x \\
@@ -58,23 +56,28 @@ of an object, turning any equation about the position of an object into a second
 equation. Because of this (and for unrelated reasons that we can not get into) it is often more convenient
 to work with the potential energy of an object, defined as the antiderivative of the force field. That is,
 given a  force field $f: \RR^n \to \RR^n$ we define its potential function to be a smooth function $u: \RR^n \to \RR$
-such that $\nabla u = f$ (note that the potential is only unique up to a added constant). But given a force field $f: \RR^n \to \RR^n$
-there is no guarantee that it has a potential, hence we would like to limit ourselves to the ones that do.
+such that $\nabla u = f$ (note that the potential is only unique up to a added constant).
+
+Given an arbitrary vector field $f: \RR^n \to \RR^n$ there is no guarantee that it has a potential function, hence we would like to
+single out these that do. There is a special term for these fields, coming from physics:
 \begin{definition}
 A vector field $f: \RR^n \supseteq \U \to \RR^n$ is called \textbf{conservative} if there is a potential $u: \U \to \RR$
 such that $\nabla u = f$.
 \end{definition}
 Calling such a vector field conservative stems from the fact that these are exactly the vector
 fields that conserve energy i.e. every line integral (and the line integral of a force is
-energy) only depends on its endpoints. In particular the line integral over any closed loop is
-zero.
+energy) only depends on the difference of the potential at their endpoints.
+In particular the line integral over any closed loop is zero.
 
-This rises the question: Given an vector field $f: \U \to \RR^n$, how can one check that it
+This makes a question arise: Given an vector field $f: \U \to \RR^n$, how can one check that it
 is conservative? It turns out that for $n = 1$ every vector field is conservative: This is
 a direct consequence of the fundamental theorem of calculus. But for $n \geq 2$ non-conservative vector
 fields exist! So how, given any vector field, can we decide whether it is conservative? One possibility would
-be to "just" find a potential function or a closed loop with non-zero integral, but this isn't always a simple
-or even feasible task. Luckily one usually learns of a simpler method using the curl of a vector field:
+be to "just" find a potential function or a closed loop with non-zero integral, but this is not always a simple
+or even feasible task.
+
+At this point in a physics class one would usually learn of a simpler method to establish whether a vector field is
+conservative by defining the curl of a vector field:
 \begin{definition}
 	Let $\U \subseteq \RR^2$ be open and $f: \U \to \RR^2$ a vector field. Define the \textbf{curl of $f$} as
 	the smooth function defined by:
@@ -91,11 +94,11 @@ can reduce the question whether a vector field is conservative to a statement ab
 Let $f: \RR^2 \to \RR^2$ be a vector field. Then $f$ is conservative if and only if its curl is zero.
 \end{lemma}
 
-This is wonderful! We reduced a hard question to an easy one, turning conservativity into an easily calculated
-invariant. But, as the attentive reader might have already noticed, we did so at the cost of generality.
-Similar to our first statement, we again reduced the statement to vector fields defined on the whole of
-$\RR^2$. And not without reason, either: There are subsets of $\RR^2$ on which curl-free vector fields are
-not necessary conservative. As an example take $\U = \RR^2 \setminus \{0\}$ and define:
+This is wonderful! This Lemma reduces a hard question to an easy one and we are now able to easily calculate whether
+a given vector field is conservative. But, as the attentive reader might have already noticed, we did so at the cost of generality.
+Similar as with our previous statement, we are again limited to vector fields defined on the whole of $\RR^2$.
+And not without reason, either: There are subsets of $\RR^2$ on which curl-free vector fields are not necessary conservative.
+As an example take $\U = \RR^2 \setminus \{0\}$ and define:
 \begin{align*}
 	f: \U &\to \RR \\
 		(x, y) &\mapsto \frac{1}{x^2 + y^2}(-y, x)
@@ -104,19 +107,17 @@ Its curl vanishes:
 \begin{align*}
 	\curl f = \frac{y^2 - x^2}{(x^2 + y^2)^2} - \frac{y^2 - x^2}{(x^2 + y^2)^2} = 0
 \end{align*}
-But this vector field is clear not conservative: Take e.g. the integral on the unit circle (a trivially closed
+But this vector field is clearly not conservative: Take e.g. the integral on the unit circle (obviously a closed
 loop), it is not zero!
 
 Our argument fails for a similar reason as in the first example: It includes a assumption on the domain of
-the vector field, since curl-free vector fields are not conservative in general, but something weaker:
-\begin{definition}
-A vector field $f: \RR^n \supseteq  \U \to \RR^n$ is called \textbf{locally conservative} if every point $x \in \U$ has an
-open neighborhood $\V \subseteq \U$ such that $f|_\V$ is conservative.
-\end{definition}
+the vector field, since curl-free vector fields are in general not (globally) conservative, but only
+locally, i.e. every point has a neighborhood on which the vector field is conservative.
 
-That curl-free vector fields are locally conservative can intuitively be seen by approximating small loops using small squares.
-Imagine one such square of side length $2\Delta > 0$ with mid-point $(x_1, x_2)$. The (counter-clockwise) integral of its boundary over
-a vector field $f$ can then be approximated as:
+That curl-free vector fields are locally conservative can intuitively be seen by approximating small
+loops using small squares. Imagine one such square of side length $2\Delta > 0$ with mid-point
+$(x_1, x_2)$. The (counter-clockwise) integral of its boundary over a vector field $f$ can then be
+approximated as:
 \begin{align*}
 	\Delta \cdot & (  f_1(x_1, x_2 - \Delta) + f_2(x_1 + \Delta, x_2) - f_1(x_1, x_2 + \Delta) - f_2(x_1 - \Delta, x_2) \\
 	&\approx \Delta \Big( f_1(x_1, x_2) - \Delta \frac{\partial f_1}{\partial x_2}(x_1, x_2) + f_2(x_1, x_2) + \Delta \frac{\partial f_2}{\partial x_1}(x_1, x_2) \\
@@ -124,30 +125,32 @@ a vector field $f$ can then be approximated as:
 	      &= 2\Delta^2 \Big( \frac{\partial f_2}{\partial x_1}(x_1, x_2) - \frac{\partial f_1}{\partial x_2}(x_1, x_2)\Big) \\
 	&= 2 \Delta^2 \curl f
 \end{align*}
-Hence vector fields are locally conservative if and only if they are curl-free. But again: There are sets on which
-every locally conservative vector field is conservative – why? Without giving a rigorous proof:
-As an approximate answer imagine a closed loop on $\RR^2$, to keep it simple again as a square.
-This square can be split into 4 smaller squares and then the integral over the boundary of the larger square is equal to the sum
-of the integrals over the boundaries of the smaller ones. By doing this until all squares
-are small enough such that the integral over their boundary is zero shows that their sum and hence the integral over the boundary of
-the large square is zero.
+Hence vector fields are locally conservative if and only if they are curl-free.
 
-But in the case of $\RR^2 \setminus \{0\}$ this is not possible: Any loop/square that contains the origin can not be split into smaller squares.
-This property can now again be phrased in topological terms:
+Thus the natural question arises: On which domains is a locally conservative vector field conservative? 
+
+In the familiar case of $\RR^2$ this implications holds since every closed loop can be filled up
+by a disk. This disk can then be subdivided into small enough pieces such that $f$ is conservative on them. The integral around
+the closed loop is then equal to the sum of the integrals of $f$ over the boundaries of the pieces, all
+of which are zero. Hence the integral is zero and $f$ is conservative.
+
+This argument only depends on the ability to fill every closed loop and can thus be extended to every space on which this is
+possible. This property also has a nice geometrical interpretation of being equivalent to a space not having any "holes" and
+is also a famous topological invariant:
 \begin{definition}
 We call a topological space $X$ \textbf{simply connected} if it is connected and every closed loop i.e. map $f: S^1 \to X$ admits a extension to $\mathbb{D}^2$.
 \end{definition}
-Hence on simply connected spaces locally conservative vector fields are conservative!
 
-Both of these examples can be seen as instances of \textbf{de Rhams theorem}, a deep statement about the connection between the "globalization"
-of local properties of smooth functions on a space and topological properties of the space itself,
-and the subject of this thesis.
+Similar as in the previous case, we found a connection between a topological property of a space and properties of smooth
+objects with vanishing "derivative". It turns out that there is a general statement called \textit{de Rhams theorem}, a deep
+statement about the connection between the "globalization" of local properties of smooth functions on a space and topological
+properties of the space itself, which includes these examples as a special case and is the subject of our thesis.
 
 Properly stating de Rhams theorem requires the development of de Rham Cohomology: The concept of smooth
 functions and vector fields can be generalized into \textbf{differential forms} with the gradient/curl then
-becoming the \textbf{exterior derivative $\mathrm{d}$}, that maps $k$-forms to $k+1$-forms. Thus the objects
-of our interest are the forms with zero exterior exterior derivative (called closed) modulo the ones that are
-the exterior derivative of another form (called exact), or in algebraic terms:
+becoming the \textbf{exterior derivative $\mathrm{d}$}, mapping $k$-forms to $k+1$-forms. Thus the objects
+of our interest are the forms with zero exterior exterior derivative (called \textit{closed}) modulo the ones that are
+the exterior derivative of another form (called \textit{exact}), or in algebraic terms:
 \begin{align*}
 	H^* \coloneqq \ker(\mathrm{d}) / \Img(\mathrm{d})
 \end{align*}
@@ -157,28 +160,30 @@ The attentive reader might notice that this is only sensible if $\mathrm{d}$ is 
 is $\mathrm{d} \circ \mathrm{d} = 0$, but that is indeed the case, as we are going to proof.
 \end{remark}
 
-$H^*$ is called the de Rham cohomology of a space and de Rhams theorem now states that this is
+$H^*$ is called the de Rham cohomology of a space and de Rhams theorem states that this is
 isomorphic to a topological invariant: Čech cohomology, which can be understood as measuring the "holes"
 in a space by detecting certain objects that have empty boundary (called cycles) modulo objects that are the
-boundary of something.
+boundary of something. (This can be seen as the generalization of a closed loop that cannot be filled in by a disk)
 
 That these two invariants are isomorphic is a deep fact, first conjectured by E. Cartan in 1928 and
-proven in 1931 by George de Rham in his dissertation \cite{de_rham_sur_1931} using the theory of integration
+proven in 1931 by George de Rham in his dissertation \cite{de_rham_sur_1931} using integration
 of differential $k$-forms. While giving an intuitive interpretation of de Rham cohomology being dual to the
 (oriented and compact) submanifolds
 \footnote{
 	Sadly it is more complicated than this, because one needs to consider more than just these submanifolds.
-	Properly doing this leads to the theory of \textit{currents} for a detailed review see TODO
+	Properly doing this leads to the theory of \textit{currents} for a detailed review see \cite{de_rham_differentiable_1984}
 }
 it also requires the machinery of integration of differential forms and gets quite technical in the details.
 
-On the other extreme it is possible to prove this statement using \textit{sheaf cohomology}, but this elegance comes
-at the cost of geometric intuition and requiring heavy algebraic machinery.
+On the other extreme it is possible to prove this statement using \textit{sheaf cohomology}, which is a category theoric tool
+that generalizes the description of obstructions to the extension of local solutions of geometric problems to global ones.
+Such a sheaf-theoric proof is elegant, but it also lacks the geometric intuition of de Rhams approach and requires heavy
+algebraic machinery
 
-The proof that is done in this thesis was premiered 1952 by Weil in the (French) paper \cite{weil_sur_1952},
-with \cite{tu_differential_1982} being a good (non French) modern account. It strikes a balance, being elegant
-without requiring either integration nor too heavy algebraic machinery and still having a geometric explanation
-though not one as obvious.
+In this thesis we are going to try to find a middle ground between these extremes, using a method, that was premiered in 1952
+by André Weil in the (French) paper \cite{weil_sur_1952}
+(with \cite{tu_differential_1982} being a good (non-French) modern account). While being primarily algebraic it foregoes too
+heavy machinery, does not require integration and offers a geometric explanation (though not one as obvious).
 
 Out contribution lies in supplying details of the proof that were left out of \cite{tu_differential_1982}, combining
 it with a self-contained
@@ -186,6 +191,7 @@ it with a self-contained
 	Not self-contained in the sense of proving every statement, but self-contained in the sense that it can be
 	(hopefully) understood on its own
 }
-introduction to all the needed materials \& motivations, trying to make this thesis accessible to anybody with a
-knowledge of linear algebra, analysis and topology at an undergraduate level without requiring any topic-specific knowledge.
+introduction to all the needed materials and motivations, trying to make this thesis accessible to anybody with a
+knowledge of linear algebra, analysis and topology at an undergraduate level without requiring any further topic-specific
+knowledge.
  

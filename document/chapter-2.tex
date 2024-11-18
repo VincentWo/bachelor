@@ -6,19 +6,20 @@ traced back to connectedness being a "low-dimensional" invarant, best seen by tr
 \begin{theorem}
 	Let $n \neq m \in \NN$. $\RR^n$ is not homeomorphic to $\RR^m$
 \end{theorem}
-We can prove this in the case of $n = 1, m > 1$ as follows: Take any $p \in RR$, then $\RR \setminus \{p\}$ has
-two connected components, but $\RR^m \setminus \{q\}$ is connected for any $q \in RR^m$, hence the spaces can't
+We can prove this in the case of $n = 1, m > 1$ as follows: Take any $p \in \RR$, then $\RR \setminus \{p\}$ has
+two connected components, but $\RR^m \setminus \{q\}$ is connected for any $q \in \RR^m$, hence the spaces can't
 be homeomorphic. For distinguishing the case of $n = 2, m > 2$ this argument fails – in that sense connectedness
 is a lower dimensional phenomonen.
 
 Various higher dimensional generalizations of connected components have been developed
 that overcome this limitation by measuring higher dimensional phenomena. Of these generalizations
-Cohomology is arguably the easiest to compute and understand. There are actually multiple different
-ways to define cohomology, but on "nice" spaces (which includes all smooth manifolds) all of them agree, allowing
-us to restrict our attention to just one: Čech Cohomology. Čech Cohomology is an based on the concept that topological
-spaces are mess, too messy
+Cohomology is arguably the easiest to compute and understand. While there are in general multiple different
+ways to define cohomology, on "nice" spaces (which includes all smooth manifolds) all of them agree, allowing
+us to restrict our attention to just one: Čech Cohomology. It tries to reduce the geometric structure of our
+usually uncountable spaces back to finite combinatorial objects, whose properties are easily calculated.
+
 \begin{remark}
-One normally would state most of the definitions in this chapter in
+One would normally state most of the definitions in this chapter in
 the context of modules of a ring $R$, getting vector spaces as a special
 case (since vector spaces are exactly the modules of their field),
 but since de Rham cohomology only makes sense as a vector space this
@@ -76,12 +77,13 @@ open covers:
 	We will denote the $n$-simplices of this nerve by $\mathfrak{N}^n(\mathfrak{U}, X)$.
 \end{definition}
 That is: We take the open sets as vertices, with two intersecting sets being lines, three intersecting
-set as 2-simplices and in general $n + 1$ intersecting sets as $n$-simplices.
+set being 2-simplices and in general $n + 1$ intersecting sets being $n$-simplices.
 
-To make this structure more workable we turn it into a graded vector space structure:
+To make this more algebraicly interesting we turn it into a graded vector space structure:
 \begin{align*}
 	C^n(\mathfrak{N}(\mathfrak{U}, X)) \coloneqq \bigoplus_{\sigma \in \mathfrak{N}^n(\mathfrak{U}, X)} \RR
 \end{align*}
+% TODO: To this better, especially since this is the first of many uses of such a convention
 We will also establish a convention to refer its elements. For $\alpha_0, \dots, \alpha_n \in I$ we 
 denote the element representing the intersection of $\U_{\alpha_0}, \dots, \U_{\alpha_n}$ by
 $e_{\alpha_0, \dots, \alpha_n}$ (in the case of an empty intersection we will treat it as being zero).
@@ -105,8 +107,7 @@ The boundary of $e_{a, b}$ is $b - a$, this can be interpreted as $e_{a, b}$ bei
 and $e_{b, a}$ being the line from $b$ to $a$.
 
 The triangle $e_{a,b,c}$ has the boundary $e_{b, c} - e_{a, c} + e_{a, b} = e_{a,b} + e_{b, c} + e_{c, a}$.
-This can be interpreted as its choice of orientation consisting of lines from $a$ to $b$ to $c$, in contrast
-to e.g. $e_{c, b, a} = -e_{a, b, c}$ consisting of lines from $c$ to $b$ to $a$.
+This can be interpreted as its choice of orientation being whether to go clockwise or counter-clockwise around it.
 \end{example}
 
 This map is obviously a linear map on $C_*(\mathfrak{N}(\mathfrak{U}, X))$ and it is nil-potent, that is
@@ -126,7 +127,9 @@ In abuse of notation we will denote this by writing
 $\partial: C_\bullet \to C_{\bullet - 1}$.
 
 To "detect holes" we are now going to take inspiration from the definition of
-the fundamental group. There one is interested in non-contractible loops, that
+the fundamental group.
+% TODO: Expand on this
+There one is interested in non-contractible loops, that
 is: maps from $S^1$ into the space that cannot be extended to $D^2$. Putting
 this into a more general context: One is interested in loops that aren't the boundary
 of anything. Taking a loop to mean everything that does not have boundary gives us
@@ -183,7 +186,7 @@ $(C^\bullet, \delta^\bullet)$ is the $\ZZ$-graded vector space:
 	H^n(C^\bullet, \delta^\bullet) := \ker(\delta^n)/\Img(\delta^{n - 1})
 \]
 \end{definition}
-Dual to our previous remark we are going to denote the elements of $\Im(\delta)$ as coboundaries
+Dual to our previous remark we are going to denote the elements of $\Img(\delta)$ as coboundaries
 and the elements of $\ker(\delta)$ as cocycles.
 
 Combining all of this leads us to finally define the Čech-cohomology of an open cover:
@@ -211,6 +214,7 @@ $\mathfrak{U}$} as:
 \centering
 \includegraphics{graphics/simplicial_complex2.pdf}
 \caption{A triangle as a simplicial complex}
+\label{fig:triangle_simplicial_complex}
 \end{figure}
 
 % One could make this more precise and assign a topological space
@@ -331,7 +335,8 @@ cover of a space.
 
 And for good reason: Not every open cover of a space produces a reasonable approximation. In fact: every
 space can be covered by just itself, with the resulting nerve being one point, resulting in a cohomology
-that is trivial in every dimension but 0. For a less contrived example see \ref{figure:circle_nerves} 
+% TODO: Something is weird with the numbering here
+that is trivial in every dimension but 0. For a less contrived example see Figure \ref{figure:circle_nerves}:
 $S^1$ can be covered by two overlapping open sets, which produces a nerve that consists only of a 1-simplex –
 not a very circle-like shape.
 
@@ -376,17 +381,14 @@ $C^n$ to $D^n$ and commutes with the boundary operators, i.e.
 \]
 \end{definition}
 This condition can be equally stated as requiring the diagram
-% https://q.uiver.app/#q=WzAsNSxbMCwzLCJDXlxcYnVsbGV0Il0sWzAsNCwiRF5cXGJ1bGxldCJdLFsxLDMsIkNee3tcXGJ1bGxldH0gKyAxfSJdLFsxLDQsIkRee3tcXGJ1bGxldH0gKyAxfSJdLFsyLDAsIlxcYnVsbGV0Il0sWzAsMSwiZiIsMl0sWzAsMiwiXFxtYXRocm17ZH1fQV5cXGJ1bGxldCJdLFsyLDMsImYiXSxbMSwzLCJcXG1hdGhybXtkfV9CXlxcYnVsbGV0IiwyXV0=
-\[\begin{tikzcd}
-	&& \bullet \\
-	\\
-	\\
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJDXlxcYnVsbGV0Il0sWzAsMSwiRF5cXGJ1bGxldCJdLFsxLDAsIkNee3tcXGJ1bGxldH0gKyAxfSJdLFsxLDEsIkRee3tcXGJ1bGxldH0gKyAxfSJdLFswLDEsImYiLDJdLFswLDIsIlxcbWF0aHJte2R9X0FeXFxidWxsZXQiXSxbMiwzLCJmIl0sWzEsMywiXFxtYXRocm17ZH1fQl5cXGJ1bGxldCIsMl1d
+\[\begin{tikzcd}[cramped]
 	{C^\bullet} & {C^{{\bullet} + 1}} \\
 	{D^\bullet} & {D^{{\bullet} + 1}}
-	\arrow["{\mathrm{d}_A^\bullet}", from=4-1, to=4-2]
-	\arrow["f"', from=4-1, to=5-1]
-	\arrow["f", from=4-2, to=5-2]
-	\arrow["{\mathrm{d}_B^\bullet}"', from=5-1, to=5-2]
+	\arrow["{\mathrm{d}_A^\bullet}", from=1-1, to=1-2]
+	\arrow["f"', from=1-1, to=2-1]
+	\arrow["f", from=1-2, to=2-2]
+	\arrow["{\mathrm{d}_B^\bullet}"', from=2-1, to=2-2]
 \end{tikzcd}\]
 to commute. Chain maps do descend unto cohomology, because:
 \begin{lemma}
@@ -529,7 +531,7 @@ of naturally isomorphic vector spaces. This is more a philosophical than a pract
 since the natural isomorphisms allow us to just take a specific representative as "the" Čech cohomology.
 \end{remark}
 
-While this definition is quite elegant, it does suffer from the problem of it being quite impractical.
+While this definition is quite elegant, it does suffer from the problem of being impractical.
 Given a topological space we would have to calculate the Čech cohomology of all its open covers and
 then apply the limiting operation – in most cases this is all but impossible.
 

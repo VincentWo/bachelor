@@ -13,9 +13,9 @@
           };
           tex = (pkgs.texlive.combine {
             inherit (pkgs.texlive)
-              scheme-medium biblatex tikz-cd stackengine chngcntr csquotes 
+              scheme-medium biblatex tikz-cd spath3 stackengine chngcntr csquotes 
               latexmk standalone hobby animate preview media9 zref ocgx2
-              tcolorbox environ tikzfill pdfcol;
+              tcolorbox environ tikzfill pdfcol doublestroke;
           });
         in
         with pkgs; {
@@ -24,6 +24,7 @@
               tex
               biber
               texlab
+              ispell
             ];
           };
         }
