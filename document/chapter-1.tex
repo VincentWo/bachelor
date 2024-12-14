@@ -1,35 +1,22 @@
 \chapter{De Rham Cohomology}
-Curl-free vector fields and locally constant smooth functions are not that different: Both associate
-some smoothly varying data to points and can be described as the nullspace of some linear
-"differentiation" operator.
+To properly understand the phenomena we have seen so far requires us to rephrase them in the language of
+differential geometry. Thus we will use this chapter to define the basic vocubalary of differential geometry,
+starting with the generalization of differentation to more general domains.
 
-But properly developing and generalizing this concept requires developing the ubiquitous concept 
-of smooth manifolds, enabling us to not only generalize the concept of a smooth function to more than
-just open subsets of $\RR^n$, but also to develop (some of) the rich theory of differential geometry:  
-Generalizing the concept of differentiation using the concept of a tangent space – and its dual
-the cotangent space to generalize integration, culminating into the theory of differential forms
-and de Rham cohomology.
 
-\begin{remark}
 While we are going to aim for a self-contained introduction to all the needed differential geometric
-background, it is impossible to do so without skipping quite some detail. If one desires a full fledged
+background, it is impossible to do so in our limited format without skipping quite some detail. If one desires a full fledged
 introduction (and the topic is definitely more than interesting enough to deserve one), then one should
 read one of the plethora of proper ones e.g. \cite{lee_introduction_2013},
 \cite{spivak_comprehensive_1979} or \cite{wendl_differential_2022}
-\end{remark}
 
 \section{Smooth Manifolds}
-Before getting into smooth manifolds, we start with topological manifolds. The archetypical example of one is
-the $n$-dimensional sphere, defined as:
-\begin{align*}
-	S^n = \{\, x \in \RR^{n + 1} \mid |x| = 1  \,\}
-\end{align*}
-Let us continue with $S^1$, the familiary shape of the circle. Though it is a subset of $\RR^2$ it
-is not really $2$-dimensional, but rather of dimension $1$ e.g. in the case of polar coordinates $S^1$
-is just $\{\, r = 1 \,\}$ and hence can be described locally by just one coordinate: The angle
+The usual definition of differentiability only works for open subsets of $\RR^n$, but
+we want to generalize the notion to a more general class of spaces known as 
+\textit{manifolds}.
 
-While this description does not work globally, this turns out to be the crucial feature of manifolds: They are
-locally euclidean:
+Manifolds are a foremost topological concept generalizing the concept of embedded
+curves/surfaces one usually encounters in basic analysis courses:
 \begin{definition}[Topological Manifold]
 A \textbf{Topological Manifold} of dimension $n$ is a metrizable and separable\footnote{
 	There are good reasons to require this, but we are just going to accept this as a technical requirement.
@@ -40,20 +27,34 @@ an open set $\V \subseteq \RR^n$.
 Given such a set $\U$ and homeomorphism $\varphi: \U \to \V$ we call $(\U, \varphi)$ a \textbf{chart}
 or \textbf{local coordinate system} of $M$.
 \end{definition}
-This definition might seem already enough to define smoothness. Given a $m$-manifold $M$ and a
-$n$-manifold $N$ and a function $f: M \to N$ we can for every point $p \in M$ take a chart
-$(\U, \varphi)$ near $p$ and a chart $(\V, \psi)$ near $f(p)$ and then turn $f$ into a function from
-$\U$ to $\V$\footnote{
-	This surpresses some technicalities, since $f(\U)$ is not guaranteed to be a subset of $\V$, but
-	we are going to assume this without loss of generality (otherwise just shrink $\U$ enough)
-} as follows:
-\begin{align*}
-	\psi \circ f \circ \phi^{-1}: \U \to \V
-\end{align*}
-This is now a function from an open subset of $\RR^m$ to an open subset of $\RR^n$, hence we already
-know what "smoothness" means.
+Thus while a manifold might look globally quite different from $\RR^n$ it is always
+going to look like $\RR^n$ locally.
 
-But this definition has major flaw: It is not coordinate independent. That is, given a function is smooth at a
+The archetypical example of this concepts are the $n$-spheres, defined as
+\[
+	S^n \coloneqq \{\, x \in \RR^{n + 1} \mid |x| = 1 \,\}
+\]
+with $S^1$ more commonly known as the circle. These all look globally quite different
+from $\RR^n$, but locally look like $\mathbb{R}^n$, something that becomes evident
+every time one uses a navigation app, which usually shows one a projection of some
+subset of $S^2$ to a subset of $\RR^2$.
+
+We now want to generalize the notion of differentiability to functions $f: M \to N$,
+where $M, N$ aren't open subsets of $\RR^n$, but manifolds. They seem to be perfect
+for this purpose since differentiability is a local property anyway and manifolds
+locally look like $\RR^n$. 
+
+In fact it does not take long to come up with a definition of differentiability that
+seems to work: Given a function $f: M \to N$ between two manifolds we call $f$
+differentiable at a point $p \in M$ if there exist local choices of coordinates
+$(\U, x)$ around $p$ and $(\V, y)$ around $f(p)$ such that the function
+\[
+	y \circ f \circ x^{-1}: \mathbb{R}^m \to \mathbb{R}^n
+\]
+is differentiable. 
+ 
+While this definition might seem quite workable already, it has major flaw:
+It is not coordinate independent. That is, given a function is smooth at a
 point $p$ with respect to charts $(x, \U)$, $(y, \V)$ there is no guarentee that the function is also going to be
 smooth with respect to some other charts $(\tilde{x}, \tilde{\U}), (\tilde{y}, \tilde{\V})$. This can be fixed by
 restricting to smooth changes of coordinate, that is by requiring for two charts $(x, \U), (y, \V)$ of some manifold
@@ -68,16 +69,20 @@ $m$ that the map $x \circ y^{-1}$ is smooth\footnote{
 While this is the right choice this requires us to pick more data than just a topological space. We also have to pick
 open sets and their coordinate functions.
 
-Such a choice is called an Atlas:
 \begin{definition}
-TODO
+A smooth manifold is a topological manifold with a choice of charts
+$\{(\U_\alpha, x_\alpha)\}_{\alpha \in I}$ such that $\bigcup_{\alpha \in I} \U = M$,
+and for eny $\alpha, \beta \in I$ the sets $x_\alpha(\U_\alpha \cap \U_\beta$,
+$x_\beta(\U_\alpha \cap \U_\beta)$ are open and $x_\alpha \circ x_\beta^{-1}$
+is smooth.
 \end{definition}
-One would hope that the choice of atlas does not matter, but it turns out that it does: There are topological spaces
-with non-equivalent smooth structures. Hence we are always going to need to include the smooth structure of smooth
-manifolds when talking about them, though it is usually going to follow from context.
+One would hope that it would always be possible to choose charts to turn any given
+topological manifold into a smooth one, but by a deep result from differential topology 
+this is not always possible. Even worse there are topological manifolds with 
+different\footnote{TOOD} choices producing different smooth manifolds, but we mostly
+do not have to worry about that.
 
-Similiarly as with topological spaces, true equivalence of spaces is a too fine invariant. The right equivalence is
-given by diffeomorphisms:
+The word different we used right now 
 \begin{definition}
 	Let $M,N$ be smooth manifolds. We call a smooth map $f: M \to N$ \textit{diffeomorphism} if it is bijective and
 	its inverse is also smooth.
@@ -85,63 +90,53 @@ given by diffeomorphisms:
 We call manifolds that admit a diffeomorphism between them diffeomorphic – as in topological spaces it is rather difficult
 to show that two spaces are not diffeomorphic, but smooth invariants helps with this.
 
-While we defined smoothness itself, it remains to define the actual derivative of a cohomology.
-In classical real analysis one has to replace the derivative $f'$ by the linear
-map $Df$ i.e. the differential of $f$, which can be interpreted as the best linear
-approximation of $f$ in the sense of $Df|_p(v)$ being the best linear (in $v$)
-approximation for $f(p + v)$. We would love to do the same thing, but we can't since a
-smooth manifold in general does not have any vector space structure, making it impossible
-to talk about directions or linearity.
+While we defined smoothness itself, it remains to define the actual derivative of a 
+function. This turn out to be a bit more involved since the classical derivative
+is dependend on the possibility to talk about directions in a point $p$. That
+is given a point $p \in \mathbb{R}^n$ we can talk about the space of all
+directions at $p$, a $n$-dimensional vector space that we are going to denote as
+$T_p \RR^n$. The derivative of a smooth function $\RR^n \to \RR$ at a point $p$
+is then a linear function from $T_p \RR^n$ to $\RR$. We call $T_p \RR^n$ the 
+tangent space at $p$.
 
-The remedy for this is going to be the tangent space: For every point $p \in M$ one
-defines a local tangent space $T_p M$ that is a $n$-dimensional vector space and can
-be thought of as either a linear approximation of $M$ at $p$, the $n$-dimensional vector
-space of "directions" at $p$ or as the directional derivatives at $p$ seen as functionals
-on $C^\infty(M)$ fullfilling a "product-rule" TODO.
+This is not completely straightforward to translate to an abstract smooth manifold
+since in general there do not exists any canonical directions on a manifold. But
+fixing a choice of chart $x: M \to \RR^n$ around $p \in M$  we can represent the
+directions at $x(p)$ using the directions at $p$, defining 
+\[
+	T_p^x M \coloneqq T_{x(p)} M
+\]
+Similiar to how we can change coordinates on $M$ by $y \circ x^{-1}$, we can also
+switch from one choice of directions to another by using the isomorphism:
+\[
+	D(y \circ x^{-1})(x(p)): T^x_p M = T_{x(p)} \RR^n \to T_{y(p)} \RR^n = T^y_{y(p)} M
+\]
+Thus one can define $T_p M$ as the union of all $T^x_p M$ for any chart $x$ modulo
+the equivalence relation equating two vectors $a \in T^x_p M$ and $b \in T^y_p$
+if and only if $b = D(y \circ x^{-1})(p)(a)$.
 
-We sadly don't have the time to fully develop the theory of tangent spaces, so we have
-to take the things we need as black boxes. $TM$ is the tangent space of $M$, taken as the
-"disjoint union" of all local tangent spaces, it can also be equipped with a topology and
-an atlas such that it is a $2n$-dimensional smooth manifold. A smooth map $f: M \to N$
-induces a map $Df: TM \to TN$ that intuitively maps "changes" on $M$ to "changes" on $N$.
+For any chart $x$ at $p$ there is a canonical choice of projection
+$\pi^x: T_p M \to T_p^x M$ and we can turn $T_p M$ into a vector space such that each
+of this projections is an isomorphism.
 
-Although tangent spaces don't have a canonical basis, once we have chosen coordinates
-$\mathbf{x} = (x_1, \dots, x_n)$ for $p \in M$ there is a standard choice of basis of
-$T_pM$ denoted as 
-\begin{align*}
-	\frac{\partial}{\partial \mathbf{x}} = 
-		\left\{\frac{\partial}{\partial x_1}, \dots, \frac{\partial}{\partial x_n}\right\}
-\end{align*}
-% TODO: M \to N or only M \to \RR
-that acts on a smooth $f: M \to \RR$ as
-\begin{align*}
-	\frac{\partial}{\partial x_1} f = (f \circ \mathbf{x}^{-1}(\mathbf{x}(p) + t e_1))'(0)
-\end{align*}
+Then given a map $f: M \to N$ we may define its derivative as the linear map
+\[
+	T_pf: T_p M \to T_{f(p)}N = (\pi^y)^{-1} \circ D(y^{-1} \circ f \circ x)(p) \circ \pi^x
+\]
+
+$T \RR^n$ has a canonical basis and thus every $T_p^x M$ has a canonical basis, this
+can be used to associate a basis of $T_p M$ for a choice of local coordinates $x$,
+which we are going to denote as
+$\frac{\partial}{\partial x^1}, \dots, \frac{\partial}{\partial x^n}$.
+
+We sadly do not have the time to fully develop the theory of tangent spaces, which is
+why are going to have to take some remaining things as black bloxes. One can
+take the disjoint union of all tangent spaces to define the tangent bundle
+$TM \coloneqq \bigcup_{p \in M} T_p M$. This can then be equipped with a smooth
+manifold structure of dimension $2n$. Then $Tf: TM \to TN$ can be defined in the
+obvious way to match every $T_p f$
 
 \section{Differential Forms}
-While we established a way to define differentiation of smooth functions on manifolds,
-it remains to define its counterpart: Integration. We delayed this for a reason: While
-the classic concept of differentiation can be unambigously generalized to manifolds and
-multiple dimensions, the concept of integration can be generalized in quite different ways.
-And this is not by coincidence: The one dimensional Integral actually fullfills three distinct roles,
-which grow distinct when taken to multiple dimensions (while still being interconnected).
-
-In the case of $\RR$ Integration is a means of measuring area (this is generalized by the familiar
-Lebesgue Integral TODO: Riemann Curvature Integral), of representing antiderivates, that is
-a function $F$ defined by the equation $F' = f$ (this is generalized by (partial) differential
-equations) and last but not least a means of calculating a signed area/"work" (which is
-finally generalized by differential forms)
-
-The difference between signed and unsigned area is substanstial, even it might seem minute,
-since it requires one to integrate over orientated areas. In the easiest 1d-case this is intuitivly
-expressed by exchanging the limits:
-\[
-	\int_a^b = -\int_b^a	
-\]
-And it makes sense: The work required of following a path from a to b should be the opposite of
-following the same path backwards. (While one would want the length of the path to be independent
-from the direction taken).
-
 Conviently this concept of signed area is not a new thing, one recalls from linear algebra that
 the determinant of a $n \times n$ matrix can be interpreted as the signed change of area of a
 $n$ parallelopiped under the linear transformation. And indeed, our theory of differential
@@ -160,6 +155,7 @@ familiar techniques of linear algebra to analyse smooth functions
 
 % TODO: The upper section is kind of ugly
 \subsection*{Forms}
+% TODO: Pullback of forms
 When defining integration one usually starts to talk about "infinitisimal"
 displacements (or in higher dimensions parallelepipeds), making everything
 precise using limits. But we already have a way to talk about an "infinititisimal"
@@ -273,77 +269,54 @@ is a $k + 1$-form $\eta$ such that for every $k+1$-manifold $M$ we have:
 \[
 	\int_M \eta = \int_{\partial M} \omega
 \]
-\section{De-Rham Cohomology}
-After spending some time to get our definitions in order we want to talk about
-our original problem: Detecing holes. Our most basic definition of an hole is
-in the $0$-dimensional case: The number of connected components of a manifold.
-Since this is the most basic case we would hope to classify $0$-forms in some
-way to detect this. One special property of a connected manifold is that every
-locally constant function is globally constant. A function being locally constant
-is something that we can easliy measure using differential forms: A function $f$ is
-locally constant iff $\mathrm{d}f = 0$. Since $\mathrm{d}$ is a ring homomorphism
-on $\Omega^0(M)$ its kernel $\ker(\mathrm{d})$ is a subring and we can define
-the 0-th De-Rham Cohomology as:
-\[
-	H^0(M) \coloneqq \ker(\mathrm{d}) \cap \Omega^0(M)
-\]
-We find that the dimension of this is exactly equal to the number of connected components
-of $M$, since every locally constant function is defined by it's value on one point of a
-connected component.
+\section{De Rham Cohomology}
+After this introduction to the basic of differential geometry we now have enough
+tools in our toolbox to define de Rham cohomology, which is going to be our main
+focus of study.
 
-It is a priori not clear how to generalize the concept of "local constness" to higher differential
-forms, but we can find a generalization by changing how we phrase "local constness".
-A function is locally const iff for a given point $p$ there is a neighborhood $U$ of $p$ such that for
-every $q \in U$:
-\[
-	f(p) = f(q) \iff 0 = f(p) - f(q) = \int_{\{-q, p\}} f = \int_\gamma \mathrm{d} f
-\]
-where $\gamma$ is any loop from $p$ to $q$. The "interesting" forms (forms that only appear
-if the manifold is not connected) are now the ones for which this is true locally, but not globally
-i.e. there are points $p, q \in M$ such that:
-\[
-	\int_{-q, p} \omega \neq 0
-\]
+We start by recapping some of the introduction: There we started exploring the connection between
+locally constant functions and the connected components. Locally constant functions are exactly the
+zero forms with vanishing derivative, that is:
+\begin{align*}
+	H^0_\dr \coloneqq \Omega^0(M) \cap \ker(\rmd)
+\end{align*}
+We are going to call this \textit{the zeroth de Rham cohomology of $M$}. As the kernel of a linear map this is a
+vector space, which dimension can easily seen to be equal to the number of connected components of $M$.
 
-Taking this into higher dimensions, we can look at the differential $k$-forms in the kernel
-of $\mathrm{d}$. Given a differential $k$-form $\omega$ with $\mathrm{d}\omega$, its local property
-now is that for every point $p \in M$ there is neighborhood $\mathcal{U}$ such that the integral
-of $\omega$ over any compact oriented $k$-submanifold $M$ without boundary is zero. This is because
-locally every such manifold is the boundary of a compact oriented $k+1$-manifold $B$
+At this time it might be tempting to define the de Rham cohomology just as the kernel of $\rmd$, but that this
+works in dimension zero is just a happy little accident – one sees that by considering our next case: The
+conservativity of vector fields. In the introduction we talked about an interconnection between a space being
+simple connected and the existence of non-conservative vector fields with vanishing curl. Originally we defined a
+vector field $f$ on $\RR^3$ as just a map from $\RR^3$ to $\RR^3$. One can turn such a vector field into a
+differential 1-form as follows:
+\begin{align*}
+	\omega = f_1 \dx{1} + f_2 \dx{2} + f_3 \dx{3}
+\end{align*}
+We can calculate the exterior derivative of this vector field:
+\begin{align*}
+	\rmd \omega &=
+		  \left(\pdx[f_1]{2} \right) \dx{2}\dx{1}
+		+ \left(\pdx[f_1]{3} \right) \dx{3}\dx{1}
+		+ \left(\pdx[f_2]{1} \right) \dx{1}\dx{2}
+		+ \left(\pdx[f_2]{3} \right) \dx{3}\dx{2} \\
+		&\phantom{=}\,+ \left(\pdx{1} f_3\right) \dx{1}\dx{3}
+		+ \left(\pdx{2} f_3\right) \dx{2}\dx{3} \\
+		&= \left( \pdx[f_2]{1} - \pdx[f_1]{2} \right) \dx{1}\dx{2}
+			+ \left( \pdx[f_3]{2} - \pdx[f_2]{3} \right) \dx{2}\dx{3} \\
+		&\phantom{=}\,+ \left( \pdx[f_1]{3} - \pdx[f_3]{1} \right) \dx{3}\dx{1}
+\end{align*}
+This vanishes if and only if the curl of $f$ vanishes, hence we are once against interested in the kernel of $\rmd$,
+but we also want to conclude the "boring" cases, where $f$ is actually conservative. These are the cases where
+there is a potential $F$ with derivative $\nabla F = f$. But taking the vector fields with curl as a 1-form one
+may rephrase this as there being a 0-form $F$ such that $\rmd F = \omega$.  Thus we are actually interested in
+the kernel of $\rmd$ modulo the image of $\rmd$.
 
-TODO: This is not a trivial statement
-
-and hence by Stokes:
-\[
-	\int_M \omega = \int_B \mathrm{d}M
-\]
-Since these are important, they have a special name
-\begin{definition}
-Let $M$ be a smooth manifold. A differential form $\omega$ on $M$ is called \textbf{closed}
-if $\mathrm{d} \omega = 0$
-\end{definition}
-
-The interesting question now becomes for which closed forms this is \textbf{not} true
-globally. It is easier to answer the converse: For which $k$-forms is this true globally.
-One important fact about the exterior derivative is, that it is nilpotent, hence a large
-class of closed forms are the forms that are the results of exterior differentiation and in
-fact it holds for every $k$-form which can be written $\mathrm{d}\omega$ for some $k-1$ form $\omega$,
-that for any compact oriented manifold $M$ without boundary:
-\[
-	\int_M \mathrm{d}\omega = \int_{\partial M} \omega = 0
-\]
-These are the "boring" forms, which we also denote by a special name.
-\begin{definition}
-Let $M$ be a smooth manifold, $\omega$ a differential form. We call $\omega$ exact if there is a differential
-form $\eta$ such that $\omega = \mathrm{d}\eta$.
-\end{definition}
-
-We are thus interested in the closed forms modulo the exact ones, in general we define:
+None of this prior discussion depended on any special cases, hence we may define:
 \begin{definition}
 Let $M$ be a smooth manifold. We define the \textbf{de-Rham cohomology of $M$} as the graded
 algebra:
 \[
-	H^*(M) \coloneqq \bigoplus_{k = 0}^\infty \ker(\mathrm{d}^k)/\Img(\mathrm{d}^{k - 1})
+	H^*_\dr(M) \coloneqq \bigoplus_{k = 0}^\infty \ker(\mathrm{d}^k)/\Img(\mathrm{d}^{k - 1})
 \]
 \end{definition}
 \begin{remark}
@@ -354,25 +327,12 @@ when the intent is clear. One just has to remember that the cohomology consists 
 and that hence such a choice is not unique in general.
 \end{remark}
 
-% TODO: Graded Algebra? Exterior product?
-Our previous discussion already allows us to calculate the zero-th de-Rham cohomology
-\begin{lemma}
-Let $M$ be a smooth manifold. Then the zeroth de-Rham cohomology is
-\[
-	H^0(M) \simeq \bigoplus_{c \in \pi_0(M)} \mathbb{R}
-\]
-where $\pi_0(M)$ are the connected components of $M$.
-
-The exterior product corresponds to memberwise multiplication.
-\end{lemma}
-\begin{proof}
-TODO
-\end{proof}
-%TODO: Sollte vermutlich erklärt werden
+Because of the way we defined de Rham cohomology we can already make some harmless sounding statements, that are
+going to turn out quite usefull:
 \begin{lemma}
 Let $M$ be a smooth $n$-manifold. Then for every $k > n$:
 \[
-	H^k(M) = 0
+	H^k_\dr(M) = 0
 \]
 \end{lemma}
 \begin{proof}
@@ -380,8 +340,35 @@ For $k > n$ the only skew-symmetric $k$-form on a $n$-dimensional vector space i
 $\Omega^k(M) = 0$, which implies $H^k(M) = 0$.
 \end{proof}.
 
-% TODO: Pullback of forms
+It is instructive to do some cohomology calculations:
+\begin{lemma}[Poincaré lemma]
+	The de Rham cohomology of $\RR^n$ is:
+	\begin{align*}
+		H^k_\dr(\RR^n) = \begin{cases}
+			\RR &\quad\text{if } k = 0 \\
+			0   &\quad\text{otherwise}
+		\end{cases}
+	\end{align*}
+\end{lemma}
+\begin{proof}
+We are going to prove this by induction. For $\RR^0$ we have $H^0_\dr(\RR) = \RR$ since $\RR$ is connected
+and $H^k_\dr(\RR) = 0$ for $k > 0$ since $\RR^0$ is zero-dimensional.
 
+We now want to prove that $H^k(\RR^n \times \RR) \cong H^k(\RR^n)$. Let
+$\omega \in \Omega^*(\RR^n \times \RR)$ such that $\rmd \omega = 0$, then one can write $\omega$ as:
+\begin{align*}
+	\omega = \sum f_I \dx{I} + \sum g_I\dx{I}\dx{n + 1}
+\end{align*}
+We can now use a technique called integration over fibers, which is a fancy word for using the fundamental 
+theorem of calculus by defining:
+\begin{align*}
+	\Psi(x_1, \dots, x_n, x_{n + 1}) = \sum \left(\int_0^{x_{n + 1}} g_I(x_1, \dots, x_n, t) \rmd t \right) \dx{I}
+\end{align*}
+Thus we have:
+\begin{align*}
+	\rmd \Psi = \sum_{i \in } \pdx{i} \left(\int_0^{x_{n + 1}} g_I(x_1, \dots, x_n, t) \rmd t \right) \dx{i}\dx{I}
+\end{align*}
+\end{proof}
 \subsection{The Mayer-Vietoris Sequence}
 With our current knowledge it seems impossible to calculate the de-Rham cohomology for anything but the most simplest of
 spaces, hence we have to develop more computational tools. We are going to start with the most important one: A way to

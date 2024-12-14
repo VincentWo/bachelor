@@ -9,6 +9,7 @@
 \usepackage{mathtools}
 \usepackage[style=alphabetic]{biblatex}
 \usepackage{tikz}
+\usepackage{graphicx}
 \usetikzlibrary{cd,decorations.pathreplacing,decorations.markings,arrows}
 \addbibresource{main.bib}
 \usepackage{amssymb}
@@ -21,6 +22,9 @@
 \usepackage{mathtools}
 \usepackage{animate}
 \usepackage{pgffor}
+\usepackage{tabto,ulem,booktabs}
+\usepackage{textcomp}
+\usepackage{geometry}
 \usepackage[most]{tcolorbox}
 
 \overfullrule=10pt
@@ -55,7 +59,10 @@
 
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\CC}{\mathbb{C}}
+\newcommand{\dr}{\text{DR}}
 \newcommand{\RR}{\mathbb{R}}
+\newcommand{\dx}[1]{\rmd x^{#1}}
+\newcommand{\pdx}[2][]{\frac{\partial #1}{\partial x_{#2}}}
 \newcommand{\ZZ}{\mathbb{Z}}
 \newcommand{\U}{\mathcal{U}}
 \newcommand{\V}{\mathcal{V}}

@@ -19,30 +19,30 @@ In fact it holds in general:
 	Let $\U \subseteq \RR$ open and $f: \U \to \RR$ a smooth function. $f$ is locally constant if and only if
 	$f' = 0$.
 \end{lemma}
-As it usually goes this statement is more general, but also weaker: There are obviously sets (like $\RR$ itself) on
-which a vanishing derivative implies constness. Recovering the original statement from our general version requires
-detecting these cases. To figure out the distinguish property of these sets, we follow the proof of the statement on
-$\RR$ to see where it breaks apart for general sets:
+As it usually goes this statement is more general, but also weaker: There are sets (like $\RR$ itself) on
+which a vanishing derivative implies constness. Recovering the original statement from our general version
+requires detecting these cases. To figure out the distinguishing property of these sets, we follow the proof of
+the statement on $\RR$ to see where it starts to fail for general sets:
 
-On $\RR$ this implication is easily proven: Let $f: \RR \to \RR$ be locally constant. For every $x \in \RR$
-pick an open neighborhood $\V_x$ of $x$ on which $f$ is constant. Pick any $y \in \RR$ and
-define:
+On $\RR$ it is easily proven that every locally constant function is constant: Let $f: \RR \to \RR$ be locally
+constant. For every $x \in \RR$ pick an open neighborhood $\V_x$ of $x$ on which $f$ is constant. Pick any
+$y \in \RR$ and define:
 \begin{align*}
 	\V^=      &\coloneqq \bigcup_{x \in \RR\colon f(x) = f(y)} \V_x \\
 	\V^{\neq} &\coloneqq \bigcup_{x \in \RR\colon f(x) \neq f(y)} \V_x
 \end{align*}
-Both of these sets are open and disjoint and $\RR = \V^= \cup \V^{\neq}$, hence also closed.
-But the only sets on $\RR$ that are open and closed are the empty set and $\RR$ itself and since
-$\V^=$ is non-empty by construction it has to be $\RR$, therefore $f$ is constant.
+This is a decomposition of $\RR$ into two disjoint open sets. But the only decomposition like that consists
+of $\RR$ and the empty set. And since $\V^=$ is non-empty by construction it has to be $\RR$, therefore $f$ is
+constant.
 
-This non-existence of sets that are open and closed (except $\RR$ and the empty set) follows from a
-geometric intuitive topological property:
+This non-existence of decompositions can be understood as the inability of "breaking" $\RR$ apart – which can
+be done in the case of $\RR \setminus \{0\}$. This can be captured in general as a geometricly intuitive
+topological property:
 \begin{definition}
 	Let $X$ be a topological space. We call X \textbf{connected} if there are no non-empty
 	disjoint open sets $\V, \O \subseteq X$ such that $\V \cup \O = X$.
 \end{definition}
-Hence if $\U$ is connected $f$ is constant and the connected subsets of $\RR$ are exactly
-these on which $f' = 0$ implies constness of $f$.
+Hence if $\U$ is connected, every function with vanishing derivative is constant.
 
 Keeping this example in the back of the mind, we are going to take a look at a seemingly unrelated
 question. In Physics one often deals with forces that are dependent on the position of an object (e.g. gravity
@@ -68,6 +68,11 @@ Calling such a vector field conservative stems from the fact that these are exac
 fields that conserve energy i.e. every line integral (and the line integral of a force is
 energy) only depends on the difference of the potential at their endpoints.
 In particular the line integral over any closed loop is zero.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth, keepaspectratio]{graphics/line_integral.pdf}
+	\caption{On a conservative vector field all integrals only depend on the endpoints of paths}
+\end{figure}
 
 This makes a question arise: Given an vector field $f: \U \to \RR^n$, how can one check that it
 is conservative? It turns out that for $n = 1$ every vector field is conservative: This is
@@ -156,7 +161,7 @@ the exterior derivative of another form (called \textit{exact}), or in algebraic
 \end{align*}
 
 \begin{remark}
-The attentive reader might notice that this is only sensible if $\mathrm{d}$ is nil-potent, that
+The attentive reader might notice that this is only sensible if $\mathrm{d}$ is nilpotent, that
 is $\mathrm{d} \circ \mathrm{d} = 0$, but that is indeed the case, as we are going to proof.
 \end{remark}
 
@@ -185,9 +190,8 @@ by André Weil in the (French) paper \cite{weil_sur_1952}
 (with \cite{tu_differential_1982} being a good (non-French) modern account). While being primarily algebraic it foregoes too
 heavy machinery, does not require integration and offers a geometric explanation (though not one as obvious).
 
-Out contribution lies in supplying details of the proof that were left out of \cite{tu_differential_1982}, combining
-it with a self-contained
-\footnote{
+Our contribution lies in supplying details of the proof that were left out of \cite{tu_differential_1982}, combining
+it with a self-contained\footnote{
 	Not self-contained in the sense of proving every statement, but self-contained in the sense that it can be
 	(hopefully) understood on its own
 }
