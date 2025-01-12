@@ -1,13 +1,13 @@
 \chapter{De Rham Cohomology}
 Properly understanding the phenomena we have seen so far requires rephrasing them in the
 language of differential geometry, which we are going to develop in this chapter –
-starting with the generalization of differentation to more general domains then just open
+starting with the generalization of differentiation to more general domains then just open
 subsets of $\RR^n$.
 
 While we are going to aim for a self-contained introduction to all the needed differential geometric
 background, it is impossible to do so in our limited format without skipping quite some detail. If a full
 fledged introduction is desired (and the topic is definitely more than interesting enough to deserve one),
-then reading one of the plethora of proper ones is recommened e.g. \cite{lee_introduction_2013},
+then reading one of the plethora of proper ones is recommended e.g. \cite{lee_introduction_2013},
 \cite{spivak_comprehensive_1979} or \cite{wendl_differential_2022} to name some of the authors favorites
 in no particular order.
 
@@ -20,7 +20,7 @@ of embedded curves/surfaces:
 A \textbf{Topological Manifold} of dimension $n$ is a metrizable and separable\footnote{
 	These are technical requirements to ensure that manifolds really behave like we would an euclidean space
 	expect to behave since being locally homeomorphic to $\RR^n$ is not enough. Intuitively metrizability
-	ensures uniqueness of limits while seperability ensures that our spaces don't get "too big".
+	ensures uniqueness of limits while separability ensures that our spaces don't get "too big".
 }
 topological space $M$ in which every point $p \in M$ has a neighborhood $\U$ that is homeomorphic to
 an open set $\V \subseteq \RR^n$.
@@ -95,7 +95,7 @@ charts on a manifold gives us a new object:
 A smooth manifold is a topological manifold with a choice of pairwise smoothly compatible charts
 $\{(\U_\alpha, x_\alpha)\}_{\alpha \in I}$ such that $\bigcup_{\alpha \in I} \U_\alpha = M$.
 \end{definition}
-In this context our suggested definition of smoothess makes sense:
+In this context our suggested definition of smoothness makes sense:
 \begin{definition}
 Given two smooth manifolds $M, N$ we call a function $M \to N$ smooth if for all choices of coordinates
 $(\U, x)$ of $M$ and $(\V, y)$ of $N$ the function
@@ -107,7 +107,7 @@ is smooth.
 Unsurprisingly smooth functions are the natural maps between smooth manifolds and hereinafter every map between
 smooth manifolds is assumed to be smooth unless stated otherwise.
 
-Smoothness is also used to define an equivalence relation on manifolds that is more usefull than
+Smoothness is also used to define an equivalence relation on manifolds that is more useful than
 strict equality:
 \begin{definition}
 	Let $M,N$ be smooth manifolds. We call a smooth map $f: M \to N$ \textit{diffeomorphism} if it is
@@ -132,13 +132,13 @@ as a linear map
 \[
 	D_p f: T_p \RR^n \to T_{f(p)} \RR^m
 \]
-While this might seem like meaningless notationals tricks it shows that translating the derivative to
-arbitrary smooth manifolds starts with finding a usefull definition of $T_p M$ for any smooth manifold $M$.
+While this might seem like meaningless notational tricks it shows that translating the derivative to
+arbitrary smooth manifolds starts with finding a useful definition of $T_p M$ for any smooth manifold $M$.
 Notice that for any $p \in M$ a choice of chart $(\U, x)$ gives rise to a chart-specific tangent space
 $T_{x(p)} \RR^n$, which we are going to denote as $T_p^x M$ (Note that this space has a canonical basis
 arising from the canonical basis of $T_p \RR^n$, which we are going to denote by
 $\frac{\partial}{\partial x_1}, \dots, \frac{\partial}{\partial x_n}$). Though this seems promising one would
-not want to have to choose local coordinates to make sense of $T_p M$. And one does not have to by realising
+not want to have to choose local coordinates to make sense of $T_p M$. And one does not have to by realizing
 that while any other chart $(y, \V)$ around $p$ induces a different tangent space $T_p^y M$, there is
 a canonical isomorphism to $T_p^x M$ given by the derivative of the change of coordinates:
 \[
@@ -159,14 +159,14 @@ This can then be used to induce a map from $T_p M$ to $T_{f(p)}N$:
 \begin{definition}
 Let $M, N$ be smooth manifolds and $f: M \to N$ a smooth function. We define its derivative or \textbf{tangent
 map} at $p$ denoted by $T_p f: T_p M \to T_{f(p)}N$ as the unique linear map that for any choices of
-coordinates $(x, \U)$ around $p$ and $(y, \V)$ around $f(p)$ fullfills 
+coordinates $(x, \U)$ around $p$ and $(y, \V)$ around $f(p)$ fulfills 
 \[
 	T_p f = j^y_{f(p)} \circ \left(D_{x(p)} (y \circ f \circ x^{-1})\right) \circ  (i^x_p)^{-1}
 \]
 with $i^x_p: T_p^x M \to T_p M$ and $j^y_{f(p)}: T^y_{f(p)}N \to T_{f(p)} N$ being the canonical isomorphisms.
 \end{definition}
-To ensure that this map really exists we have to prove that any map fullfilling this equality for charts
-$(x, \U)$ around $p$ and $(y, \V)$ around $f(p)$ also fullfills it for a different choice of charts
+To ensure that this map really exists we have to prove that any map fulfilling this equality for charts
+$(x, \U)$ around $p$ and $(y, \V)$ around $f(p)$ also fulfills it for a different choice of charts
 $(\tilde{x}, \tilde{\U})$ around $p$ and $(\tilde{y}, \tilde{\V})$ around $f(p)$. The chain rule gives us a
 connection between the derivative of $f$ with respect different choices of coordinates:
 it holds
@@ -191,7 +191,7 @@ $(i^{\tilde{x}}_p)^{-1}$. Vice versa with $D_{\tilde{y}(f(p))} (y \circ \tilde{y
 This makes $T_p f$ well-defined.
 
 The theory surrounding tangent spaces is rich and interesting and we only have time to scratch its surface
-having to take some of the remaining things as black bloxes with proofs and details left to the earlier
+having to take some of the remaining things as black boxes with proofs and details left to the earlier
 mentioned proper accounts.
 
 One can define the \textbf{tangent bundle} $TM \coloneqq \bigcup_{p \in M} T_p M$ as the disjoint union of
@@ -200,7 +200,7 @@ the later carries certain (wrong) connotations about the topology of $TM$}. $TM$
 with a smooth manifold structure of dimension $2n$. For any smooth function $f: M \to N$ one can then
 unify all tangent maps to define $Tf: TM \to TN$, which is smooth with respect to the aforementioned
 smooth structure of $TM$/$TN$. Vector fields on $\RR^n$ can then be generalized to smooth manifolds as
-maps $X: M \to TM$ which fullfill $X(p) \in T_p M$. This definition includes the old one if one takes
+maps $X: M \to TM$ which fulfill $X(p) \in T_p M$. This definition includes the old one if one takes
 $\RR^n$ as a smooth manifold with its canonical smooth structure.
 
 \section{Differential Forms}
@@ -210,10 +210,10 @@ between the connected components of open subsets of $\RR^n$ and the smooth funct
 defined on it.
 
 The fact that locally constant functions are related to connected component directly translates to smooth
-manifolds, all that is left is to find a nice decription of these using derivatives. This is a bit more involved:
+manifolds, all that is left is to find a nice description of these using derivatives. This is a bit more involved:
 The tangent map of a smooth function $f: M \to \RR$ is not going to vanish if $f$ is locally constant. This is
 because $Tf$ not only contains information about the change of $f(p)$, but also about $f(p)$ itself. In the
-case of general manifolds this is nescessary, but in the case of $\RR$ there is a canonical isomorphism between
+case of general manifolds this is necessary, but in the case of $\RR$ there is a canonical isomorphism between
 $T \RR$ and $\RR \times \RR$ (with the first component representing points and the second tangent vectors).
 This isomorphism can be used to project $T f$ to the second component (i.e. to the "change"). We call this
 projection the \textbf{differential of $f$} and denote it by $\rmd f$. Then $f$ is locally constant if and
@@ -235,14 +235,14 @@ to define the de Rham cohomology.
 % function $TM \to \RR$. But one can make more sense of this by rewriting it a bit: Since $\rmd f$ maps
 % $(p, v)$ to some value in $\RR$ with $p \in M, v \in T_p M$ and is linear in $v$ one can also view it as 
 % mapping every $p$ to a linear map from $T_p M$ to $\RR$ i.e. to the dual space of $T_p M$. The dual space
-% of $T_p M$ is going to be denoted as $T_p^* M$, and then similiary to the case of the tangent bundle it is
+% of $T_p M$ is going to be denoted as $T_p^* M$, and then similarly to the case of the tangent bundle it is
 % possible to extend this definition to the so called \textbf{cotangent bundle} $T^* M$ consisting of the
 % union of all $T^*_pM$. Then $\rmd f$ can be taken as a function $M \to T^*M$ or a \textbf{covector field}.
 
 % The connection to our original motivation can then be found as follows: On $\RR^n$ there is a natural
 % isomorphism between $\RR^n$ and its dual space given by the euclidean dot product and every vector field
 % $\RR^n \to T\RR^n$ can be identified with a covector field $\RR^n \to T^*\RR^n$.\footnote{
-% 	A similiar isomorphism is also possible in the more general case of Riemannian manifolds. These
+% 	A similar isomorphism is also possible in the more general case of Riemannian manifolds. These
 % 	are intuitively smooth manifolds with a dot product structure on the tangent space, which produces
 % 	a natural isomorphism between tangent and cotangent vectors. But in general there is no such canonical
 % 	isomorphism.
@@ -256,15 +256,15 @@ define integrals by adding data to the manifold itself (e.g. a measure) differen
 alternative approach, including these informations in the integrands themselves. They do that by mapping each
 point $p$ to a local notion of volume, though in a way that needs a bit of explanation.
 
-This local notion of volume around $p$ can be thought of assigning volume to parallelopipeds based at $p$.
-Of course parallelopipeds do not exist on arbitrary manifolds, but one can approximate them through the use
+This local notion of volume around $p$ can be thought of assigning volume to parallelepipeds based at $p$.
+Of course parallelepipeds do not exist on arbitrary manifolds, but one can approximate them through the use
 of tangent vectors i.e. every $n$-tuple of tangent vectors in $T_p M$ can be interpreted as an
-$n$-parallelopiped. Thus we want to describe volume using maps from $(T_p M)^n$ to $\RR$, though we also
-want them to fullfill some more requirements to make them more "volume-like".
+$n$-parallelepiped. Thus we want to describe volume using maps from $(T_p M)^n$ to $\RR$, though we also
+want them to fulfill some more requirements to make them more "volume-like".
 
 Firstly we are going to require them to map linear dependent tangent vectors to $0$ since these represent
-degenerate parallelopipeds. Secondly we want them to be multi-linear, like the normal volume of
-parallelopipeds. This has the odd consequence of having to deal with negative "volume", but this can be seen
+degenerate parallelepipeds. Secondly we want them to be multi-linear, like the normal volume of
+parallelepipeds. This has the odd consequence of having to deal with negative "volume", but this can be seen
 as a feature instead of a flaw by interpreting signed volume as a volume (the absolute value)
 together with an \textit{orientation} (the sign).
 
@@ -290,7 +290,7 @@ side is up.
 % \end{definition}
 % If one would want to talk about orientation on a manifold 
 % Using this definition the generalization of orientation to smooth manifolds becomes quite doable, just by
-% noticing what one has to prevent. even talk about orientation on a manifolds requires it to be coordinate independent i.e. all of our coordinate changess need to
+% noticing what one has to prevent. even talk about orientation on a manifolds requires it to be coordinate independent i.e. all of our coordinate changes need to
 % be orientation preserving, which turns out to be enough:
 % \begin{definition}[Oriented Manifold]
 % 	An \textbf{Oriented Manifold} is a smooth manifold for which all changes of coordinates are orientation preserving i.e. whose
@@ -358,8 +358,8 @@ Then, given a differential 1-form $\omega: M \to T^*M$ for any chart $(\U, x)$ t
 \]
 for any $p \in \U$. This makes it reasonable to call a differential form smooth if and only if its component
 functions are smooth for any chart. Taking this definition to higher dimensions requires a representation of
-higher dimensional multi-linear maps in a similiar form, which in the special case of anti-symmetric maps
-can be achieved in a succint way using the so called \textbf{wedge product}.
+higher dimensional multi-linear maps in a similar form, which in the special case of anti-symmetric maps
+can be achieved in a succinct way using the so called \textbf{wedge product}.
 
 To define the wedge-product one needs to start with defining the tensor product:
 \begin{definition}  
@@ -372,7 +372,7 @@ To define the wedge-product one needs to start with defining the tensor product:
 	\]		
 \end{definition}
 The tensor product of two anti-symmetric maps is sadly not anti-symmetric itself, but there is a way to
-anti-symmetrice any multi-linear map:
+anti- any multi-linear map:
 \begin{definition}
 	Let $\alpha: V^k \to \RR$ be a multi-linear map. We define its anti-symmetrization as
 	\[
@@ -393,7 +393,7 @@ The wedge product of dual basis vectors is especially interesting and can be des
 \begin{theorem}
 Given a basis $v_1, \dots, v_n$ of a vector space $V$ with corresponding dual basis
 $\rmd x^1, \dots, \rmd x^n$, the wedge product of $k$ dual basis vectors $\rmd x^{i_1}, \dots, \rmd x^{i_k}$
-fullfills
+fulfills
 \[
 	(\rmd x^{i_1} \wedge \dots \wedge \rmd x^{i_k})(e^{j_1}, \dots, e^{})
 \]
@@ -407,7 +407,7 @@ Starting with two dual basis vectors $\rmd x^i, \rmd x^j$:
 
 Before doing anything with the wedge product, we are going to prove some of its elemental properties:
 \begin{theorem}
-	The wedge product fullfills the following properties:
+	The wedge product fulfills the following properties:
 	\begin{itemize}
 		\item
 			The wedge product is bilinear
@@ -436,7 +436,7 @@ differential $k$-form $\omega$ on an manifold can locally be written as
 for some chart $(\U, x)$. Then we can call a differential form smooth if its components functions with respect
 to all charts are smooth.
 
-% We are also going to use this to introduce a usefull abuse of notation: Though technically
+% We are also going to use this to introduce a useful abuse of notation: Though technically
 % $\omega_{i_1, \dots, i_k}$ is only defined for increasing indices, define it for all indices by antisymmetry
 % i.e. $\omega_{\sigma(i_1), \dots, \sigma(i_k)} = (-1)^{|\sigma|} \omega_{i_1, i_2, \dots, i_k}$ for any
 % permutation $\sigma$.
@@ -453,7 +453,7 @@ Combining all these we can finally define:
 	\]
 \end{definition}
 Note that this definition also defines differential 0-forms, which smoothly assign to every point
-$p \in M$ a function from the cartesean product of 0 vector spaces (which is by definition just a point) to
+$p \in M$ a function from the Cartesian product of 0 vector spaces (which is by definition just a point) to
 $\RR$ i.e. just a value from $\RR$. Thus differential 0-forms are just the smooth functions on a manifold.
 
 We actually already encountered examples of 1-forms:
@@ -478,14 +478,14 @@ Having defined differential forms it remains to define their derivative, which w
 purely algebraic way:
 \begin{definition}
 Let $M$ be a smooth manifold. The exterior derivative $\rmd: \Omega^*(M) \to \Omega^*(M)$ is the
-unique linear operator mapping $k$-forms to $k + 1$-forms that fullfills:
+unique linear operator mapping $k$-forms to $k + 1$-forms that fulfills:
 \begin{itemize}
 	\item On 0-forms i.e. smooth functions it matches the differential
 	\item It satisfies the graded Leibniz rule
 		\[
 			\rmd (\alpha \wedge \beta) = \rmd \alpha \wedge \beta + (-1)^k \alpha \wedge \rmd \beta
 		\]
-		for any homogenous forms $\alpha, \beta$ with $k$ being the degree of $\alpha$
+		for any homogeneous forms $\alpha, \beta$ with $k$ being the degree of $\alpha$
 	\item It is nilpotent i.e. $\rmd \circ \rmd = 0$
 	\item It is local, in the sense of $(\rmd \omega)(p)$ only depends on the values of $\omega$ on
 		small neighborhoods of $p$.
@@ -497,7 +497,7 @@ about uniqueness:
 	Since $\rmd$ is defined to be local it is sufficient to prove uniqueness of $\rmd$ only locally.
 	Any $k$-form $\omega$ is locally just a sum of terms of the form
 	$\omega_{i_1 \dots i_k} \rmd x^{i_1} \wedge \dots \wedge \rmd x^{i_k}$ for some chart $(\U, x)$. This
-	already determines $\rmd \omega$ since $\rmd$ being linear, fullfilling the graded Leibniz rule and being
+	already determines $\rmd \omega$ since $\rmd$ being linear, fulfilling the graded Leibniz rule and being
 	equivalent to the differential implies:
 	\begin{align*}
 		\rmd \omega
@@ -508,13 +508,13 @@ about uniqueness:
 	\end{align*}
 	This not only proves that $\rmd$ is unique, it also gives us a possible formula for it. Thus proofing
 	existence is reduced to proving that this formula is independent of choices of coordinates and that it
-	actually fullfills all required properties.
+	actually fulfills all required properties.
 
 	This formula is by definition local and it is easy to see that it is indeed a linear operator and 
 	matches the differential on smooth functions. It remains to prove the Leibniz rule and nilpotency.
-	Because of linearity it is enough to prove the Leibniz rule for homogenous terms
+	Because of linearity it is enough to prove the Leibniz rule for homogeneous terms
 	$f \rmd x^{i_1} \wedge \dots \wedge \rmd x^{i_k}$ and $g \rmd x^{j_1} \wedge \dots \wedge x^{j_\ell}$,
-	which we are going to abbreviate as $f \rmd x^I$ and $g \rmd x^J$ for multiindices $I,J$.
+	which we are going to abbreviate as $f \rmd x^I$ and $g \rmd x^J$ for multi-indices $I,J$.
 	A computation then leads to:
 	\begin{align*}
 		\rmd( (f \rmd x^I) \wedge (g \rmd x^J) )
@@ -564,7 +564,7 @@ about uniqueness:
 % 		&= \int_\O \omega 
 % \end{align*}
 % Where the last equality depends on the behavior of differential forms under changes of coordinates and
-% only works because of our orientation assumption, which guarentees that $\det(D(y \circ x^{-1}))$ is
+% only works because of our orientation assumption, which guarantees that $\det(D(y \circ x^{-1}))$ is
 % positive.
 
 % TODO: Compactness
@@ -593,7 +593,7 @@ about uniqueness:
 % \[
 % 	\int_M \omega = \sum_{\alpha \in I} \int_{\U_\alpha} \rho_\alpha \omega
 % \]
-% whre $\{\rho_\alpha\}_{\alpha \in I}$ is a partition of unity subordinate to the charts of $M$.
+% where $\{\rho_\alpha\}_{\alpha \in I}$ is a partition of unity subordinate to the charts of $M$.
 % \end{definition}
 
 % Though this definition works, it critically depends on the existence of a partition of unity. Luckily on 
@@ -609,12 +609,12 @@ about uniqueness:
 % a $k$-volume it only makes sense to integrate it on a $k$-manifold, so integrating differential $k$-forms on an $n$-manifold for $n > k$ requires
 % first developing the notion of a \textbf{submanifold}, which we are going to define as the images of special maps:
 % \begin{definition}
-% We call a smooth map $f: M \to N$ an \textbf{embedding} if it is an homeomorphism ontos its image (i.e. $f: M \to f(M)$ is a bijection with
-% continous inverse) and its tangent map $Tf: TM \to TN$ is injective for every restriction $T_p f: T_p M \to T_{f(p)} N$.
+% We call a smooth map $f: M \to N$ an \textbf{embedding} if it is an homeomorphism onto its image (i.e. $f: M \to f(M)$ is a bijection with
+% continuous inverse) and its tangent map $Tf: TM \to TN$ is injective for every restriction $T_p f: T_p M \to T_{f(p)} N$.
 % \end{definition}
 % Intuitively the first condition ensures that $f$ preserves the "dimensionality" of $M$ while the second ensures smoothness of the result.
 
-% These maps characterice smooth submanifolds:
+% These maps characterize smooth submanifolds:
 % \begin{definition}
 % Let $M$ be a smooth manifold. We call $S \subseteq M$ a \textbf{(smooth) $k$-submanifold of $M$} if there is a $k$-manifold $N$ and an 
 % embedding $f: N \to M$ such that $S = \Img(f)$.
@@ -638,7 +638,7 @@ about uniqueness:
 % where $\epsilon(p)$ is the orientation of $p$.
 % \end{remark}
 
-% That this definition is independent from the choice of embedding follows from a similiar argument as the indepence of the integral from a
+% That this definition is independent from the choice of embedding follows from a similar argument as the independence of the integral from a
 % change of coordinates. (TODO)
 
 % After having defined integration in such a general context there is only one technicality left to state the
@@ -648,8 +648,8 @@ about uniqueness:
 % for this motivational excourse we are going to be a bit sloppy with its definition and won't talk about all the ramifications of it.
 % Without further ado:
 % \begin{definition}
-% A topological manifold with boundary is a metrizable and seperable topological space $X$ such that every
-% point $p$ has an open neighborhood that is homeomorphic to an open subset of the $n$-th halfspace i.e. $\mathbb{H}^n = [0, \infty) \times \RR^{n - 1}$
+% A topological manifold with boundary is a metrizable and separable topological space $X$ such that every
+% point $p$ has an open neighborhood that is homeomorphic to an open subset of the $n$-th half-space i.e. $\mathbb{H}^n = [0, \infty) \times \RR^{n - 1}$
 % \end{definition}
 % This definition translates to the smooth case without much problems, in fact all of our
 % definitions so far can be extended to the case of manifolds with boundaries (for details
@@ -664,7 +664,7 @@ about uniqueness:
 % $1$ being positively oriented.
 % \end{example}
 
-% \subsection{The exterior deriative}
+% \subsection{The exterior derivative}
 % We are finally able to state the fundamental theorem of calculus in the language of
 % differential geometry:
 % \begin{lemma}
@@ -694,9 +694,9 @@ about uniqueness:
 % While this is actually enough to specify $\rmd$ (which one can see properly executed
 % in \cite{yang_exterior_nodate}) following this line of reasoning is a bit too long for this thesis, which is
 % why we are going to define $\rmd$ (the "exterior derivative") in more algebraic terms
-% and then note that this property is fullfilled. But nontheless it is helpfull to have
+% and then note that this property is fulfilled. But nonetheless it is helpful to have
 % this geometric interpretation in mind, not just as a property that the exterior derivative
-% happens to fullfill, but as a definition.
+% happens to fulfill, but as a definition.
 
 % But now for the more workable though abstract definition:
 % \begin{definition}
@@ -765,7 +765,7 @@ For any smooth manifold $M$:
 where $\pi_0(M)$ consists of the connected components of $M$.
 \end{theorem}
 
-Another helpfull statement also follows immeaditly from the definition:
+Another helpful statement also follows immediately from the definition:
 \begin{lemma}
 Let $M$ be a smooth $n$-manifold. Then for every $k > n$:
 \[
@@ -806,7 +806,7 @@ Hence every 1-form on $\RR$ is exact, ensuring that $H^1(\RR) = 0$.
 \end{proof}
 \subsection{The Mayer-Vietoris Sequence}
 With our current knowledge it seems impossible to calculate the de-Rham cohomology for anything but the
-simplest of spaces since it involes solving differential equations. Luckily there is major computational
+simplest of spaces since it involves solving differential equations. Luckily there is major computational
 tool making these calculations much easier by connecting the cohomology of a space to the cohomologies of
 its components. Concretely, given two open set $\U, \V$ that cover a smooth manifold $M$, there is a long
 exact sequence, called the \textbf{Mayer-Vietoris sequence} between the cohomologies of
@@ -866,7 +866,7 @@ Let $\phi: M \to N$ be a smooth map, then
 	
 \begin{remark}
 For any $n$-manifold $M$ every open subset $\U \subseteq M$ is also an $n$-manifold with the subset topology
-by restricting the charts of $M$ to $\U$. Similiarly the disjoint union of two smooth manifolds can also be
+by restricting the charts of $M$ to $\U$. Similarly the disjoint union of two smooth manifolds can also be
 turned into a smooth manifold with the disjoint union topology by taking the disjoint union of all charts.
 
 Any differential $k$-form on $\U \amalg \V$ then determines $k$-forms on $\U$ and $\V$ and vice versa,
@@ -881,7 +881,7 @@ M & \U \coprod \V \arrow[l, "j"] & \U \cap \V \arrow[l, "i_\V", shift left] \arr
 \end{tikzcd}
 \end{center}
 With $j$ being the disjoint union of the inclusions from $\U$ and $\V$ into $M$ and $i_\U$ being the
-inclusion of $\U \cap \V$ into $\U$ (and then into the disjoint union), similiar with $i_\V$. All of these
+inclusion of $\U \cap \V$ into $\U$ (and then into the disjoint union), similar with $i_\V$. All of these
 are smooth and hence induce a sequence of restrictions of differential forms:
 \begin{equation}
 % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12B5AWxgHM6APQBUACgCyAShABfUuky58hFAEZyVWoxZtOvAcPGcAqlIAEnAEZZ+ENMziXufQaLGcAajPmLseAiIAJk1qemZWRA4XQ3dTZwBjOjRnbzktGCh+eCJQADMAJwgeJA0QHAgkEJAGLDBIkDgIWqgQagALGDpWxDAmBgZqHDosBjZIerbG9qw8nFKwnQasAH0vUSmGOisYBgAFJQDVEALbdvnfEELihfLKxGq4GbmkAFoyrZ39w5U2BhgXosImxVqYNpdriVEGQ7rdwroogArcEUWRAA
@@ -941,7 +941,7 @@ Let $f: M \to N$ be a smooth map. We define the map $\tilde{f}^*: H^*_\text{DR}(
 	\tilde{f}^*([\alpha]) = [f^*(\alpha)]
 \]
 \end{definition}
-Note that similiar as with the pullback $\reallywidetilde{f^* \circ g^*} = \tilde{f}^* \circ \tilde{g}^*$ and
+Note that similar as with the pullback $\reallywidetilde{f^* \circ g^*} = \tilde{f}^* \circ \tilde{g}^*$ and
 $\reallywidetilde{\mathrm{Id}}^* = \mathrm{Id}$, hence by the same argument as earlier, isomorphism of the
 space of differential forms descend to isomorphisms of cohomologies and in particular diffeomorphic manifolds
 have isomorphic cohomology. 
@@ -1061,7 +1061,7 @@ A \textbf{cochain complex} is a graded vector space $A^*$ together with maps
 \begin{align*}
 	\rmd^k: A^k \to A^{k + 1}
 \end{align*}
-which together define a map $\rmd: A^* \to A^*$ in the obvious way, that fullfills:
+which together define a map $\rmd: A^* \to A^*$ in the obvious way, that fulfills:
 \begin{align*}
 	\rmd \circ \rmd = 0
 \end{align*}
@@ -1078,7 +1078,7 @@ vector space:
 \begin{align*}
 H^k(A^*) \coloneqq \ker(\rmd^k) / \Img(\rmd^{k - 1})
 \end{align*}
-The elements of $\ker(\rmd^k)$ are called $k$-cocyles of $A^*$ and the elements of $\Img(\rmd^{k - 1})$
+The elements of $\ker(\rmd^k)$ are called $k$-cocycles of $A^*$ and the elements of $\Img(\rmd^{k - 1})$
 $k$-coboundaries of $A^*$.
 \end{definition}
 De Rham cohomology is an obvious example of this construction.
@@ -1126,7 +1126,7 @@ $a = \tilde{a} + \rmd_A \hat{a}$. Then:
 \]
 Therefore $\tilde{f}^*$ is well-defined.
 \end{proof}
-As an immeadiate consequence we can now proof that pullbacks of smooth maps descend to cohomology by proving
+As an immediate consequence we can now proof that pullbacks of smooth maps descend to cohomology by proving
 that these maps are chain maps!
 \begin{lemma}
 Let $M, N$ be smooth manifolds and $f: M \to N$ a smooth map. Then the map $f^*: \Omega^*(N) \to \Omega^*(M)$
@@ -1191,7 +1191,7 @@ product it holds:
 Hence $f^*$ and $\rmd$ commute on every differential form.
 \end{proof}
 
-The notion of (short) exact sequences seamingless translates to cochain complexes, finally allowing us to
+The notion of (short) exact sequences seamlessly translates to cochain complexes, finally allowing us to
 state our theorem in all its generality:
 \begin{theorem}
 Let
@@ -1233,8 +1233,8 @@ $\rmd_C c$ (which is by definition zero):
 Thus $g(\mathrm{d}_B b) = 0$ and by exactness there is a unique $a \in A^{k + 1}$ such that
 $f(a) = \rmd_B b$. We then define $\rmd^*[c]$ as $[a]$.
 
-Since $a$ depends on choices of representant $c$ and preimage $b$ one has to prove that $\rmd^*$ is
-nontheless well-defined. We are going to start with proving that the choice of $b$ does not matter by choosing
+Since $a$ depends on choices of representative $c$ and preimage $b$ one has to prove that $\rmd^*$ is
+nonetheless well-defined. We are going to start with proving that the choice of $b$ does not matter by choosing
 $\tilde{b}$ such that $g^k(\tilde{b}) = c$. Then $g^k(b - \tilde{b}) = 0$ and by exactness
 there exists a unique $\hat{a}$ such that $f^k(\hat{a}) = b - \tilde{b}$. Putting this into a commutative:
 % https://q.uiver.app/#q=WzAsNixbMSwwLCJiIC0gXFx0aWxkZXtifSJdLFsxLDEsIlxcbWF0aHJte2R9X0IoYiAtIFxcdGlsZGV7Yn0pIl0sWzIsMSwiMCJdLFsyLDAsIjAiXSxbMCwwLCJcXGhhdHthfSJdLFswLDEsIlxcbWF0aHJte2R9X0FcXGhhdHthfSJdLFswLDEsIlxcbWF0aHJte2R9X0IiLDJdLFsxLDIsImdee2sgKyAxfSIsMl0sWzAsMywiZ15rIl0sWzMsMiwiXFxtYXRocm17ZH1fQyJdLFs0LDAsImZeayJdLFs0LDUsIlxcbWF0aHJte2R9X0EiLDJdLFs1LDEsImZee2sgKyAxfSIsMl1d
@@ -1271,7 +1271,7 @@ such that $g^{k-1}(\hat{b}) = \hat{c}$. These can be put into a commutative diag
 	\arrow["{g^{k + 1}}"', from=3-2, to=3-3]
 \end{tikzcd}\]
 Since it has been showed that $\mathrm{d}^*$ does not depend on the choice of $b$ this implies
-$\rmd^*([c - \tilde{c}]) = 0$, thus $\rmd^*$ is independent of the choice of representant $c$ and in
+$\rmd^*([c - \tilde{c}]) = 0$, thus $\rmd^*$ is independent of the choice of representative $c$ and in
 particular well-defined.
 
 It remains to show that the resulting sequence is exact. We start by proving that
@@ -1364,7 +1364,7 @@ down these cohomologies one sees that they actually are the same.
 As abstract all this algebra might seem, this proof gives us not only the existence of $\rmd^*$, but also
 a concrete recipe to construct $\rmd^* [c]$, which is quite valuable in practice.
 
-To show its concrete usefullness, we are going to use the Mayer-Vietoris Sequence to calculate the de-Rham
+To show its concrete usefulness, we are going to use the Mayer-Vietoris Sequence to calculate the de-Rham
 Cohomology of $S^1$, including finding a concrete basis of $H^1(S^1)$.
 
 We cover $S^1$ by two open sets $\U, \V \subseteq S^1$ as shown in TODO. These sets are diffeomorphic to $\RR$
@@ -1406,7 +1406,7 @@ The Mayer-Vietoris sequence of these spaces is then
 	\arrow[from=2-4, to=2-5]
 	\arrow[from=2-5, to=2-6]
 \end{tikzcd}\]
-where we have removed all superfluos cohomologies that are known to be trivial.
+where we have removed all superfluous cohomologies that are known to be trivial.
 
 While it would be possible to calculate $H^1(S^1)$ just by dimension counting (a task the reader is gladly
 invited to do) it is instructive to look closer at all these maps. $H^0(S^1)$ consists of the constant
@@ -1417,7 +1417,7 @@ inclusions. This difference is constant on $\U \cap \V$ and thus the image of $i
 constant functions, which form a 1-dimensional subspace of $H^0(\U \cap \V)$. The last map of this sequence
 is of course the most interesting. Since the image of $i^*$ consists of the globally constant functions on
 $\U \cap \V$, the functions that don't vanish under $\rmd^*$ are the locally constant ones that differ between
-$\U$ and $\V$ e.g. $\mathbb{1}_\U$ (the indicator funciton of $\U$). To calculate $\rmd^*[\mathds{1}_\U]$,
+$\U$ and $\V$ e.g. $\mathbb{1}_\U$ (the indicator function of $\U$). To calculate $\rmd^*[\mathds{1}_\U]$,
 we first us a partition of unity $\rho_\U, \rho_\V$ to calculate the right inverse of $\mathds{1}_\U$ under
 $i^*$ as in the proof of exactness of the short Mayer-Vietoris sequence:
 $(-\rho_\V \mathds{1}_\U, \rho_\U \mathds{1}_\U) = (-\rho_\V, 0)$. Explicitly calculating the exterior
