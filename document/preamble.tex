@@ -26,6 +26,8 @@
 \usepackage{textcomp}
 \usepackage{geometry}
 \usepackage[most]{tcolorbox}
+\usepackage{scalerel}
+\usepackage{stackengine,wasysym}
 
 \overfullrule=10pt
 \setlength{\parindent}{0em}
@@ -76,3 +78,9 @@
 \DeclareMathOperator{\sign}{sign}
 \DeclareMathOperator{\curl}{curl}
 
+\newcommand\reallywidetilde[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{-.1\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\AC}{.5150\wd0}}{.6\ht0}%
+  }{O}{c}{F}{T}{S}%
+}}

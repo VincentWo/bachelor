@@ -17,6 +17,11 @@ circle_fine_nerve:
 	latexmk -pdflatex=xelatex -pdf -pvc ./graphics/circle_fine_nerve.tex --output-directory=./graphics
 curve_in_r2:
 	latexmk -pdflatex=xelatex -pdf -pvc ./graphics/curve_in_r2.tex --output-directory=./graphics	
+2-sphere:
+	latexmk -pdflatex=xelatex -pdf -pvc ./graphics/2_sphere.tex --output-directory=./graphics	
+3-sphere:
+	latexmk -pdflatex=xelatex -pdf -pvc ./graphics/3_sphere.tex --output-directory=./graphics	
+
 
 
 
