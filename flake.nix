@@ -25,6 +25,7 @@
               tex
               biber
               texlab
+              tectonic
               ispell
             ];
           };
