@@ -18,9 +18,10 @@ we want to generalize the notion to a more general class of spaces known as
 of embedded curves/surfaces:
 \begin{definition}[Topological Manifold]
 A \textbf{Topological Manifold} of dimension $n$ is a metrizable and separable\footnote{
-	These are technical requirements to ensure that manifolds really behave like we would an euclidean space
-	expect to behave since being locally homeomorphic to $\RR^n$ is not enough. Intuitively metrizability
-	ensures uniqueness of limits while separability ensures that our spaces don't get "too big".
+	These are technical requirements to ensure that manifolds really behave like we would except of an
+	"euclidean" space, because being locally homeomorphic to $\RR^n$ still leaves room for weird things to
+	happen. Intuitively metrizability ensures uniqueness of limits while separability ensures that our spaces
+	don't get "too big".
 }
 topological space $M$ in which every point $p \in M$ has a neighborhood $\U$ that is homeomorphic to
 an open set $\V \subseteq \RR^n$.
@@ -30,14 +31,20 @@ or \textbf{local coordinate system} of $M$.
 \end{definition}
 
 Though this abstract definition of a manifold might be new to the reader, there are some topological manifolds that
-they probably already know since grade school:
+they probably already know since grade school\footnote{not to be confused with the ones encountered
+in grad school}:
 \begin{example}
 The archetypical (nontrivial) example of this concepts are the $n$-spheres, defined as
 \[
 	S^n \coloneqq \{\, x \in \RR^{n + 1} \mid |x| = 1 \,\}
 \]
 
-\begin{figure}[b]
+with $S^1$ more commonly known as the circle. As one sees in \ref{figure:spheres}
+for $S^1$ and $S^2$, these all are quite different from $\RR^n$, while locally being homeomorphic to it.
+Something that becomes evident every time one uses a navigation app, since these usually display a projection
+of some subset of $S^2$ to a subset of $\RR^2$.
+\end{example}
+\begin{figure}[thb]
 	\centering
 	\tcbsetforeverylayer{enhanced, colback=white, frame hidden}
 	\begin{tcolorbox}[segmentation style={solid}, sidebyside]
@@ -49,53 +56,44 @@ The archetypical (nontrivial) example of this concepts are the $n$-spheres, defi
 	\caption{$S^1$ and $S^2$ respectively}
 \end{figure}
 
-with $S^1$ more commonly known as the circle. As one sees in \ref{figure:spheres}
-for $S^1$ and $S^2$ these all are quite different from $\RR^n$, while locally being homeomorphic to it, which
-becomes evident every time one uses a navigation app, since these usually display a projection of some
-subset of $S^2$ to a subset of $\RR^2$.
-\end{example}
 
 Topological manifolds are an interesting subject by themselves and one might wonder whether it is already
 possible to define a notion of "differentiation" for maps between them. Since differentiability itself is a
-local condition they indeed seem to be a great candidate to do that. Indeed it does not take too long
-to come up with a definition of differentiability that seems to work: Given a function
-$f: M \to N$ between two manifolds we could call it differentiable at a point $p \in M$
-if for all local choices of coordinates $(\U, x)$ around $p$ and $(\V, y)$ around $f(p)$
-the function
+local condition, coming up with a definition of differentiability that seems to work does not take too long:
+Given a function $f: M \to N$ between two manifolds we could call it differentiable at a point $p \in M$
+if for all local choices of coordinates $(\U, x)$ around $p$ and $(\V, y)$ around $f(p)$ the function
 \[
 	y \circ f \circ x^{-1}: \RR^m \to \RR^n
 \]
-is differentiable. 
- 
-This approach might seem sensible, but it does not really work. It has the major issue of excluding too
-many functions since the differentiability of a function with respect to two charts does not imply anything
-about its differentiability with respect to arbitrary other charts. Even something like the identity
-on $\RR$, which is obviously smooth with respect to the standard choices of coordinates (i.e. the identity
-itself) would not be differentiable by this definition: Defining $y: \RR \to \RR$ to be identity and
-$x: \RR \to \RR$ as $y(p) = p^3$ results in
+is differentiable. While looking sensible, this approach does not really work.
+It has the major issue of excluding too many functions, because differentiability of a function with respect
+to two charts does not imply anything about its differentiability with respect to other charts. Even something
+like the identity on $\RR$, which is obviously smooth with respect to the standard choices of coordinates
+(i.e. the identity itself) would not be differentiable by this definition: Defining $y: \RR \to \RR$ to be
+identity and $x: \RR \to \RR$ as $y(p) = p^3$ results in
 \[
 	y \circ \mathrm{Id} \circ x^{-1}(z) = z^{1/3}
 \]
-which is not differentiable! But this flaw already suggests how to fix itself: One would need a way to 
-ensure that differentiability of a function with respect to some charts also implies differentiability with
-respect to all other charts. This is achieved by selecting a collection of charts that are
+which is not differentiable! But this flaw already suggests a fix: One would need to ensure that
+differentiability of a function with respect to some charts also implies differentiability with
+respect to all other charts. The easiest way to achieve this is by using only charts that are
 \textbf{smoothly\footnote{
 	We are going to assume smoothness (i.e. $C^\infty$) instead of differentiability from here on since it
 	makes a lot of definitions and theorems a lot easier to digest and we are only interested in the smooth
 	case anyway.
 } compatible with each other}:
 \begin{definition}
-	Let $M$ be a topological manifold. We call two charts $(x, \U), (y, \V)$ \textbf{smoothly compatible}
+	Let $M$ be a topological manifold. We call two charts $(\U, x), (\V, y)$ \textbf{smoothly compatible}
 	if $x(\U \cap \V)$ and $y(\U \cap \V)$ are open and $x \circ y^{-1}$ and $y \circ x^{-1}$ are smooth.
 \end{definition}
-By the chain rule it follows immediately that a map $f$ is smooth with respect to two charts if and
-only if it is smooth with respect to all smoothly compatible charts. Adding a choice of smoothly compatible
-charts on a manifold gives us a new object:
+Using the chain rule, a map $f$ is smooth with respect to two charts if and only if it is smooth with respect
+to all smoothly compatible charts. Adding a choice of smoothly compatible charts on a manifold gives us a new
+object:
 \begin{definition}
 A smooth manifold is a topological manifold with a choice of pairwise smoothly compatible charts
 $\{(\U_\alpha, x_\alpha)\}_{\alpha \in I}$ such that $\bigcup_{\alpha \in I} \U_\alpha = M$.
 \end{definition}
-In this context our suggested definition of smoothness makes sense:
+Given smooth manifolds, our suggested definition of smoothness makes sense:
 \begin{definition}
 Given two smooth manifolds $M, N$ we call a function $M \to N$ smooth if for all choices of coordinates
 $(\U, x)$ of $M$ and $(\V, y)$ of $N$ the function
@@ -120,11 +118,11 @@ Given a topological manifold $M$ one would hope that all the smooth manifolds ar
 would be diffeomorphic to each other, but in general this is not the case. 
 \end{remark}
 
-Though we defined smoothness itself it remains to define the actual derivative of a smooth function. To
+Though we defined smoothness itself, it remains to define the actual derivative of a smooth function. To
 accomplish this let's take a closer look at the familiar derivative. Intuitively the derivative of
 a function at a point $p$ takes a direction and outputs a linear approximation of the change of $f$ given
 a move from $p$ into that direction. The space of "directions" at $p$ is usually just taken to be $\RR^n$,
-but we are going to get a bit technical about it by denoting it as $T_p \RR^n$ and calling it
+but we are going to get a bit technical about it and denote it as $T_p \RR^n$, which we call the
 \textbf{tangent space at $p$} (Morally the difference between $T_p \RR^n$ and $\RR^n$ is that the former
 describes vectors based at $0$ and the later vectors based at $p$). This tangent space can also be used to
 describe the linear approximation of the change of $f$, enabling us to denote the derivative of $f$ at $p$
@@ -132,13 +130,13 @@ as a linear map
 \[
 	D_p f: T_p \RR^n \to T_{f(p)} \RR^m
 \]
-While this might seem like meaningless notational tricks it shows that translating the derivative to
-arbitrary smooth manifolds starts with finding a useful definition of $T_p M$ for any smooth manifold $M$.
+While this might seem like meaningless notational tricks, it hints at finding a useful definition of $T_p M$
+being a substantial step in the translation of the derivative to arbitrary smooth manifolds.
 Notice that for any $p \in M$ a choice of chart $(\U, x)$ gives rise to a chart-specific tangent space
 $T_{x(p)} \RR^n$, which we are going to denote as $T_p^x M$ (Note that this space has a canonical basis
 arising from the canonical basis of $T_p \RR^n$, which we are going to denote by
-$\frac{\partial}{\partial x_1}, \dots, \frac{\partial}{\partial x_n}$). Though this seems promising one would
-not want to have to choose local coordinates to make sense of $T_p M$. And one does not have to by realizing
+$\frac{\partial}{\partial x_1}, \dots, \frac{\partial}{\partial x_n}$). While this seems promising, one would
+not want to have to choose local coordinates to make sense of $T_p M$. And one does not have to, by realizing
 that while any other chart $(y, \V)$ around $p$ induces a different tangent space $T_p^y M$, there is
 a canonical isomorphism to $T_p^x M$ given by the derivative of the change of coordinates:
 \[
@@ -147,7 +145,7 @@ a canonical isomorphism to $T_p^x M$ given by the derivative of the change of co
 (This is an isomorphism since $x \circ y^{-1}$ is a diffeomorphism). Then one can avoid any choice of
 coordinates by defining $T_pM$ as the isomorphism class of $T^x_p M$ for all charts $(x, \U)$ around $p$. This is
 still a vector space, though without a canonical basis (but choosing local coordinates $(x, \U)$ induces one,
-which with a little abuse of notation is also denoted
+which with a little abuse of notation we also denote
 $\frac{\partial}{\partial x_1}, \dots, \frac{\partial}{\partial x_n}$). 
 
 It remains to define the derivative itself. For any given charts $(x, \U)$ around $p$ and $(y, \V)$ around
@@ -166,10 +164,9 @@ coordinates $(x, \U)$ around $p$ and $(y, \V)$ around $f(p)$ fulfills
 with $i^x_p: T_p^x M \to T_p M$ and $j^y_{f(p)}: T^y_{f(p)}N \to T_{f(p)} N$ being the canonical isomorphisms.
 \end{definition}
 To ensure that this map really exists we have to prove that any map fulfilling this equality for charts
-$(x, \U)$ around $p$ and $(y, \V)$ around $f(p)$ also fulfills it for a different choice of charts
-$(\tilde{x}, \tilde{\U})$ around $p$ and $(\tilde{y}, \tilde{\V})$ around $f(p)$. The chain rule gives us a
+$(\U, x)$ around $p$ and $(\V, y)$ around $f(p)$ also fulfills it for a different choice of charts
+$(\tilde{\U}, \tilde{x})$ around $p$ and $(\tilde{V}, \tilde{y})$ around $f(p)$. The chain rule gives us a
 connection between the derivative of $f$ with respect different choices of coordinates:
-it holds
 \begin{align*}
 	D_{x(p)} (y \circ f \circ x^{-1})
 		&= D_{x(p)} (y \circ \tilde{y}^{-1} \circ \tilde{y} \circ f \circ \tilde{x}^{-1} \circ \tilde{x} \circ x^{-1}) \\
@@ -190,7 +187,7 @@ $(i^{\tilde{x}}_p)^{-1}$. Vice versa with $D_{\tilde{y}(f(p))} (y \circ \tilde{y
 \end{align*}
 This makes $T_p f$ well-defined.
 
-The theory surrounding tangent spaces is rich and interesting and we only have time to scratch its surface
+The theory surrounding tangent spaces is rich and interesting and we only have time to scratch its surface,
 having to take some of the remaining things as black boxes with proofs and details left to the earlier
 mentioned proper accounts.
 
@@ -204,11 +201,9 @@ maps $X: M \to TM$ which fulfill $X(p) \in T_p M$. This definition includes the 
 $\RR^n$ as a smooth manifold with its canonical smooth structure.
 
 \section{Differential Forms}
-Having developed the theory of tangent spaces we can start translating our original motivation from the
-introduction into the context of differential geometry. In the introduction we talked about the relationship
-between the connected components of open subsets of $\RR^n$ and the smooth functions with vanishing derivative
-defined on it.
-
+Having developed the theory of tangent spaces, we can start translating our introductory motivation from
+$\RR^n$ to general manifolds. Our first example was about the relationship between the connected
+components of open subsets of $\RR^n$ and the smooth functions with vanishing derivative defined on it.
 The fact that locally constant functions are related to connected component directly translates to smooth
 manifolds, all that is left is to find a nice description of these using derivatives. This is a bit more involved:
 The tangent map of a smooth function $f: M \to \RR$ is not going to vanish if $f$ is locally constant. This is
@@ -220,14 +215,14 @@ projection the \textbf{differential of $f$} and denote it by $\rmd f$. Then $f$ 
 only if its differential is zero everywhere, letting us describe the locally constant functions as the kernel
 of $\rmd$.
 
-While this went quite nicely the second example does not translate quite as well. Recall that we talked
+While this went quite nicely, the second example does not translate quite as well. Recall that we talked
 about a connection between a space being simply connected and vector fields with vanishing curl being
 conservative. While vector fields do exist on arbitrary manifolds there is neither an obvious way to define
 their curl nor what it means for a vector field to be "conservative" since the derivative of smooth functions
 is not a vector field. These issue arise because on general smooth manifolds vector fields aren't the right
 tool to capture the phenomena we have seen so far. To do that we need to define \textbf{differential forms},
-which we are going to motivate as the natural objects of integration on smooth manifolds before using them
-to define the de Rham cohomology.
+which we are going to motivate as the natural objects of integration on smooth manifolds, before using them
+to define the de Rham cohomology, the true object of our study.
 % form of derivative called the \textbf{exterior derivative}.
 % Neither is $\rmd f$ a
 % vector field nor is there 
@@ -340,9 +335,10 @@ Because of this lemma one usually sees differential forms defined as antisymmetr
 are going to refer to this property in the future since it is more succinct, but it is important to remember
 where it comes from.
 
-It remains to define a notion of smoothness for differential forms, which requires developing a bit more
-multi-linear algebra. Recall that any given basis $b_1, \dots, b_n$ of a vector space $V$ gives rise to a
-dual basis $e^1, \dots, e^n$  defined as the unique linear maps $V \to \RR$ satisfying:
+As often in differential geometry, we aren't  interested in all differential forms, but just the smooth ones,
+though their smoothness remains to be defined with the use of a bit more multi-linear algebra. We recall that
+any given basis $b_1, \dots, b_n$ of a vector space $V$ gives rise to a dual basis $e^1, \dots, e^n$  defined
+as the unique linear maps $V \to \RR$ satisfying:
 \[
 	e^i(b_j) = \begin{cases}
 		1 &\text{if } i = j \\
@@ -372,7 +368,7 @@ To define the wedge-product one needs to start with defining the tensor product:
 	\]		
 \end{definition}
 The tensor product of two anti-symmetric maps is sadly not anti-symmetric itself, but there is a way to
-anti- any multi-linear map:
+anti-symmetrize any multi-linear map:
 \begin{definition}
 	Let $\alpha: V^k \to \RR$ be a multi-linear map. We define its anti-symmetrization as
 	\[
@@ -390,6 +386,9 @@ combinatorial factor) to define:
 	\]
 \end{definition}
 The wedge product of dual basis vectors is especially interesting and can be described explicitly:
+\begin{remark}
+This whole section is not finished yet!
+\end{remark}
 \begin{theorem}
 Given a basis $v_1, \dots, v_n$ of a vector space $V$ with corresponding dual basis
 $\rmd x^1, \dots, \rmd x^n$, the wedge product of $k$ dual basis vectors $\rmd x^{i_1}, \dots, \rmd x^{i_k}$
@@ -424,8 +423,17 @@ Before doing anything with the wedge product, we are going to prove some of its 
 \begin{proof}
 Since the tensor product is bilinear and $\mathrm{Alt}$ is linear, the wedge product is bilinear.
 
+To prove its associativity, let $\alpha, \beta, \gamma$ be anti-symmetric $k, \ell, m$-forms. Then
+\begin{align*}
+	(\alpha \wedge \beta) \wedge \gamma
+		&= \frac{((k + \ell + m)!)}{(k + \ell)!m!}\Alt((\alpha \wedge \beta) \otimes \gamma)
+\end{align*}
+
 
 \end{proof}
+\begin{remark}
+The unfinished bits end here
+\end{remark}
 
 By using the wedge product we can use a dual basis $\rmd x^1, \dots, \rmd x^n$ to form a basis for the
 space of $k$-fold anti-symmetric maps in the form of wedge products of $k$ dual basis vectors so that any
@@ -447,7 +455,8 @@ Combining all these we can finally define:
 	an antisymmetric $k$-fold multilinear function from $T_pM \times \dots \times T_pM$ to $\RR$ such that
 	all its components functions with respect to all charts are smooth.
 
-	The space of all differential $k$-forms on $M$ is denoted as $\Omega^k(M)$ and
+	The space of all differential $k$-forms on $M$ (also called the \textbf{de Rham cocomplex of $M$} is
+	denoted as $\Omega^k(M)$ and
 	\[
 		\Omega^*(M) \coloneqq \bigoplus_{k = 0}^\infty \Omega^k(M)
 	\]
