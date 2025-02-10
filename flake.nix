@@ -16,7 +16,7 @@
               scheme-medium biblatex tikz-cd spath3 stackengine chngcntr csquotes 
               latexmk standalone hobby animate preview media9 zref ocgx2
               tcolorbox environ tikzfill pdfcol doublestroke tabto-ltx tikz-3dplot
-              scalerel;
+              scalerel quiver;
           });
         in
         with pkgs; {

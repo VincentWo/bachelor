@@ -573,7 +573,7 @@ be glued together to a closed $k$-form on $M$. Locally this can be made even mor
 	with all other components (that aren't permutations of this) being zero.
 \end{lemma}
 \begin{proof}
-We proof this by induction, for $\ell = 0$ (i.e. for the complete multi-index $\Alpha$) we have
+We proof this by induction, for $\ell = 0$ (i.e. for the complete multiindex $\Alpha$) we have
 \[
 	j(\cdual{\alpha_0, \dots, \alpha_k})_{\alpha_0,\dots,\alpha_k}
 		= 1
@@ -614,8 +614,8 @@ This lemma is most useful for the case of $\ell = k$, resulting in
 While this lemma describes the isomorphism only for very particular cocycles, using linearity
 one easily generalizes this to all cocycles. One just has to remember that this component
 shows only a local description of this isomorphism i.e. the component $\alpha_j$ represents
-the resulting differential form only on $\U_{\alpha_j}$, with index independence for overlapping
-sets guaranteed by the construction of the isomorphism (and only for cocycles, not for general
+the resulting differential form only on $\U_{\alpha_j}$, with unambigousity for overlapping
+sets guarenteed by the construction of the isomorphism (and only for cocyles, not for general
 cochains).
 \end{remark}
 Neither the exact values, nor the signs here are terribly important, important is that the
@@ -627,7 +627,7 @@ isomorphism to a bump $k$-form on $\U_{\alpha_0 \dots \alpha_k}$.
 
 Having this explicit description of the isomorphism enables us to prove that it agrees with the
 map induced by refinements i.e. given two great covers $\mathfrak{U} \prec \mathfrak{V}$ of a
-smooth manifold $M$ together with an appropriate map $\lambda: J \to I$ from the index set of
+smooth manifold $M$ together with an appropiate map $\lambda: J \to I$ from the index set of
 $\mathfrak{V}$ to the index set of $\mathfrak{U}$, we want the following diagram to commute
 (with $\varphi_\mathfrak{U}, \varphi_\mathfrak{V}$ being the respective isomorphisms):
 % https://q.uiver.app/#q=WzAsMyxbMCwwLCJcXGhhdHtIfV4qKFxcbWF0aGZyYWt7VX0pIl0sWzEsMCwiSF4qX1xcZHIoTSkiXSxbMSwxLCJcXGhhdHtIfV4qKFxcbWF0aGZyYWt7Vn0pIl0sWzAsMSwiXFx2YXJwaGlfe1xcbWF0aGZyYWt7VX19Il0sWzIsMSwiXFx2YXJwaGlfe1xcbWF0aGZyYWt7Vn19IiwyXSxbMCwyLCJcXGxhbWJkYV4qIiwyXV0=

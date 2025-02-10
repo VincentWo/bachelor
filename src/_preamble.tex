@@ -1,6 +1,6 @@
-\documentclass[12pt,a4paper]{memoir}
+\documentclass[11pt, a4paper, final]{memoir}
 
-\usepackage{microtype}
+\usepackage[final]{microtype}
 \usepackage{dsfont}
 \usepackage{mathdots}
 \usepackage{fontspec}
@@ -10,7 +10,7 @@
 \usepackage[style=alphabetic]{biblatex}
 \usepackage{tikz}
 \usepackage{graphicx}
-\usetikzlibrary{cd,decorations.pathreplacing,decorations.markings,arrows}
+\usetikzlibrary{cd,decorations.pathreplacing,decorations.markings,arrows,shapes.misc,calc,patterns,3d,hobby,math}
 \addbibresource{main.bib}
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -27,9 +27,15 @@
 \usepackage{geometry}
 \usepackage[most]{tcolorbox}
 \usepackage{scalerel}
+\usepackage{}
 \usepackage{stackengine,wasysym}
+% \usepackage{unicode-math}
+% \usepackage{xcharter-otf}
+\usepackage{quiver}
+\usepackage{phoenician}
 
-\overfullrule=10pt
+
+% \overfullrule=10pt
 \setlength{\parindent}{0em}
 \setlength{\parskip}{1em}
 
@@ -66,17 +72,23 @@
 \newcommand{\dx}[1]{\rmd x^{#1}}
 \newcommand{\pdx}[2][]{\frac{\partial #1}{\partial x_{#2}}}
 \newcommand{\ZZ}{\mathbb{Z}}
-\newcommand{\U}{\mathcal{U}}
-\newcommand{\V}{\mathcal{V}}
-\renewcommand{\O}{\mathcal{O}}
-\newcommand{\dvb}{d^{*, *}_v}
-\newcommand{\dhb}{d^{*, *}_h}
-\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\U}{{\mathcal{U}}}
+\newcommand{\V}{{\mathcal{V}}}
+\renewcommand{\O}{{\mathcal{O}}}
+\newcommand{\dvb}{\rmd^{*, *}_v}
+\newcommand{\dhb}{\rmd^{*, *}_h}
+\newcommand{\rmd}{{\mathrm{d}}}
 \newcommand{\indicator}{\mathds{1}}
-\usetikzlibrary{shapes.misc}
+
 \DeclareMathOperator{\Img}{Im}
 \DeclareMathOperator{\sign}{sign}
 \DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\Alt}{Alt}
+\DeclareMathOperator{\Id}{Id}
+
+% \includeonly{chapter-1.tex}
+
+\DeclarePairedDelimiter\cdual{]}{[}
 
 \newcommand\reallywidetilde[1]{\ThisStyle{%
   \setbox0=\hbox{$\SavedStyle#1$}%
@@ -84,5 +96,11 @@
     \stretchto{\scaleto{\SavedStyle\mkern.2mu\AC}{.5150\wd0}}{.6\ht0}%
   }{O}{c}{F}{T}{S}%
 }}
+\newcommand\Alpha{A}
+
+
+\title{Proving de Rham's theorem via the Čech-de Rham double complex}
+\author{Vincent Woltmann}
+\newlength{\drop}
 
 \begin{document}

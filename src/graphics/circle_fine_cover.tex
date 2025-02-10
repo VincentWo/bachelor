@@ -1,9 +1,8 @@
 
 \documentclass{standalone}
 \usepackage{tikz}
-\usetikzlibrary{hobby}
-\usetikzlibrary{calc}
-\usetikzlibrary{math}
+\usetikzlibrary{hobby, calc, math}
+\usepackage{fontspec}
 
 
 \begin{document}
@@ -18,8 +17,8 @@
 	% \draw[fill, opacity=0.2] ([shift=(\start-\overlap:1.8)]0,0) arc (\start-\overlap:\end + \overlap:1.8) arc (360 + \start + \overlap:\end + \overlap:0.2) arc (\end + \overlap:\start-\overlap:2.2) arc (360 + \start - \overlap:180 - \start + \overlap:0.2);
 	% \draw[fill, opacity=0.2] ([shift=(360 + \overlap:1.8)]0,0) arc (360 + \overlap:270 - \overlap:1.8) arc (-\overlap:180 - \overlap:0.2) arc (180 - \overlap:360 + \overlap:2.2) arc(\overlap:180 + \overlap:0.2);
 
-\draw (90: 1.4) node {$U_\alpha$};
-\draw (225:1.4) node {$U_{\beta_0}$};
-\draw (315:1.4) node {$U_{\beta_1}$};
+\draw (90: 1.4) node {$\mathcal{U}_\alpha$};
+\draw (225:1.4) node {$\mathcal{U}_{\beta_0}$};
+\draw (315:1.4) node {$\mathcal{U}_{\beta_1}$};
 \end{tikzpicture}
 \end{document}

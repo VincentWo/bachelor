@@ -1,6 +1,6 @@
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
-Upon the first introduction to derivatives one learns quite early that a function
+Upon the first encounter to derivatives one learns quite early that a function
 $f: \RR \to \RR$ is constant if and only if $f'(x) = 0$ for every $x \in \RR$. This statement is useful,
 but also contains a subtle implicit assumption: It depends not only on the value of $f'$, but also on
 the domain of $f$. In fact, take:
@@ -12,28 +12,25 @@ the domain of $f$. In fact, take:
 		\end{cases}
 \end{align*}
 this functions unsurprisingly has derivative zero, but is not globally constant, only locally i.e. every
-point has a neighborhood on which the restriction of $f$ is constant.
-
-In fact it holds in general:
+point has a neighborhood on which the restriction of $f$ is constant. In fact it holds in general:
 \begin{lemma}
 	Let $\U \subseteq \RR$ open and $f: \U \to \RR$ a smooth function. $f$ is locally constant if and only if
 	$f' = 0$.
 \end{lemma}
-As it usually goes this statement is more general, but also weaker: There are sets (like $\RR$ itself) on
-which a vanishing derivative implies constness. Recovering the original statement from our general version
-requires detecting these cases. To figure out the distinguishing property of these sets, we follow the proof of
-the statement on $\RR$ to see where it starts to fail for general sets:
-
-On $\RR$ it is easily proven that every locally constant function is constant: Let $f: \RR \to \RR$ be locally
-constant. For every $x \in \RR$ pick an open neighborhood $\V_x$ of $x$ on which $f$ is constant. Pick any
-$y \in \RR$ and define:
+As it usually goes this statement is more general but weaker. We would like to get the best
+of both worlds by finding the most general class of sets for which the stronger statement is
+true i.e. on which a vanishing derivative implies constness. To figure out the distinguishing
+property of these sets, we follow the proof of the statement on $\RR$ to see where it starts
+to fail for general sets: On $\RR$ it is easily proven that every locally constant function
+is constant: Let $f: \RR \to \RR$ be locally constant. For every $x \in \RR$ pick an open
+neighborhood $\V_x$ of $x$ on which $f$ is constant. Pick any $y \in \RR$ and define:
 \begin{align*}
 	\V^=      &\coloneqq \bigcup_{x \in \RR\colon f(x) = f(y)} \V_x \\
 	\V^{\neq} &\coloneqq \bigcup_{x \in \RR\colon f(x) \neq f(y)} \V_x
 \end{align*}
-This is a decomposition of $\RR$ into two disjoint open sets. But the only decomposition like that consists
-of $\RR$ and the empty set. And since $\V^=$ is non-empty by construction it has to be $\RR$, therefore $f$ is
-constant.
+This is a decomposition of $\RR$ into two disjoint open sets. But the only decomposition like
+that consists of $\RR$ and the empty set. And since $\V^=$ is non-empty by construction it has
+to be $\RR$, therefore $f$ is constant.
 
 This non-existence of decompositions can be understood as the inability of "breaking" $\RR$ apart – which can
 be done in the case of $\RR \setminus \{0\}$. This can be captured in general as a geometricly intuitive
@@ -187,10 +184,10 @@ algebraic machinery
 
 In this thesis we are going to try to find a middle ground between these extremes, using a method, that was premiered in 1952
 by André Weil in the (French) paper \cite{weil_sur_1952}
-(with \cite{tu_differential_1982} being a good (non-French) modern account). While being primarily algebraic it foregoes too
+(with \cite{bott_differential_1982} being a good (non-French) modern account). While being primarily algebraic it foregoes too
 heavy machinery, does not require integration and offers a geometric explanation (though not one as obvious).
 
-Our contribution lies in supplying details of the proof that were left out of \cite{tu_differential_1982}, combining
+Our contribution lies in supplying details of the proof that were left out of \cite{bott_differential_1982}, combining
 it with a self-contained\footnote{
 	Not self-contained in the sense of proving every statement, but self-contained in the sense that it can be
 	(hopefully) understood on its own
